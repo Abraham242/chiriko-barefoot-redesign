@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { useParams, Link } from "react-router-dom";
 import { Star, Check, ChevronLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -10,8 +11,19 @@ const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 const ProductPage = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id) || products[0];
-
+  const seoTitle = `${product.name} Barefoot Shoes en Venezuela`;
+  const seoDescription = `${product.name}: ${product.subtitle}. Calzado barefoot con ${product.features.slice(0, 3).join(", ").toLowerCase()}. Asesoría por WhatsApp y envíos en Venezuela.`;
+  
   return (
+  <>
+    <SEO
+      title={seoTitle}
+      description={seoDescription}
+      path={`/product/${product.id}`}
+    />
+
+    <div>
+    
     <div className="min-h-screen">
       <Navbar />
       <div className="pt-20 lg:pt-24">
@@ -94,7 +106,10 @@ const ProductPage = () => {
       <Footer />
       <WhatsAppButton />
     </div>
+  </>
+      
   );
 };
+    
 
 export default ProductPage;
