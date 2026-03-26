@@ -23,7 +23,6 @@ const ProductPage = () => {
     />
 
     <div>
-    
     <div className="min-h-screen">
       <Navbar />
       <div className="pt-20 lg:pt-24">
