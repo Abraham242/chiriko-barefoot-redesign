@@ -17,6 +17,12 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
+    <>
+    <SEO
+      title="Barefoot Shoes en Venezuela"
+      description="Calzado barefoot premium en Venezuela. Movimiento natural, diseño minimalista y asesoría personalizada por WhatsApp."
+      path="/"
+    />
     <div className="min-h-screen">
       <Navbar />
       <HeroSection />
@@ -34,6 +40,7 @@ const Index = () => {
       <Footer />
       <WhatsAppButton />
     </div>
+    </>
   );
 };
 
