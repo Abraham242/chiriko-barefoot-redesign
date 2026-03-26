@@ -54,6 +54,7 @@ const SizeGuidePage = () => {
       description="Aprende a medir tu pie y encontrar tu talla ideal en zapatos barefoot. Guía simple y asesoría personalizada."
       path="/size-guide"
     />
+    </div>
     <div className="min-h-screen">
       <Navbar />
       <div className="pt-20 lg:pt-24">
