@@ -13,9 +13,7 @@ const SizeGuidance = () => {
             We'll help you find the perfect fit. It only takes a minute.
           </p>
           <a
-            href="https://wa.me/584121234567?text=Hola%2C%20necesito%20ayuda%20con%20mi%20talla%20de%20Chiriko"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/size-guide"
             className="inline-flex items-center justify-center px-10 py-4 bg-foreground text-primary-foreground font-body text-sm tracking-widest uppercase hover:bg-foreground/90 transition-colors"
           >
             Learn how to measure your foot
