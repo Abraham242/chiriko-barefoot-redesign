@@ -1,4 +1,4 @@
-import SEO from "@/components/SEO";
+
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { ChevronLeft, Footprints, Ruler, PenLine, MessageCircle } from "lucide-react";
@@ -48,13 +48,12 @@ const steps = [
 
 const SizeGuidePage = () => {
   return (
-    <>
-    <SEO
-      title="Guía de Tallas Barefoot"
-      description="Aprende a medir tu pie y encontrar tu talla ideal en zapatos barefoot. Guía simple y asesoría personalizada."
-      path="/size-guide"
-    />
-    </div>
+<>
+  <SEO
+    title="Guía de Tallas Barefoot"
+    description="Aprende a medir tu pie y encontrar tu talla ideal en zapatos barefoot. Guía simple y asesoría personalizada."
+    path="/size-guide"
+  />
     <div className="min-h-screen">
       <Navbar />
       <div className="pt-20 lg:pt-24">
