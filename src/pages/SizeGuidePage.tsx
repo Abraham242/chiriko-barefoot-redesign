@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { ChevronLeft, Footprints, Ruler, PenLine, MessageCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
