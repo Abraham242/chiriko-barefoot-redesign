@@ -1,56 +1,157 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ShoppingBag, MessageCircle } from "lucide-react";
+
+const phoneNumber = "584221798072";
+const message =
+  "Hola, vengo de chirikostudio.com y quiero ayuda para elegir mi talla.";
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+const navLinks = [
+  { label: "Shop", href: "/#shop" },
+  { label: "Learn", href: "/#learn" },
+  { label: "Size Guide", href: "/size-guide" },
+  { label: "Contact", href: "/#contact" },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 12);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  const isHome = location.pathname === "/";
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/92 backdrop-blur-md border-b border-border/60"
+          : "bg-background/70 backdrop-blur-sm"
+      }`}
+    >
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link to="/" className="font-heading text-2xl lg:text-3xl font-semibold tracking-wide text-foreground">
-            Chiriko Studio
+        <div className="flex h-20 items-center justify-between gap-6">
+          <Link
+            to="/"
+            className="font-heading text-xl md:text-2xl tracking-[0.12em] text-foreground"
+            aria-label="Chiriko Studio home"
+          >
+            CHIRIKO STUDIO
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-10">
-            <Link to="/" className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">
-              Shop
-            </Link>
-            <Link to="/" className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </Link>
-            <Link to="/" className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">
-              Learn
-            </Link>
-            <Link to="/" className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </Link>
-            <button className="text-foreground hover:text-muted-foreground transition-colors">
-              <ShoppingBag size={20} strokeWidth={1.5} />
-            </button>
+          <nav className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) =>
+              link.href.startsWith("/#") && isHome ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="font-body text-[12px] tracking-[0.18em] uppercase text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className="font-body text-[12px] tracking-[0.18em] uppercase text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
+          </nav>
+
+          <div className="hidden lg:flex items-center gap-3">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 items-center justify-center gap-2 border border-border px-4 text-[12px] tracking-[0.16em] uppercase text-foreground transition-colors hover:border-foreground"
+            >
+              <MessageCircle size={16} />
+              WhatsApp
+            </a>
+
+            <a
+              href={isHome ? "/#shop" : "/"}
+              className="inline-flex h-11 items-center justify-center gap-2 bg-foreground px-5 text-[12px] tracking-[0.16em] uppercase text-primary-foreground transition-colors hover:bg-foreground/90"
+            >
+              <ShoppingBag size={16} />
+              Shop now
+            </a>
           </div>
 
-          {/* Mobile toggle */}
-          <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)}>
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="inline-flex lg:hidden items-center justify-center text-foreground"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+          >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-background border-t border-border">
-          <div className="px-6 py-8 flex flex-col gap-6">
-            <Link to="/" onClick={() => setIsOpen(false)} className="font-body text-sm tracking-widest uppercase text-foreground">Shop</Link>
-            <Link to="/" onClick={() => setIsOpen(false)} className="font-body text-sm tracking-widest uppercase text-foreground">About</Link>
-            <Link to="/" onClick={() => setIsOpen(false)} className="font-body text-sm tracking-widest uppercase text-foreground">Learn</Link>
-            <Link to="/" onClick={() => setIsOpen(false)} className="font-body text-sm tracking-widest uppercase text-foreground">Contact</Link>
+        <div className="lg:hidden border-t border-border/60 bg-background">
+          <div className="container mx-auto px-6 py-6 flex flex-col gap-5">
+            {navLinks.map((link) =>
+              link.href.startsWith("/#") && isHome ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="font-body text-sm tracking-[0.16em] uppercase text-foreground"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="font-body text-sm tracking-[0.16em] uppercase text-foreground"
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
+
+            <div className="pt-2 flex flex-col gap-3">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center gap-2 border border-border text-sm tracking-[0.16em] uppercase text-foreground"
+              >
+                <MessageCircle size={16} />
+                WhatsApp
+              </a>
+
+              <a
+                href={isHome ? "/#shop" : "/"}
+                className="inline-flex h-12 items-center justify-center gap-2 bg-foreground text-sm tracking-[0.16em] uppercase text-primary-foreground"
+              >
+                <ShoppingBag size={16} />
+                Shop now
+              </a>
+            </div>
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 
