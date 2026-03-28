@@ -17,7 +17,7 @@ const HeroSection = () => {
         <div className="container mx-auto px-6 lg:px-12 pb-14 pt-32 md:pb-20 lg:pb-24">
           <div className="max-w-3xl">
             <p className="mb-5 font-body text-[11px] md:text-xs uppercase tracking-[0.22em] text-primary-foreground/80">
-              Barefoot shoes in Venezuela
+              Movimiento natural · Venezuela
             </p>
 
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
