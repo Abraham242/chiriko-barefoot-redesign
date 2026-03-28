@@ -21,11 +21,11 @@ const HeroSection = () => {
             </p>
 
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
-              Camina como naciste
+              Restaura el movimiento natural de tu cuerpo
             </h1>
 
             <p className="mt-6 max-w-xl font-body text-base md:text-lg leading-relaxed text-primary-foreground/88">
-              Diseñados para que tu pie se mueva libre, natural y sin
+              Diseñados para que tu pie se mueva libre y sin
               restricciones. Barefoot premium con asesoría personalizada en
               Venezuela.
             </p>
