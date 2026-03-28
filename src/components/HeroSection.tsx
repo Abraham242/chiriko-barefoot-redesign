@@ -21,7 +21,7 @@ const HeroSection = () => {
             </p>
 
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
-              Restaura el movimiento natural de tus pies
+              Libertad en cada paso
             </h1>
 
             <p className="mt-6 max-w-xl font-body text-base md:text-lg leading-relaxed text-primary-foreground/88">
