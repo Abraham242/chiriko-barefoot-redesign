@@ -40,7 +40,6 @@ const ProductPage = () => {
             </Link>
 
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-              {/* Gallery */}
               <div className="space-y-4">
                 <div className="overflow-hidden bg-secondary/40">
                   <img
@@ -51,7 +50,6 @@ const ProductPage = () => {
                 </div>
               </div>
 
-              {/* Info */}
               <div className="lg:sticky lg:top-28">
                 {product.tag && (
                   <div className="inline-flex items-center px-3 py-1 mb-5 bg-secondary text-foreground text-xs tracking-[0.16em] uppercase">
@@ -87,7 +85,6 @@ const ProductPage = () => {
                   {product.price}
                 </div>
 
-                {/* Size selector */}
                 <div className="mb-8">
                   <p className="font-body text-sm tracking-[0.16em] uppercase text-muted-foreground mb-4">
                     Size (EU)
@@ -113,7 +110,6 @@ const ProductPage = () => {
                   </Link>
                 </div>
 
-                {/* CTA */}
                 <div className="space-y-4 mb-10">
                   <button
                     type="button"
@@ -134,7 +130,6 @@ const ProductPage = () => {
                   </a>
                 </div>
 
-                {/* Features */}
                 <div className="border-t border-border pt-8 mb-8">
                   <h2 className="font-heading text-2xl font-light text-foreground mb-5">
                     Features
@@ -155,7 +150,6 @@ const ProductPage = () => {
                   </div>
                 </div>
 
-                {/* Education snippet */}
                 <div className="bg-secondary/40 p-6 lg:p-8">
                   <h3 className="font-heading text-2xl font-light text-foreground mb-3">
                     Why barefoot?
