@@ -33,7 +33,7 @@ const HeroSection = () => {
                 href="#shop"
                 className="inline-flex h-14 items-center justify-center bg-[#F7F5F0] px-8 font-body text-[12px] uppercase tracking-[0.18em] text-[#1A1A18] transition-all duration-300 hover:bg-white"
               >
-                Comprar ahora
+                Explorar colección
               </a>
 
               <a
@@ -41,6 +41,7 @@ const HeroSection = () => {
                 className="inline-flex h-14 items-center justify-center border border-primary-foreground/45 px-8 font-body text-[12px] uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:border-primary-foreground hover:bg-primary-foreground/10"
               >
                 ¿Qué es barefoot?
+                Nuestra filosofía
               </a>
             </div>
 
@@ -65,7 +66,7 @@ const HeroSection = () => {
 
               <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
                 <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Curaduría
+                  Selección Premium
                 </p>
                 <p className="mt-1 font-body text-sm text-primary-foreground">
                   Barefoot premium
