@@ -18,8 +18,8 @@ const Footer = () => {
             </p>
 
             <p className="mt-5 font-body text-sm leading-relaxed text-muted-foreground">
-              Barefoot shoes seleccionados para devolverte movimiento natural,
-              libertad y una forma más consciente de caminar.
+              Una curaduría de barefoot shoes creada para devolverle al cuerpo
+              movimiento natural, libertad y una forma más consciente de caminar.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -45,7 +45,7 @@ const Footer = () => {
 
           <div>
             <p className="font-body text-[12px] uppercase tracking-[0.18em] text-foreground">
-              Shop
+              Colección
             </p>
             <ul className="mt-5 space-y-3">
               <li>
@@ -53,7 +53,7 @@ const Footer = () => {
                   href="/#shop"
                   className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Shop all
+                  Ver colección
                 </a>
               </li>
               <li>
@@ -61,7 +61,7 @@ const Footer = () => {
                   href="/size-guide"
                   className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Size guide
+                  Guía de Tallas
                 </a>
               </li>
               <li>
@@ -71,7 +71,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Get size help
+                  Asesoría de talla
                 </a>
               </li>
             </ul>
@@ -79,7 +79,7 @@ const Footer = () => {
 
           <div>
             <p className="font-body text-[12px] uppercase tracking-[0.18em] text-foreground">
-              Learn
+              Barefoot
             </p>
             <ul className="mt-5 space-y-3">
               <li>
@@ -87,7 +87,7 @@ const Footer = () => {
                   href="/#learn"
                   className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  What is barefoot?
+                  La filosofía barefoot
                 </a>
               </li>
               <li>
@@ -95,7 +95,7 @@ const Footer = () => {
                   href="/#why"
                   className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Why Chiriko
+                  Por qué Chiriko
                 </a>
               </li>
               <li>
@@ -103,7 +103,7 @@ const Footer = () => {
                   href="/#reviews"
                   className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Reviews
+                  Testimonios
                 </a>
               </li>
             </ul>
@@ -111,7 +111,7 @@ const Footer = () => {
 
           <div>
             <p className="font-body text-[12px] uppercase tracking-[0.18em] text-foreground">
-              Contact
+              Estudio
             </p>
             <ul className="mt-5 space-y-3">
               <li>
