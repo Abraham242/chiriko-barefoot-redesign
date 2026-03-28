@@ -25,9 +25,7 @@ const HeroSection = () => {
             </h1>
 
             <p className="mt-6 max-w-xl font-body text-base md:text-lg leading-relaxed text-primary-foreground/88">
-              Diseñados para que tu pie se mueva libre y sin
-              restricciones. Barefoot premium con asesoría personalizada en
-              Venezuela.
+              Piezas diseñadas para devolverle a tus pies la libertad que merecen. Estética minimalista y biomecánica natural, con asesoría a tu medida.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
