@@ -6,8 +6,14 @@ const BestSellers = () => {
     <section className="py-24 lg:py-32">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-3">Best Sellers</h2>
-          <p className="font-body text-muted-foreground text-sm tracking-wide">Our most loved designs</p>
+          <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-3">
+            Los más elegidos
+          </h2>
+
+          <p className="font-body text-muted-foreground text-sm tracking-wide max-w-xl mx-auto">
+            Diseños barefoot seleccionados para movimiento natural, comodidad real
+            y una estética atemporal.
+          </p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
@@ -19,6 +25,7 @@ const BestSellers = () => {
                     {product.tag}
                   </span>
                 )}
+
                 <img
                   src={product.image}
                   alt={product.name}
@@ -26,9 +33,23 @@ const BestSellers = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              <h3 className="font-heading text-lg lg:text-xl text-foreground">{product.name}</h3>
-              <p className="font-body text-xs text-muted-foreground tracking-wide mb-1">{product.subtitle}</p>
-              <p className="font-body text-sm font-medium text-foreground">{product.currency}{product.price}</p>
+
+              <h3 className="font-heading text-lg lg:text-xl text-foreground">
+                {product.name}
+              </h3>
+
+              <p className="font-body text-xs text-muted-foreground tracking-wide mb-1">
+                {product.subtitle}
+              </p>
+
+              <p className="font-body text-sm font-medium text-foreground">
+                {product.currency}
+                {product.price}
+              </p>
+
+              <p className="mt-2 font-body text-xs uppercase tracking-[0.16em] text-muted-foreground group-hover:text-foreground transition-colors">
+                Ver detalles
+              </p>
             </Link>
           ))}
         </div>
