@@ -15,10 +15,6 @@ import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-git add .
-git commit -m "Force fresh deploy with fixed Index"
-git push
-
 const Index = () => {
   return (
     <>
