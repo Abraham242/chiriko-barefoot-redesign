@@ -1,8 +1,8 @@
 import { MessageCircle } from "lucide-react";
 
 const phoneNumber = "584221798072";
-const message =
-  "Hola, vengo de chirikostudio.com y quiero ayuda para elegir mi talla.";
+const whatsappMessage = `Hola, vengo de chirikostudio.com 👋  
+Quiero ayuda para elegir mi talla y modelo barefoot.`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
 const WhatsAppButton = () => {
