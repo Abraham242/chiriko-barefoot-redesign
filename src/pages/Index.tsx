@@ -18,28 +18,66 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 const Index = () => {
   return (
     <>
-    <SEO
-      title="Barefoot Shoes en Venezuela"
-      description="Calzado barefoot premium en Venezuela. Movimiento natural, diseño minimalista y asesoría personalizada por WhatsApp."
-      path="/"
-    />
-    <div className="min-h-screen">
-      <Navbar />
-      <HeroSection />
-      <TrustMicroBar />
-      <ProblemSection />
-      <ShoeComparison />
-      <ValueProps />
-      <BestSellers />
-      <EducationSection />
-      <SizeGuidance />
-      <LifestyleSection />
-      <SocialProof />
-      <PreFooterTrust />
-      <FinalCTA />
-      <Footer />
-      <WhatsAppButton />
-    </div>
+      <SEO
+        title="Barefoot Shoes en Venezuela"
+        description="Calzado barefoot premium en Venezuela. Movimiento natural, diseño minimalista y asesoría personalizada por WhatsApp para ayudarte a elegir tu talla."
+        path="/"
+      />
+
+      <div className="min-h-screen bg-background">
+        <Navbar />
+
+        <main>
+          <HeroSection />
+
+          <section aria-label="Trust signals">
+            <TrustMicroBar />
+          </section>
+
+          <section id="why" className="scroll-mt-28" aria-label="Why Chiriko">
+            <ProblemSection />
+          </section>
+
+          <section aria-label="Traditional vs barefoot comparison">
+            <ShoeComparison />
+          </section>
+
+          <section aria-label="Value propositions">
+            <ValueProps />
+          </section>
+
+          <section id="shop" className="scroll-mt-28" aria-label="Collection">
+            <BestSellers />
+          </section>
+
+          <section id="learn" className="scroll-mt-28" aria-label="Barefoot philosophy">
+            <EducationSection />
+          </section>
+
+          <section id="size-guide" className="scroll-mt-28" aria-label="Size guidance">
+            <SizeGuidance />
+          </section>
+
+          <section aria-label="Lifestyle">
+            <LifestyleSection />
+          </section>
+
+          <section id="reviews" className="scroll-mt-28" aria-label="Reviews">
+            <SocialProof />
+          </section>
+
+          <section aria-label="Pre-footer trust">
+            <PreFooterTrust />
+          </section>
+
+          <section aria-label="Final call to action">
+            <FinalCTA />
+          </section>
+        </main>
+
+        <Footer />
+        <WhatsAppButton />
+      </div>
     </>
   );
 };
