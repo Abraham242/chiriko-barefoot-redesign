@@ -26,7 +26,9 @@ function upsertMeta(selector: string, attributes: Record<string, string>) {
 }
 
 function upsertLink(rel: string, href: string) {
-  let element = document.head.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
+  let element = document.head.querySelector(
+    `link[rel="${rel}"]`
+  ) as HTMLLinkElement | null;
 
   if (!element) {
     element = document.createElement("link");
@@ -37,16 +39,27 @@ function upsertLink(rel: string, href: string) {
   element.setAttribute("href", href);
 }
 
+function buildUrl(path: string) {
+  if (!path || path === "/") return `${SITE_URL}/`;
+
+  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+function buildTitle(title: string) {
+  if (title.includes(SITE_NAME)) return title;
+  return `${title} | ${SITE_NAME}`;
+}
+
 export default function SEO({
   title,
   description,
-  path = "",
+  path = "/",
   image = DEFAULT_IMAGE,
   noIndex = false,
 }: SEOProps) {
   useEffect(() => {
-    const fullTitle = `${title} | ${SITE_NAME}`;
-    const url = `${SITE_URL}${path}`;
+    const fullTitle = buildTitle(title);
+    const url = buildUrl(path);
 
     document.title = fullTitle;
 
@@ -94,7 +107,7 @@ export default function SEO({
 
     upsertMeta('meta[property="og:image:alt"]', {
       property: "og:image:alt",
-      content: "Chiriko Studio barefoot shoes",
+      content: "Chiriko Studio, barefoot shoes premium en Venezuela",
     });
 
     upsertMeta('meta[property="og:locale"]', {
@@ -120,6 +133,11 @@ export default function SEO({
     upsertMeta('meta[name="twitter:image"]', {
       name: "twitter:image",
       content: image,
+    });
+
+    upsertMeta('meta[name="twitter:image:alt"]', {
+      name: "twitter:image:alt",
+      content: "Chiriko Studio, barefoot shoes premium en Venezuela",
     });
   }, [title, description, path, image, noIndex]);
 
