@@ -45,7 +45,7 @@ const Navbar = () => {
           <Link
             to="/"
             className="font-heading text-xl md:text-2xl tracking-[0.12em] text-foreground"
-            aria-label="Chiriko Studio home"
+            aria-label="Inicio de Chiriko Studio"
           >
             CHIRIKO STUDIO
           </Link>
