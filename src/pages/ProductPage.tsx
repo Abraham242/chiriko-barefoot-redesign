@@ -36,7 +36,7 @@ const ProductPage = () => {
               className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
             >
               <ChevronLeft size={16} />
-              Back to shop
+              Volver a la colección
             </Link>
 
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
@@ -76,7 +76,7 @@ const ProductPage = () => {
                     ))}
                   </div>
                   <span className="font-body text-sm text-muted-foreground">
-                    24 reviews
+                    24 testimonios
                   </span>
                 </div>
 
@@ -87,7 +87,7 @@ const ProductPage = () => {
 
                 <div className="mb-8">
                   <p className="font-body text-sm tracking-[0.16em] uppercase text-muted-foreground mb-4">
-                    Size (EU)
+                    Talla (EU)
                   </p>
 
                   <div className="grid grid-cols-5 gap-3">
@@ -106,7 +106,7 @@ const ProductPage = () => {
                     to="/size-guide"
                     className="inline-block mt-4 font-body text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
                   >
-                    Need help with sizing?
+                    ¿Necesitas ayuda con tu talla?
                   </Link>
                 </div>
 
@@ -115,7 +115,7 @@ const ProductPage = () => {
                     type="button"
                     className="w-full h-14 bg-foreground text-primary-foreground font-body text-sm tracking-[0.18em] uppercase hover:bg-foreground/90 transition-colors"
                   >
-                    Add to cart
+                    Añadir a la bolsa
                   </button>
 
                   <a
@@ -126,13 +126,13 @@ const ProductPage = () => {
                     rel="noopener noreferrer"
                     className="w-full h-14 border border-border flex items-center justify-center font-body text-sm tracking-[0.18em] uppercase text-foreground hover:border-foreground transition-colors"
                   >
-                    Get size help on WhatsApp
+                    Recibir asesoría por WhatsApp
                   </a>
                 </div>
 
                 <div className="border-t border-border pt-8 mb-8">
                   <h2 className="font-heading text-2xl font-light text-foreground mb-5">
-                    Features
+                    Detalles
                   </h2>
 
                   <div className="space-y-4">
@@ -152,12 +152,12 @@ const ProductPage = () => {
 
                 <div className="bg-secondary/40 p-6 lg:p-8">
                   <h3 className="font-heading text-2xl font-light text-foreground mb-3">
-                    Why barefoot?
+                    ¿Por qué barefoot?
                   </h3>
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
-                    Zero-drop design keeps your foot flat and aligned. The wide
-                    toe box lets toes spread naturally, improving balance and
-                    posture with every step.
+                    El diseño drop cero mantiene tu pie plano y alineado.
+                    La horma anatómica permite que los dedos se expandan de forma natural,
+                    mejorando estabilidad, postura y libertad de movimiento.
                   </p>
                 </div>
               </div>
