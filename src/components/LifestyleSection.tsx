@@ -9,28 +9,29 @@ const LifestyleSection = () => {
           <div className="relative aspect-[4/5] overflow-hidden">
             <img
               src={lifestyle1}
-              alt="People walking through tropical nature trail in barefoot shoes"
+              alt="Persona caminando en la naturaleza con barefoot shoes"
               loading="lazy"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8">
               <p className="font-heading text-2xl lg:text-3xl font-light text-primary-foreground leading-tight">
-                Every path is yours to feel
+                Movimiento natural en cada camino
               </p>
             </div>
           </div>
+
           <div className="relative aspect-[4/5] overflow-hidden">
             <img
               src={lifestyle2}
-              alt="Person sitting on concrete steps in urban setting wearing barefoot shoes"
+              alt="Persona en entorno urbano usando barefoot shoes"
               loading="lazy"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8">
               <p className="font-heading text-2xl lg:text-3xl font-light text-primary-foreground leading-tight">
-                Urban ground, natural movement
+                Diseño, libertad y movimiento en tu día a día
               </p>
             </div>
           </div>
