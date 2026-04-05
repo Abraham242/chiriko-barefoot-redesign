@@ -29,18 +29,19 @@ const ProductPage = () => {
 
   const whatsappMessage =
     product.price > 0
-    ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
+      ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
 
 Quiero comprar, pero necesito ayuda con la talla.
 
 Mi pie mide aproximadamente ___ cm y lo quiero para (uso diario / gimnasio / caminar).
 
 ¿Me puedes recomendar la talla correcta?`
-    : `Hola, estoy viendo el modelo ${product.name} en Chiriko.
+      : `Hola, estoy viendo el modelo ${product.name} en Chiriko.
 
 Quiero saber disponibilidad, precio y talla.
 
 ¿Me puedes ayudar?`;
+
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     whatsappMessage
   )}`;
@@ -91,6 +92,7 @@ Quiero saber disponibilidad, precio y talla.
                           ? "border-foreground"
                           : "border-border"
                       }`}
+                      aria-label={`Ver imagen ${index + 1} de ${product.name}`}
                     >
                       <img
                         src={image}
@@ -132,16 +134,16 @@ Quiero saber disponibilidad, precio y talla.
                   </span>
                 </div>
 
-                <div className="font-heading text-3xl md:text-4xl text-foreground mb-8">
+                <div className="font-heading text-3xl md:text-4xl text-foreground mb-3">
                   {product.price > 0
-                  ? `${product.currency}${product.price}`
-                  : "Consultar disponibilidad"}
+                    ? `${product.currency}${product.price}`
+                    : "Consultar disponibilidad"}
                 </div>
 
                 <p className="text-sm text-muted-foreground mb-6">
-  Alta demanda — consulta disponibilidad antes de que se agoten
-</p>
-                
+                  Alta demanda — consulta disponibilidad antes de que se agoten
+                </p>
+
                 <div className="mb-8 border-l border-foreground/20 pl-4">
                   <p className="font-body text-sm md:text-base text-foreground leading-relaxed">
                     Diseñado para devolverle a tu pie su forma y movimiento
@@ -181,20 +183,18 @@ Quiero saber disponibilidad, precio y talla.
                     un minuto.
                   </p>
                 </div>
-                
+
                 <div className="mb-6 bg-secondary/40 p-5">
-                    <p className="font-body text-sm text-foreground leading-relaxed">
-                      ✔ Te ayudamos personalmente por WhatsApp  
-                      ✔ Recomendación de talla exacta  
-                      ✔ Envíos en toda Venezuela  
-                    </p>
+                  <p className="font-body text-sm text-foreground leading-relaxed">
+                    ✔ Te ayudamos personalmente por WhatsApp
+                    <br />
+                    ✔ Recomendación de talla exacta
+                    <br />
+                    ✔ Envíos en toda Venezuela
+                  </p>
                 </div>
 
-                    <p className="text-xs text-muted-foreground text-center">
-                      Respuesta en menos de 10 minutos
-                    </p>
-                
-                <div className="space-y-4 mb-10">
+                <div className="space-y-4 mb-3">
                   <a
                     href={whatsappUrl}
                     target="_blank"
@@ -215,6 +215,10 @@ Quiero saber disponibilidad, precio y talla.
                     Recibir asesoría por WhatsApp
                   </a>
                 </div>
+
+                <p className="text-xs text-muted-foreground text-center mb-10">
+                  Respuesta en menos de 10 minutos
+                </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
                   <div className="border border-border p-4">
@@ -256,7 +260,7 @@ Quiero saber disponibilidad, precio y talla.
 
                 <div className="border-t border-border pt-8 mb-8">
                   <h2 className="font-heading text-2xl font-light text-foreground mb-5">
-                    Detalles
+                    Lo que vas a sentir
                   </h2>
 
                   <div className="space-y-4">
@@ -267,7 +271,7 @@ Quiero saber disponibilidad, precio y talla.
                           className="mt-1 text-muted-foreground flex-shrink-0"
                         />
                         <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
-                          {feature}
+                          • {feature}
                         </p>
                       </div>
                     ))}
