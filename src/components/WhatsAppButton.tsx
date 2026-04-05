@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 const phoneNumber = "584221798072";
 const whatsappMessage = `Hola, vengo de chirikostudio.com 👋  
 Quiero ayuda para elegir mi talla y modelo barefoot.`;
-const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
 const WhatsAppButton = () => {
   return (
