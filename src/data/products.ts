@@ -46,6 +46,8 @@ export const products: Product[] = [
     name: "Barebarics Wave",
     subtitle: "White & Dark Green · consultar disponibilidad",
     price: 0,
+subtitle: "White & Dark Green · consultar disponibilidad",
+tag: "Consultar",
     currency: "$",
     images: [
       waveWhiteDarkGreen1,
