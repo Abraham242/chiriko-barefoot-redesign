@@ -1,13 +1,20 @@
 import SEO from "@/components/SEO";
 import { useParams, Link } from "react-router-dom";
-import { Star, Check, ChevronLeft, MessageCircle, ShieldCheck, Truck, Ruler } from "lucide-react";
+import {
+  Star,
+  Check,
+  ChevronLeft,
+  MessageCircle,
+  ShieldCheck,
+  Truck,
+  Ruler,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { products } from "@/data/products";
 
 const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
-
 const phoneNumber = "584221798072";
 
 const ProductPage = () => {
@@ -19,8 +26,8 @@ const ProductPage = () => {
     whatsappMessage
   )}`;
 
-  const seoTitle = `${product.name} | Barefoot Shoes en Venezuela`;
-  const seoDescription = `${product.name}: ${product.subtitle}. Calzado barefoot premium en Venezuela con horma anatómica, drop cero y flexibilidad natural. Asesoría personalizada por WhatsApp.`;
+  const seoTitle = `${product.name} | Barefoot en Venezuela`;
+  const seoDescription = `${product.name}: ${product.subtitle}. Calzado barefoot premium en Venezuela con asesoría personalizada por WhatsApp.`;
 
   return (
     <>
@@ -44,7 +51,6 @@ const ProductPage = () => {
             </Link>
 
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-              {/* Imagen principal */}
               <div className="space-y-4">
                 <div className="overflow-hidden bg-secondary/40">
                   <img
@@ -55,7 +61,6 @@ const ProductPage = () => {
                 </div>
               </div>
 
-              {/* Contenido */}
               <div className="lg:sticky lg:top-28">
                 {product.tag && (
                   <div className="inline-flex items-center px-3 py-1 mb-5 bg-secondary text-foreground text-xs tracking-[0.16em] uppercase">
@@ -82,7 +87,7 @@ const ProductPage = () => {
                     ))}
                   </div>
                   <span className="font-body text-sm text-muted-foreground">
-                    24 testimonios
+                    Asesoría personalizada
                   </span>
                 </div>
 
@@ -91,14 +96,13 @@ const ProductPage = () => {
                   {product.price}
                 </div>
 
-                {/* Beneficio corto */}
                 <div className="mb-8 border-l border-foreground/20 pl-4">
                   <p className="font-body text-sm md:text-base text-foreground leading-relaxed">
-                    Diseñado para devolverle a tu pie su forma y movimiento natural.
+                    Diseñado para devolverle a tu pie su forma y movimiento
+                    natural, sin sacrificar estilo ni comodidad.
                   </p>
                 </div>
 
-                {/* Tallas */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4 gap-4">
                     <p className="font-body text-sm tracking-[0.16em] uppercase text-muted-foreground">
@@ -127,18 +131,21 @@ const ProductPage = () => {
                   </div>
 
                   <p className="mt-4 font-body text-sm text-muted-foreground">
-                    ¿No sabes cuál elegir? Te ayudamos por WhatsApp en menos de un minuto.
+                    ¿No sabes cuál elegir? Te ayudamos por WhatsApp en menos de
+                    un minuto.
                   </p>
                 </div>
 
-                {/* CTAs */}
                 <div className="space-y-4 mb-10">
-                  <button
-                    type="button"
-                    className="w-full h-14 bg-foreground text-primary-foreground font-body text-sm tracking-[0.18em] uppercase hover:bg-foreground/90 transition-colors"
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full h-14 bg-foreground text-primary-foreground flex items-center justify-center gap-2 font-body text-sm tracking-[0.18em] uppercase hover:bg-foreground/90 transition-colors"
                   >
-                    Añadir a la bolsa
-                  </button>
+                    <MessageCircle size={16} />
+                    Comprar por WhatsApp
+                  </a>
 
                   <a
                     href={whatsappUrl}
@@ -151,7 +158,6 @@ const ProductPage = () => {
                   </a>
                 </div>
 
-                {/* Trust mini bar */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
                   <div className="border border-border p-4">
                     <Truck size={18} className="mb-3 text-muted-foreground" />
@@ -164,7 +170,10 @@ const ProductPage = () => {
                   </div>
 
                   <div className="border border-border p-4">
-                    <ShieldCheck size={18} className="mb-3 text-muted-foreground" />
+                    <ShieldCheck
+                      size={18}
+                      className="mb-3 text-muted-foreground"
+                    />
                     <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">
                       Pago
                     </p>
@@ -174,7 +183,10 @@ const ProductPage = () => {
                   </div>
 
                   <div className="border border-border p-4">
-                    <MessageCircle size={18} className="mb-3 text-muted-foreground" />
+                    <MessageCircle
+                      size={18}
+                      className="mb-3 text-muted-foreground"
+                    />
                     <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">
                       Asesoría
                     </p>
@@ -184,7 +196,6 @@ const ProductPage = () => {
                   </div>
                 </div>
 
-                {/* Detalles */}
                 <div className="border-t border-border pt-8 mb-8">
                   <h2 className="font-heading text-2xl font-light text-foreground mb-5">
                     Detalles
@@ -205,7 +216,6 @@ const ProductPage = () => {
                   </div>
                 </div>
 
-                {/* Bloque educativo */}
                 <div className="bg-secondary/40 p-6 lg:p-8 mb-8">
                   <h3 className="font-heading text-2xl font-light text-foreground mb-3">
                     ¿Por qué barefoot?
@@ -213,18 +223,18 @@ const ProductPage = () => {
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
                     El diseño drop cero mantiene tu pie plano y alineado. La
                     horma anatómica permite que los dedos se expandan de forma
-                    natural, mejorando estabilidad, postura y libertad de movimiento.
+                    natural, mejorando estabilidad, postura y libertad de
+                    movimiento.
                   </p>
                 </div>
 
-                {/* Bloque final de ayuda */}
                 <div className="border border-border p-6">
                   <h3 className="font-heading text-xl font-light text-foreground mb-2">
                     ¿Necesitas ayuda para elegir?
                   </h3>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
-                    Si no estás seguro de la talla o quieres una recomendación
-                    más precisa, escríbenos por WhatsApp y te ayudamos personalmente.
+                    Te ayudamos a elegir modelo y talla por WhatsApp para que
+                    compres con seguridad desde el inicio.
                   </p>
 
                   <a
