@@ -120,8 +120,9 @@ const ProductPage = () => {
                 </div>
 
                 <div className="font-heading text-3xl md:text-4xl text-foreground mb-8">
-                  {product.currency}
-                  {product.price}
+                  {product.price > 0
+                  ? `${product.currency}${product.price}`
+                  : "Consultar disponibilidad"}
                 </div>
 
                 <div className="mb-8 border-l border-foreground/20 pl-4">
