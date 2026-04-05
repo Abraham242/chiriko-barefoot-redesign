@@ -1,6 +1,6 @@
-import zingWhiteBlack1 from "@/assets/zing-white-black-1.jpg";
-import zingWhiteBlack2 from "@/assets/zing-white-black-2.jpg";
-import zingWhiteBlack3 from "@/assets/zing-white-black-3.jpg";
+import zingWhiteBlack1 from "@/assets/zing-white-black-1.png";
+import zingWhiteBlack2 from "@/assets/zing-white-black-2.png";
+import zingWhiteBlack3 from "@/assets/zing-white-black-3.png";
 
 import zingAllWhite1 from "@/assets/zing-all-white-1.jpg";
 import zingAllWhite2 from "@/assets/zing-all-white-2.jpg";
@@ -44,80 +44,84 @@ export const products: Product[] = [
     tag: "Más vendido",
     features: [
       "Diseño urbano fácil de combinar",
-      "Drop cero para una pisada natural",
-      "Horma anatómica con espacio real para los dedos",
+      "Drop cero",
+      "Horma anatómica",
       "Ideal para empezar en barefoot",
     ],
   },
   {
     id: "barebarics-zing-all-white-leather",
     name: "Barebarics Zing Leather",
-    subtitle: "All White · minimalismo limpio y premium",
+    subtitle: "All White · minimalismo limpio",
     price: 99.9,
     currency: "€",
     images: [zingAllWhite1, zingAllWhite2, zingAllWhite3],
     features: [
-      "Estética totalmente blanca",
-      "Diseño barefoot para uso diario",
+      "Estética limpia",
+      "Drop cero",
       "Horma anatómica",
-      "Perfecto para transición a barefoot",
+      "Uso diario",
     ],
   },
   {
     id: "barebarics-enigma-ivory",
     name: "Barebarics Enigma",
-    subtitle: "Ivory · diseño barefoot con carácter",
+    subtitle: "Ivory · diseño barefoot premium",
     price: 139.9,
     currency: "€",
     images: [enigmaIvory1, enigmaIvory2, enigmaIvory3],
     features: [
-      "Look más distintivo",
-      "Drop cero",
+      "Diseño distintivo",
       "Movimiento natural",
-      "Muy buena opción para quien ya conoce barefoot",
+      "Drop cero",
     ],
   },
   {
     id: "barebarics-wave-white-dark-green",
     name: "Barebarics Wave",
-    subtitle: "White & Dark Green · deportivo, fresco y urbano",
+    subtitle: "White & Dark Green · deportivo",
     price: 139.9,
     currency: "€",
-    images: [waveWhiteDarkGreen1, waveWhiteDarkGreen2, waveWhiteDarkGreen3],
+    images: [
+      waveWhiteDarkGreen1,
+      waveWhiteDarkGreen2,
+      waveWhiteDarkGreen3,
+    ],
     features: [
-      "Diseño dinámico",
-      "Horma anatómica",
-      "Flexible y ligero",
-      "Barefoot con look moderno",
+      "Look dinámico",
+      "Ligero",
+      "Flexible",
     ],
   },
   {
     id: "be-lenka-rebound-all-white",
     name: "Be Lenka Rebound",
-    subtitle: "All White · sneaker barefoot limpio y versátil",
+    subtitle: "All White · minimalista",
     price: 119.9,
     currency: "€",
-    images: [reboundAllWhite1, reboundAllWhite2, reboundAllWhite3],
+    images: [
+      reboundAllWhite1,
+      reboundAllWhite2,
+      reboundAllWhite3,
+    ],
     features: [
-      "Estilo minimalista",
-      "Muy combinable",
-      "Flexibilidad barefoot",
-      "Ideal para uso diario",
+      "Minimalista",
+      "Cómodo",
+      "Flexible",
     ],
   },
   {
     id: "be-lenka-grace-2-beige",
     name: "Be Lenka Grace 2.0",
-    subtitle: "Beige · sandalia barefoot elegante",
+    subtitle: "Beige · sandalia barefoot",
     price: 119.9,
     currency: "€",
     images: [graceBeige1, graceBeige2, graceBeige3],
     tag: "Clima cálido",
     features: [
-      "Perfecta para clima venezolano",
-      "Ligera y cómoda",
-      "Movimiento natural",
-      "Diseño femenino y elegante",
+      "Ligera",
+      "Elegante",
+      "Perfecta para calor",
     ],
   },
 ];
