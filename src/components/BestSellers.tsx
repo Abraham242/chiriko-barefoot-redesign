@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { products } from "@/data/products";
 
+
 const BestSellers = () => {
   return (
     <section className="py-24 lg:py-32">
