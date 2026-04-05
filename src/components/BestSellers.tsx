@@ -7,18 +7,22 @@ const BestSellers = () => {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-3">
-            Los más elegidos
+            Colección Barefoot
           </h2>
 
-          <p className="font-body text-muted-foreground text-sm tracking-wide max-w-xl mx-auto">
-            Diseños barefoot seleccionados para movimiento natural, comodidad real
-            y una estética atemporal.
+          <p className="font-body text-muted-foreground text-sm tracking-wide max-w-2xl mx-auto">
+            Una selección de modelos creados para moverte con libertad, sin
+            renunciar al diseño, la comodidad y una estética premium.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {products.map((product) => (
-            <Link to={`/product/${product.id}`} key={product.id} className="group">
+            <Link
+              to={`/product/${product.id}`}
+              key={product.id}
+              className="group"
+            >
               <div className="relative bg-secondary aspect-square mb-4 overflow-hidden">
                 {product.tag && (
                   <span className="absolute top-3 left-3 bg-accent text-accent-foreground font-body text-xs tracking-wider uppercase px-3 py-1 z-10">
