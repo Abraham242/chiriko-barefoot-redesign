@@ -138,6 +138,10 @@ Quiero saber disponibilidad, precio y talla.
                   : "Consultar disponibilidad"}
                 </div>
 
+                <p className="text-sm text-muted-foreground mb-6">
+  Alta demanda — consulta disponibilidad antes de que se agoten
+</p>
+                
                 <div className="mb-8 border-l border-foreground/20 pl-4">
                   <p className="font-body text-sm md:text-base text-foreground leading-relaxed">
                     Diseñado para devolverle a tu pie su forma y movimiento
@@ -185,6 +189,10 @@ Quiero saber disponibilidad, precio y talla.
                       ✔ Envíos en toda Venezuela  
                     </p>
                 </div>
+
+                    <p className="text-xs text-muted-foreground text-center">
+                      Respuesta en menos de 10 minutos
+                    </p>
                 
                 <div className="space-y-4 mb-10">
                   <a
@@ -194,7 +202,7 @@ Quiero saber disponibilidad, precio y talla.
                     className="w-full h-14 bg-foreground text-primary-foreground flex items-center justify-center gap-2 font-body text-sm tracking-[0.18em] uppercase hover:bg-foreground/90 transition-colors"
                   >
                     <MessageCircle size={16} />
-                    Comprar por WhatsApp
+                    Elegir talla por WhatsApp
                   </a>
 
                   <a
