@@ -27,7 +27,20 @@ const ProductPage = () => {
     setSelectedImage(product.images[0]);
   }, [product]);
 
-  const whatsappMessage = `Hola, vengo de chirikostudio.com y quiero ayuda con la talla del modelo ${product.name}.`;
+  const whatsappMessage =
+    product.price > 0
+    ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
+
+Quiero comprar, pero necesito ayuda con la talla.
+
+Mi pie mide aproximadamente ___ cm y lo quiero para (uso diario / gimnasio / caminar).
+
+¿Me puedes recomendar la talla correcta?`
+    : `Hola, estoy viendo el modelo ${product.name} en Chiriko.
+
+Quiero saber disponibilidad, precio y talla.
+
+¿Me puedes ayudar?`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     whatsappMessage
   )}`;
