@@ -177,7 +177,15 @@ Quiero saber disponibilidad, precio y talla.
                     un minuto.
                   </p>
                 </div>
-
+                
+                <div className="mb-6 bg-secondary/40 p-5">
+                    <p className="font-body text-sm text-foreground leading-relaxed">
+                      ✔ Te ayudamos personalmente por WhatsApp  
+                      ✔ Recomendación de talla exacta  
+                      ✔ Envíos en toda Venezuela  
+                    </p>
+                </div>
+                
                 <div className="space-y-4 mb-10">
                   <a
                     href={whatsappUrl}
