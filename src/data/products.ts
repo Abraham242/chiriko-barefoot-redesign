@@ -1,6 +1,6 @@
-import zingWhiteBlack1 from "@/assets/zing-white-black-1.png";
-import zingWhiteBlack2 from "@/assets/zing-white-black-2.png";
-import zingWhiteBlack3 from "@/assets/zing-white-black-3.png";
+import zingWhiteBlack1 from "@/assets/zing-white-black-1.jpg";
+import zingWhiteBlack2 from "@/assets/zing-white-black-2.jpg";
+import zingWhiteBlack3 from "@/assets/zing-white-black-3.jpg";
 
 import zingAllWhite1 from "@/assets/zing-all-white-1.jpg";
 import zingAllWhite2 from "@/assets/zing-all-white-2.jpg";
