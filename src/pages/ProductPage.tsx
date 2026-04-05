@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -20,6 +21,11 @@ const phoneNumber = "584221798072";
 const ProductPage = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id) || products[0];
+  const [selectedImage, setSelectedImage] = useState(product.images[0]);
+
+  useEffect(() => {
+    setSelectedImage(product.images[0]);
+  }, [product]);
 
   const whatsappMessage = `Hola, vengo de chirikostudio.com y quiero ayuda con la talla del modelo ${product.name}.`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -35,6 +41,7 @@ const ProductPage = () => {
         title={seoTitle}
         description={seoDescription}
         path={`/product/${product.id}`}
+        image={product.images[0]}
       />
 
       <div className="min-h-screen bg-background">
@@ -54,10 +61,31 @@ const ProductPage = () => {
               <div className="space-y-4">
                 <div className="overflow-hidden bg-secondary/40">
                   <img
-                    src={product.image}
+                    src={selectedImage}
                     alt={product.name}
                     className="w-full h-[500px] lg:h-[680px] object-cover"
                   />
+                </div>
+
+                <div className="grid grid-cols-3 gap-3">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => setSelectedImage(image)}
+                      className={`overflow-hidden border transition-colors ${
+                        selectedImage === image
+                          ? "border-foreground"
+                          : "border-border"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name} vista ${index + 1}`}
+                        className="w-full aspect-square object-cover"
+                      />
+                    </button>
+                  ))}
                 </div>
               </div>
 
