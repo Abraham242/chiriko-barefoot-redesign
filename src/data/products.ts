@@ -1,9 +1,26 @@
-import zingWhiteBlack from "@/assets/zing-white-black.jpg";
-import zingAllWhite from "@/assets/zing-all-white.jpg";
-import enigmaIvory from "@/assets/enigma-ivory.jpg";
-import waveWhiteDarkGreen from "@/assets/wave-white-dark-green.jpg";
-import reboundAllWhite from "@/assets/rebound-all-white.jpg";
-import graceBeige from "@/assets/grace-beige.jpg";
+import zingWhiteBlack1 from "@/assets/zing-white-black-1.jpg";
+import zingWhiteBlack2 from "@/assets/zing-white-black-2.jpg";
+import zingWhiteBlack3 from "@/assets/zing-white-black-3.jpg";
+
+import zingAllWhite1 from "@/assets/zing-all-white-1.jpg";
+import zingAllWhite2 from "@/assets/zing-all-white-2.jpg";
+import zingAllWhite3 from "@/assets/zing-all-white-3.jpg";
+
+import enigmaIvory1 from "@/assets/enigma-ivory-1.jpg";
+import enigmaIvory2 from "@/assets/enigma-ivory-2.jpg";
+import enigmaIvory3 from "@/assets/enigma-ivory-3.jpg";
+
+import waveWhiteDarkGreen1 from "@/assets/wave-white-dark-green-1.jpg";
+import waveWhiteDarkGreen2 from "@/assets/wave-white-dark-green-2.jpg";
+import waveWhiteDarkGreen3 from "@/assets/wave-white-dark-green-3.jpg";
+
+import reboundAllWhite1 from "@/assets/rebound-all-white-1.jpg";
+import reboundAllWhite2 from "@/assets/rebound-all-white-2.jpg";
+import reboundAllWhite3 from "@/assets/rebound-all-white-3.jpg";
+
+import graceBeige1 from "@/assets/grace-beige-1.png";
+import graceBeige2 from "@/assets/grace-beige-2.png";
+import graceBeige3 from "@/assets/grace-beige-3.png";
 
 export interface Product {
   id: string;
@@ -11,7 +28,7 @@ export interface Product {
   subtitle: string;
   price: number;
   currency: string;
-  image: string;
+  images: string[];
   tag?: string;
   features: string[];
 }
@@ -23,7 +40,7 @@ export const products: Product[] = [
     subtitle: "White & Black · sneaker barefoot para uso diario",
     price: 99.9,
     currency: "€",
-    image: zingWhiteBlack,
+    images: [zingWhiteBlack1, zingWhiteBlack2, zingWhiteBlack3],
     tag: "Más vendido",
     features: [
       "Diseño urbano fácil de combinar",
@@ -38,7 +55,7 @@ export const products: Product[] = [
     subtitle: "All White · minimalismo limpio y premium",
     price: 99.9,
     currency: "€",
-    image: zingAllWhite,
+    images: [zingAllWhite1, zingAllWhite2, zingAllWhite3],
     features: [
       "Estética totalmente blanca",
       "Diseño barefoot para uso diario",
@@ -52,7 +69,7 @@ export const products: Product[] = [
     subtitle: "Ivory · diseño barefoot con carácter",
     price: 139.9,
     currency: "€",
-    image: enigmaIvory,
+    images: [enigmaIvory1, enigmaIvory2, enigmaIvory3],
     features: [
       "Look más distintivo",
       "Drop cero",
@@ -66,7 +83,7 @@ export const products: Product[] = [
     subtitle: "White & Dark Green · deportivo, fresco y urbano",
     price: 139.9,
     currency: "€",
-    image: waveWhiteDarkGreen,
+    images: [waveWhiteDarkGreen1, waveWhiteDarkGreen2, waveWhiteDarkGreen3],
     features: [
       "Diseño dinámico",
       "Horma anatómica",
@@ -80,7 +97,7 @@ export const products: Product[] = [
     subtitle: "All White · sneaker barefoot limpio y versátil",
     price: 119.9,
     currency: "€",
-    image: reboundAllWhite,
+    images: [reboundAllWhite1, reboundAllWhite2, reboundAllWhite3],
     features: [
       "Estilo minimalista",
       "Muy combinable",
@@ -94,7 +111,7 @@ export const products: Product[] = [
     subtitle: "Beige · sandalia barefoot elegante",
     price: 119.9,
     currency: "€",
-    image: graceBeige,
+    images: [graceBeige1, graceBeige2, graceBeige3],
     tag: "Clima cálido",
     features: [
       "Perfecta para clima venezolano",
