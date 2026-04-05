@@ -1,7 +1,7 @@
 import zingWhiteBlack from "@/assets/zing-white-black.jpg";
 import zingAllWhite from "@/assets/zing-all-white.jpg";
 import enigmaIvory from "@/assets/enigma-ivory.jpg";
-import waveWhiteGreen from "@/assets/wave-white-dark-green.jpg";
+import waveWhiteDarkGreen from "@/assets/wave-white-dark-green.jpg";
 import reboundAllWhite from "@/assets/rebound-all-white.jpg";
 import graceBeige from "@/assets/grace-beige.jpg";
 
@@ -29,21 +29,21 @@ export const products: Product[] = [
       "Diseño urbano fácil de combinar",
       "Drop cero para una pisada natural",
       "Horma anatómica con espacio real para los dedos",
-      "Ideal para empezar en barefoot"
+      "Ideal para empezar en barefoot",
     ],
   },
   {
     id: "barebarics-zing-all-white-leather",
     name: "Barebarics Zing Leather",
     subtitle: "All White · minimalismo limpio y premium",
-    price: 119.9,
+    price: 99.9,
     currency: "€",
     image: zingAllWhite,
     features: [
       "Estética totalmente blanca",
       "Diseño barefoot para uso diario",
       "Horma anatómica",
-      "Perfecto para transición a barefoot"
+      "Perfecto para transición a barefoot",
     ],
   },
   {
@@ -57,7 +57,7 @@ export const products: Product[] = [
       "Look más distintivo",
       "Drop cero",
       "Movimiento natural",
-      "Muy buena opción para quien ya conoce barefoot"
+      "Muy buena opción para quien ya conoce barefoot",
     ],
   },
   {
@@ -66,12 +66,12 @@ export const products: Product[] = [
     subtitle: "White & Dark Green · deportivo, fresco y urbano",
     price: 139.9,
     currency: "€",
-    image: waveWhiteGreen,
+    image: waveWhiteDarkGreen,
     features: [
       "Diseño dinámico",
       "Horma anatómica",
       "Flexible y ligero",
-      "Barefoot con look moderno"
+      "Barefoot con look moderno",
     ],
   },
   {
@@ -85,14 +85,14 @@ export const products: Product[] = [
       "Estilo minimalista",
       "Muy combinable",
       "Flexibilidad barefoot",
-      "Ideal para uso diario"
+      "Ideal para uso diario",
     ],
   },
   {
     id: "be-lenka-grace-2-beige",
     name: "Be Lenka Grace 2.0",
     subtitle: "Beige · sandalia barefoot elegante",
-    price: 129.9,
+    price: 119.9,
     currency: "€",
     image: graceBeige,
     tag: "Clima cálido",
@@ -100,7 +100,7 @@ export const products: Product[] = [
       "Perfecta para clima venezolano",
       "Ligera y cómoda",
       "Movimiento natural",
-      "Diseño femenino y elegante"
+      "Diseño femenino y elegante",
     ],
   },
 ];
