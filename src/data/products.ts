@@ -112,6 +112,7 @@ export const products: Product[] = [
       "Flexible",
     ],
   },
+  
   {
     id: "be-lenka-grace-2-beige",
     name: "Be Lenka Grace 2.0",
