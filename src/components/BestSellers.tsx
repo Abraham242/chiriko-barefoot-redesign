@@ -11,8 +11,8 @@ const BestSellers = () => {
           </h2>
 
           <p className="font-body text-muted-foreground text-sm tracking-wide max-w-2xl mx-auto">
-            Una selección de modelos creados para moverte con libertad, sin
-            renunciar al diseño, la comodidad y una estética premium.
+            Una selección de modelos diseñados para moverte con libertad,
+            mejorar tu postura y sentir el suelo como nunca antes.
           </p>
         </div>
 
@@ -46,11 +46,11 @@ const BestSellers = () => {
                 {product.subtitle}
               </p>
 
-             <p className="font-body text-sm font-medium text-foreground">
-              {product.price > 0
-              ? `${product.currency}${product.price}`
-              : "Consultar"}
-             </p>
+              <p className="font-body text-sm font-medium text-foreground">
+                {product.price > 0
+                  ? `${product.currency}${product.price}`
+                  : "Consultar"}
+              </p>
 
               <p className="mt-2 font-body text-xs uppercase tracking-[0.16em] text-muted-foreground group-hover:text-foreground transition-colors">
                 Ver detalles
