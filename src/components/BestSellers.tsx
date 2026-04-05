@@ -46,10 +46,11 @@ const BestSellers = () => {
                 {product.subtitle}
               </p>
 
-              <p className="font-body text-sm font-medium text-foreground">
-                {product.currency}
-                {product.price}
-              </p>
+             <p className="font-body text-sm font-medium text-foreground">
+              {product.price > 0
+              ? `${product.currency}${product.price}`
+              : "Consultar"}
+             </p>
 
               <p className="mt-2 font-body text-xs uppercase tracking-[0.16em] text-muted-foreground group-hover:text-foreground transition-colors">
                 Ver detalles
