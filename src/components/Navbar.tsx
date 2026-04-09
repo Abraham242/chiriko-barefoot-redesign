@@ -44,13 +44,13 @@ const Navbar = () => {
         <div className="flex h-20 items-center justify-between gap-6">
           <Link
             to="/"
-            className="inline-flex items-center"
+            className="inline-flex items-center opacity-90 hover:opacity-100 transition-opacity duration-300"
             aria-label="Inicio de Chiriko Studio"
           >
             <img
-              src="/placeholder.svg"
+              src="/logo-black.svg"
               alt="Chiriko Studio"
-              className="h-8 w-auto md:h-9"
+              className="h-8 md:h-10 w-auto"
               loading="eager"
             />
           </Link>
