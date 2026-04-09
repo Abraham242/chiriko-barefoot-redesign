@@ -18,8 +18,8 @@ const Footer = () => {
 
           {/* Marca */}
           <div>
-            <img
-              src="/placeholder.svg"
+           <img
+              src="/logo-black.svg"
               alt="Chiriko Studio"
               className="h-8 w-auto mb-4"
               loading="lazy"
