@@ -18,9 +18,12 @@ const Footer = () => {
 
           {/* Marca */}
           <div>
-            <h3 className="font-heading text-xl text-foreground mb-4">
-              Chiriko Studio
-            </h3>
+            <img
+              src="/placeholder.svg"
+              alt="Chiriko Studio"
+              className="h-8 w-auto mb-4"
+              loading="lazy"
+            />
             <p className="font-body text-sm text-muted-foreground leading-relaxed">
               Calzado barefoot premium en Venezuela. Movimiento natural,
               diseño minimalista y asesoría personalizada.
@@ -33,10 +36,10 @@ const Footer = () => {
               Navegación
             </h4>
             <ul className="space-y-3 font-body text-sm">
-              <li><a href="#shop" className="hover:text-foreground">Colección</a></li>
-              <li><a href="#learn" className="hover:text-foreground">Filosofía</a></li>
+              <li><a href="/#shop" className="hover:text-foreground">Colección</a></li>
+              <li><a href="/#learn" className="hover:text-foreground">Filosofía</a></li>
               <li><a href="/size-guide" className="hover:text-foreground">Guía de Tallas</a></li>
-              <li><a href="#contact" className="hover:text-foreground">Contacto</a></li>
+              <li><a href="/#contact" className="hover:text-foreground">Contacto</a></li>
             </ul>
           </div>
 
