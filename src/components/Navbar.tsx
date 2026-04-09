@@ -50,7 +50,7 @@ const Navbar = () => {
             <img
               src="/logo-black.svg"
               alt="Chiriko Studio"
-              className="h-9 md:h-11 w-auto"
+              className="h-11 md:h-13 w-auto"
               loading="eager"
             />
           </Link>
