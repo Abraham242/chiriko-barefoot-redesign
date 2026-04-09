@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
-import { useParams, Link } from "react-router-dom";
+import { Navigate, useParams, Link } from "react-router-dom";
 import {
   Star,
   Check,
@@ -20,12 +20,18 @@ const phoneNumber = "584221798072";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const product = products.find((p) => p.id === id) || products[0];
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
+  const product = products.find((p) => p.id === id);
+  const [selectedImage, setSelectedImage] = useState("");
 
   useEffect(() => {
-    setSelectedImage(product.images[0]);
+    if (product) {
+      setSelectedImage(product.images[0]);
+    }
   }, [product]);
+
+  if (!product) {
+    return <Navigate to="/404" replace />;
+  }
 
   const whatsappMessage =
     product.price > 0
@@ -75,7 +81,7 @@ Quiero saber disponibilidad, precio y talla.
               <div className="space-y-4">
                 <div className="overflow-hidden bg-secondary/40">
                   <img
-                    src={selectedImage}
+                    src={selectedImage || product.images[0]}
                     alt={product.name}
                     className="w-full h-[500px] lg:h-[680px] object-cover"
                   />

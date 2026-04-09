@@ -37,7 +37,7 @@ export const products: Product[] = [
   {
     id: "barebarics-zing-white-black",
     name: "Barebarics Zing",
-    subtitle: "White & Black · sneaker barefoot para uso diario",
+    subtitle: "Blanco y negro · zapatilla barefoot para uso diario",
     price: 160,
     currency: "$",
     images: [zingWhiteBlack1, zingWhiteBlack2, zingWhiteBlack3],
@@ -52,7 +52,7 @@ export const products: Product[] = [
   {
     id: "barebarics-zing-all-white-leather",
     name: "Barebarics Zing Leather",
-    subtitle: "All White · minimalismo limpio",
+    subtitle: "Todo blanco · minimalismo limpio",
     price: 160,
     currency: "$",
     images: [zingAllWhite1, zingAllWhite2, zingAllWhite3],
@@ -66,7 +66,7 @@ export const products: Product[] = [
   {
     id: "barebarics-enigma-ivory",
     name: "Barebarics Enigma",
-    subtitle: "Ivory · diseño barefoot premium",
+    subtitle: "Marfil · diseño barefoot premium",
     price: 160,
     currency: "$",
     images: [enigmaIvory1, enigmaIvory2, enigmaIvory3],
@@ -79,7 +79,7 @@ export const products: Product[] = [
   {
     id: "barebarics-wave-white-dark-green",
     name: "Barebarics Wave",
-    subtitle: "White & Dark Green · consultar disponibilidad",
+    subtitle: "Blanco y verde oscuro · consultar disponibilidad",
     price: 0,
     currency: "$",
     images: [
@@ -97,7 +97,7 @@ export const products: Product[] = [
   {
     id: "be-lenka-rebound-all-white",
     name: "Be Lenka Rebound",
-    subtitle: "All White · minimalista",
+    subtitle: "Todo blanco · minimalista",
     price: 104,
     currency: "$",
     images: [

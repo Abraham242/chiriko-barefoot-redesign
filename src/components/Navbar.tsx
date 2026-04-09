@@ -44,10 +44,15 @@ const Navbar = () => {
         <div className="flex h-20 items-center justify-between gap-6">
           <Link
             to="/"
-            className="font-heading text-xl md:text-2xl tracking-[0.12em] text-foreground"
+            className="inline-flex items-center"
             aria-label="Inicio de Chiriko Studio"
           >
-            CHIRIKO STUDIO
+            <img
+              src="/placeholder.svg"
+              alt="Chiriko Studio"
+              className="h-8 w-auto md:h-9"
+              loading="eager"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8">
