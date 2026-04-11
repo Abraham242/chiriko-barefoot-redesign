@@ -162,7 +162,7 @@ const SizeGuidance = () => {
         </p>
 
         <a
-          href="https://wa.me/584XXXXXXXXX?text=Hola%20quiero%20ayuda%20con%20mi%20talla"
+          href="https://wa.me/584221798072?text=Hola%20quiero%20ayuda%20con%20mi%20talla"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-[#1A1A18] text-white px-8 py-4 rounded-full text-sm font-medium tracking-wide hover:bg-black transition-all shadow-md hover:shadow-lg"
