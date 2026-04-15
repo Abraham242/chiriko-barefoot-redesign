@@ -27,28 +27,28 @@ const steps = [
     icon: PenLine,
     title: "Prepara lo necesario",
     description:
-      "Coloca una hoja en un piso firme y plano. Ten a mano un lápiz o bolígrafo y una regla.",
+      "Ten a mano una hoja, lápiz o bolígrafo y una regla. Coloca la hoja de papel en un piso firme y plano.",
   },
   {
     number: 2,
     icon: Footprints,
     title: "Traza tu pie",
     description:
-      "Párate sobre la hoja con tu peso distribuido de forma natural. Traza el contorno manteniendo el lápiz vertical y cerca del pie.",
+      "Pega la hoja contra la pared y luego tu pie de igual forma sobre la hoja. Traza el contorno manteniendo el lápiz vertical y cerca del pie.",
   },
   {
     number: 3,
     icon: Ruler,
-    title: "Mide el largo",
+    title: "Míde tu pie",
     description:
-      "Mide desde el talón hasta la punta de tu dedo más largo en centímetros. Repite en ambos pies y usa la medida mayor.",
+      "Mide hasta la punta de tu dedo más largo. Repite en el otro pie (un pie puede ser más grande que el otro) y usa la medida mayor.",
   },
   {
     number: 4,
     icon: Ruler,
-    title: "Mide el ancho",
+    title: "Elíge la talla",
     description:
-      "Mide la parte más ancha del trazado, a la altura del metatarso. Esto nos ayuda a confirmar un ajuste cómodo en la horma anatómica.",
+      "A la medida que tomaste sumale entre 0,8cm y 1,2cm para elegir tu talla según la tabla. Este es el espacio que recomendamos dejar. Es normal sentir que te quedan un poco grandes al principio porque no estas acostumbrado al espacio.",
   },
 ];
 
@@ -288,7 +288,7 @@ const SizeGuidePage = () => {
                   <div>
                     <p className="font-heading text-lg text-foreground mb-2">¿Entre dos tallas?</p>
                     <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                      Elige la mayor. El barefoot debe dejar espacio para que
+                      Elige la siguiente talla más grande usando la medida de tu pie, sin agregar lo que te recomendamos. El barefoot debe dejar espacio para que
                       los dedos se expandan de forma natural.
                     </p>
                   </div>
