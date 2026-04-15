@@ -80,15 +80,15 @@ const SizeGuidePage = () => {
 
             {/* ── 1. HEADER PREMIUM ── */}
             <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-20">
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-4">
+              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-light text-foreground mb-4">
                 Guía de Tallas
               </h1>
-              <p className="font-body text-base md:text-lg text-muted-foreground mb-6">
+              <p className="font-body text-lg md:text-2xl text-muted-foreground mb-6">
                 Encuentra tu talla perfecta en segundos
               </p>
               {/* Mini pill informativo */}
-              <span className="inline-flex items-center gap-2 font-body text-xs text-muted-foreground bg-secondary/60 border border-border/50 rounded-full px-5 py-2">
-                👉 La mejor forma de elegir tu talla es medir tu pie en centímetros
+              <span className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground bg-secondary/60 border border-border/50 rounded-full px-5 py-2">
+                La mejor forma de elegir tu talla es medir tu pie en centímetros
               </span>
             </div>
           </div>
