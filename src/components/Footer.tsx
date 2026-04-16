@@ -30,6 +30,7 @@ const Footer = () => {
             </p>
           </div>
 
+          
           {/* Navegación */}
           <div>
             <h4 className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-4">
@@ -87,7 +88,7 @@ const Footer = () => {
           </div>
 
         </div>
-
+        
         <div className="border-t border-border pt-6 text-center">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Chiriko Studio. Todos los derechos reservados.
