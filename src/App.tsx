@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import ProductPage from "./pages/ProductPage";
 import SizeGuidePage from "./pages/SizeGuidePage";
-import QueEsCalzadoBarefoot from "./pages/QueEsCalzadoBarefoot";
+import QueEsCalzadoBarefoot from "./pages/que-es-calzado-barefoot";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
