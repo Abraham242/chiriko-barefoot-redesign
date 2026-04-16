@@ -36,10 +36,16 @@ const Footer = () => {
               Navegación
             </h4>
             <ul className="space-y-3 font-body text-sm">
-              <li><a href="/#shop" className="hover:text-foreground">Colección</a></li>
-              <li><a href="/#learn" className="hover:text-foreground">Filosofía</a></li>
-              <li><a href="/size-guide" className="hover:text-foreground">Guía de Tallas</a></li>
-              <li><a href="/#contact" className="hover:text-foreground">Contacto</a></li>
+              <li><a href="/#shop" className="hover:text-foreground transition-colors">Colección</a></li>
+              <li><a href="/#learn" className="hover:text-foreground transition-colors">Filosofía</a></li>
+              <li><a href="/size-guide" className="hover:text-foreground transition-colors">Guía de Tallas</a></li>
+              {/* ── NUEVO: Link al artículo ── */}
+              <li>
+                <a href="/aprende/que-es-calzado-barefoot" className="hover:text-foreground transition-colors">
+                  ¿Qué es el barefoot?
+                </a>
+              </li>
+              <li><a href="/#contact" className="hover:text-foreground transition-colors">Contacto</a></li>
             </ul>
           </div>
 
@@ -52,7 +58,7 @@ const Footer = () => {
             <div className="space-y-4 text-sm font-body">
               <a
                 href="mailto:hello@chirikostudio.com"
-                className="flex items-center gap-2 hover:text-foreground"
+                className="flex items-center gap-2 hover:text-foreground transition-colors"
               >
                 <Mail size={16} />
                 hello@chirikostudio.com
@@ -62,7 +68,7 @@ const Footer = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-foreground"
+                className="flex items-center gap-2 hover:text-foreground transition-colors"
               >
                 <MessageCircle size={16} />
                 WhatsApp
@@ -72,7 +78,7 @@ const Footer = () => {
                 href="https://www.instagram.com/chiriko.studio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-foreground"
+                className="flex items-center gap-2 hover:text-foreground transition-colors"
               >
                 <Instagram size={16} />
                 @chiriko.studio
