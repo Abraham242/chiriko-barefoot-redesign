@@ -422,4 +422,4 @@ const QueEsCalzadoBarefoot = () => {
   );
 };
 
-export default que-es-calzado-barefoot;
+export default QueEsCalzadoBarefoot;
