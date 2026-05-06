@@ -10,7 +10,7 @@ const cards = [
     icon: Footprints,
     title: "Dedos con espacio",
     description:
-      "Tus dedos necesitan expandirse para ayudarte a equilibrarte y caminar mejor.",
+      "Tus dedos necesitan expandirse para ayudar a equilibrarte y caminar mejor.",
     micro: "Menos presión. Más libertad.",
   },
   {
@@ -31,7 +31,7 @@ const cards = [
     icon: MessageCircle,
     title: "Transición consciente",
     description:
-      "No tienes que cambiarlo todo de golpe. Te ayudamos a elegir el modelo adecuado según tu pie y tu uso.",
+      "No tienes que cambiar todo de golpe. Te ayudamos a elegir el modelo adecuado según tu pie y tu uso.",
     micro: "Barefoot o transición, paso a paso.",
   },
 ];
