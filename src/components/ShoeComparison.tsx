@@ -1,121 +1,90 @@
+import { Footprints, Mountain, Move3d, MessageCircle } from "lucide-react";
+
+const phoneNumber = "584221798072";
+const whatsappMessage =
+  "Hola, vengo de chirikostudio.com y quiero entender qué modelo me conviene para empezar con calzado natural.";
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+const cards = [
+  {
+    icon: Footprints,
+    title: "Dedos con espacio",
+    description:
+      "Tus dedos necesitan expandirse para ayudarte a equilibrarte y caminar mejor.",
+    micro: "Menos presión. Más libertad.",
+  },
+  {
+    icon: Mountain,
+    title: "Pisada más estable",
+    description:
+      "Una base más natural ayuda a que el pie apoye de forma más equilibrada.",
+    micro: "Menos elevación. Más conexión.",
+  },
+  {
+    icon: Move3d,
+    title: "Movimiento real",
+    description:
+      "Materiales más flexibles permiten que el pie se mueva con menos restricciones.",
+    micro: "El zapato acompaña, no domina.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Transición consciente",
+    description:
+      "No tienes que cambiarlo todo de golpe. Te ayudamos a elegir el modelo adecuado según tu pie y tu uso.",
+    micro: "Barefoot o transición, paso a paso.",
+  },
+];
+
 const ShoeComparison = () => {
   return (
-    <section className="py-20 lg:py-28 bg-cream">
+    <section className="py-24 lg:py-32 bg-cream">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-4xl font-light text-foreground">
-            Calzado tradicional vs. barefoot
+        <div className="max-w-3xl mx-auto text-center mb-14">
+          <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-4">
+            No es solo comodidad. Es darle espacio a tu pie.
           </h2>
+          <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed">
+            La mayoría del calzado tradicional aprieta, eleva y limita el
+            movimiento. El calzado natural busca lo contrario: más espacio, más
+            estabilidad y una pisada más libre.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-          <div className="bg-background p-8 lg:p-10 text-center">
-            <div className="mb-6 flex justify-center">
-              <svg
-                width="120"
-                height="60"
-                viewBox="0 0 120 60"
-                fill="none"
-                className="text-muted-foreground"
-              >
-                <path
-                  d="M20 50 L20 20 Q20 15 30 15 L70 25 Q90 28 100 35 L100 50 Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  fill="none"
-                  opacity="0.5"
-                />
-                <line
-                  x1="15"
-                  y1="50"
-                  x2="105"
-                  y2="50"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  strokeDasharray="3 3"
-                />
-                <line
-                  x1="20"
-                  y1="50"
-                  x2="20"
-                  y2="20"
-                  stroke="hsl(0 60% 50%)"
-                  strokeWidth="1"
-                  strokeDasharray="2 2"
-                  opacity="0.6"
-                />
-                <text
-                  x="10"
-                  y="36"
-                  fill="hsl(0 60% 50%)"
-                  fontSize="7"
-                  fontFamily="DM Sans"
-                  opacity="0.7"
-                >
-                  30mm
-                </text>
-              </svg>
-            </div>
+        <div className="grid md:grid-cols-2 gap-5 lg:gap-6 max-w-5xl mx-auto">
+          {cards.map((card) => (
+            <article key={card.title} className="bg-background border border-border/70 p-7 lg:p-8">
+              <card.icon size={20} strokeWidth={1.6} className="text-muted-foreground mb-5" />
+              <h3 className="font-heading text-2xl font-light text-foreground mb-3">{card.title}</h3>
+              <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
+                {card.description}
+              </p>
+              <p className="font-body text-sm text-foreground/90">{card.micro}</p>
+            </article>
+          ))}
+        </div>
 
-            <h3 className="font-heading text-xl font-medium text-foreground mb-3">
-              Calzado tradicional
-            </h3>
+        <div className="max-w-3xl mx-auto mt-12 lg:mt-14 border border-border bg-background/60 p-8 lg:p-10 text-center">
+          <p className="font-body text-base md:text-lg text-foreground leading-relaxed mb-8">
+            Si tus zapatos te aprietan, cansan o limitan, quizás no necesitas
+            más soporte. Quizás necesitas más espacio.
+          </p>
 
-            <ul className="font-body text-sm text-muted-foreground space-y-2">
-              <li>✕ Talón elevado</li>
-              <li>✕ Punta estrecha</li>
-              <li>✕ Suela rígida</li>
-              <li>✕ Limita el movimiento</li>
-            </ul>
-          </div>
-
-          <div className="bg-background p-8 lg:p-10 text-center border border-accent/30">
-            <div className="mb-6 flex justify-center">
-              <svg
-                width="120"
-                height="60"
-                viewBox="0 0 120 60"
-                fill="none"
-                className="text-foreground"
-              >
-                <path
-                  d="M15 45 Q15 40 25 38 L50 36 Q80 34 100 38 Q110 40 110 45 Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  fill="none"
-                />
-                <line
-                  x1="10"
-                  y1="48"
-                  x2="115"
-                  y2="48"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  strokeDasharray="3 3"
-                />
-                <text
-                  x="55"
-                  y="30"
-                  textAnchor="middle"
-                  fill="hsl(82 25% 35%)"
-                  fontSize="7"
-                  fontFamily="DM Sans"
-                >
-                  Drop cero
-                </text>
-              </svg>
-            </div>
-
-            <h3 className="font-heading text-xl font-medium text-foreground mb-3">
-              Barefoot
-            </h3>
-
-            <ul className="font-body text-sm text-muted-foreground space-y-2">
-              <li className="text-foreground">✓ Drop cero</li>
-              <li className="text-foreground">✓ Horma anatómica</li>
-              <li className="text-foreground">✓ Suela flexible</li>
-              <li className="text-foreground">✓ Movimiento natural</li>
-            </ul>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="#shop"
+              className="inline-flex h-12 w-full sm:w-auto items-center justify-center px-8 border border-border text-foreground font-body text-sm tracking-[0.16em] uppercase hover:border-foreground transition-colors"
+            >
+              Ver modelos
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 w-full sm:w-auto items-center justify-center px-8 bg-foreground text-primary-foreground font-body text-sm tracking-[0.16em] uppercase hover:bg-foreground/90 transition-colors"
+            >
+              Recibir asesoría
+            </a>
           </div>
         </div>
       </div>
