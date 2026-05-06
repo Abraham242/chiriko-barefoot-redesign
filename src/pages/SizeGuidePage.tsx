@@ -5,6 +5,7 @@ import { ChevronLeft, Footprints, Ruler, PenLine, MessageCircle } from "lucide-r
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import sizeGuideImage from "@/assets/size-guide-measurement.jpg";
 
 // ─── Datos de tallas (una sola fuente de verdad) ─────────────────────────────
 const sizeChart = [
@@ -102,37 +103,12 @@ const SizeGuidePage = () => {
             <div className="max-w-3xl mx-auto">
               {/* SVG diagrama — se conserva intacto */}
               <div className="bg-secondary/50 p-8 md:p-12 mb-12 flex justify-center">
-                <svg
-                  viewBox="0 0 400 300"
-                  className="w-full max-w-md text-foreground"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-label="Diagrama para medir largo y ancho del pie"
-                >
-                  <rect
-                    x="50" y="20" width="300" height="260" rx="2"
-                    fill="hsl(var(--secondary))"
-                    stroke="currentColor" strokeWidth="1" strokeDasharray="6 3"
-                  />
-                  <path
-                    d="M200 250 C180 250, 150 230, 140 200 C130 170, 132 140, 140 120 C148 100, 155 80, 160 65 C163 55, 168 48, 175 45 C180 43, 185 48, 185 55 C185 50, 190 42, 197 40 C204 38, 208 45, 206 55 C208 47, 215 40, 222 42 C229 44, 228 53, 225 60 C230 52, 238 50, 242 55 C246 60, 242 70, 238 78 C250 90, 260 120, 260 150 C260 180, 250 220, 230 240 C220 248, 210 250, 200 250Z"
-                    fill="hsl(var(--muted))" stroke="currentColor" strokeWidth="1.5"
-                  />
-                  {/* Flecha largo */}
-                  <line x1="290" y1="45" x2="290" y2="250" stroke="hsl(var(--accent))" strokeWidth="1.5" />
-                  <line x1="284" y1="45" x2="296" y2="45" stroke="hsl(var(--accent))" strokeWidth="1.5" />
-                  <line x1="284" y1="250" x2="296" y2="250" stroke="hsl(var(--accent))" strokeWidth="1.5" />
-                  <text x="310" y="150" fill="hsl(var(--accent))" fontSize="12" fontFamily="DM Sans" transform="rotate(90, 310, 150)">
-                    Largo (cm)
-                  </text>
-                  {/* Flecha ancho */}
-                  <line x1="135" y1="275" x2="265" y2="275" stroke="hsl(var(--terracotta))" strokeWidth="1.5" />
-                  <line x1="135" y1="269" x2="135" y2="281" stroke="hsl(var(--terracotta))" strokeWidth="1.5" />
-                  <line x1="265" y1="269" x2="265" y2="281" stroke="hsl(var(--terracotta))" strokeWidth="1.5" />
-                  <text x="185" y="293" fill="hsl(var(--terracotta))" fontSize="12" fontFamily="DM Sans">
-                    Ancho (cm)
-                  </text>
-                </svg>
+                <img
+                  src={sizeGuideImage}
+                  alt="Guía visual para medir el pie y elegir la talla barefoot correcta"
+                  loading="lazy"
+                  className="w-full max-w-md object-contain"
+                />
               </div>
 
               {/* Pasos */}
