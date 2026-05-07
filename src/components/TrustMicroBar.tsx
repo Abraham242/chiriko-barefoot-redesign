@@ -2,9 +2,9 @@ import { Truck, MessageCircle, Shield, Ruler } from "lucide-react";
 
 const items = [
   { icon: Truck, text: "Envíos a toda Venezuela" },
-  { icon: MessageCircle, text: "Asesoría personalizada por WhatsApp" },
-  { icon: Shield, text: "Pago seguro" },
-  { icon: Ruler, text: "Guía de Tallas simple" },
+  { icon: MessageCircle, text: "Te ayudamos a elegir tu talla" },
+  { icon: Shield, text: "Pagos seguros" },
+  { icon: Ruler, text: "Barefoot y transición" },
 ];
 
 const TrustMicroBar = () => {

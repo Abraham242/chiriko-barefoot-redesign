@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { products } from "@/data/products";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 
 const BestSellers = () => {
@@ -8,12 +9,12 @@ const BestSellers = () => {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-3">
-            Colección Barefoot
+            Colección natural
           </h2>
 
           <p className="font-body text-muted-foreground text-sm tracking-wide max-w-2xl mx-auto">
-            Una selección de modelos diseñados para moverte con libertad,
-            mejorar tu postura y sentir el suelo como nunca antes.
+            Una selección de modelos barefoot y de transición para moverte con
+            libertad, mejorar tu postura y caminar con mayor comodidad natural.
           </p>
         </div>
 
@@ -31,9 +32,13 @@ const BestSellers = () => {
                   </span>
                 )}
 
-                <img
+                <ResponsiveImage
                   src={product.images[0]}
                   alt={product.name}
+                  widths={[220, 340, 520, 680]}
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  width={680}
+                  height={680}
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

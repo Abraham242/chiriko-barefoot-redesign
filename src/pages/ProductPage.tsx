@@ -13,6 +13,7 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { products } from "@/data/products";
 
 const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
@@ -80,9 +81,13 @@ Quiero saber disponibilidad, precio y talla.
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
               <div className="space-y-4">
                 <div className="overflow-hidden bg-secondary/40">
-                  <img
+                  <ResponsiveImage
                     src={selectedImage || product.images[0]}
                     alt={product.name}
+                    widths={[640, 900, 1200, 1600]}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    width={1200}
+                    height={1200}
                     className="w-full h-[500px] lg:h-[680px] object-cover"
                   />
                 </div>
@@ -100,9 +105,14 @@ Quiero saber disponibilidad, precio y talla.
                       }`}
                       aria-label={`Ver imagen ${index + 1} de ${product.name}`}
                     >
-                      <img
+                      <ResponsiveImage
                         src={image}
                         alt={`${product.name} vista ${index + 1}`}
+                        widths={[160, 240, 360]}
+                        sizes="33vw"
+                        width={360}
+                        height={360}
+                        loading="lazy"
                         className="w-full aspect-square object-cover"
                       />
                     </button>
