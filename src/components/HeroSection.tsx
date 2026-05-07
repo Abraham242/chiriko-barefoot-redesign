@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import heroImage from "@/assets/hero-lifestyle.jpg";
+import lifestyle1 from "@/assets/lifestyle-1.jpg";
+import lifestyle2 from "@/assets/lifestyle-2.jpg";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const phoneNumber = "584221798072";
@@ -6,21 +9,51 @@ const whatsappMessage =
   "Hola, vengo de chirikostudio.com y quiero ayuda para elegir el modelo y la talla correcta.";
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
+const heroSlides = [
+  {
+    image: heroImage,
+    alt: "Calzado natural Chiriko Studio en Venezuela",
+  },
+  {
+    image: lifestyle1,
+    alt: "Movimiento natural con calzado barefoot",
+  },
+  {
+    image: lifestyle2,
+    alt: "Calzado natural para caminar con libertad",
+  },
+];
+
 const HeroSection = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-[92vh] flex items-end overflow-hidden bg-background">
       <div className="absolute inset-0">
-        <ResponsiveImage
-          src={heroImage}
-          alt="Calzado natural Chiriko Studio en Venezuela"
-          widths={[640, 960, 1280, 1600, 1920]}
-          sizes="100vw"
-          width={1920}
-          height={1280}
-          loading="eager"
-          fetchPriority="high"
-          className="h-full w-full object-cover object-center"
-        />
+        {heroSlides.map((slide, index) => (
+          <ResponsiveImage
+            key={slide.alt}
+            src={slide.image}
+            alt={slide.alt}
+            widths={[640, 960, 1280, 1600, 1920]}
+            sizes="100vw"
+            width={1920}
+            height={1280}
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : "low"}
+            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ease-out ${
+              activeSlide === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/78 via-[#1A1A18]/34 to-[#1A1A18]/10" />
       </div>
 
@@ -34,13 +67,6 @@ const HeroSection = () => {
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
               Muévete natural. Camina mejor.
             </h1>
-
-            <p className="mt-6 max-w-xl font-body text-base md:text-lg leading-relaxed text-primary-foreground/88">
-              Zapatos barefoot y modelos de transición seleccionados para darle
-              más espacio, alineación y libertad a tus pies. Te ayudamos a
-              elegir la talla correcta y el modelo adecuado para tu forma de
-              moverte.
-            </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a

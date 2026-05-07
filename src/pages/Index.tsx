@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import HeroIntro from "@/components/HeroIntro";
 import TrustMicroBar from "@/components/TrustMicroBar";
 import ProblemSection from "@/components/ProblemSection";
 import ShoeComparison from "@/components/ShoeComparison";
@@ -29,6 +30,7 @@ const Index = () => {
 
         <main>
           <HeroSection />
+          <HeroIntro />
 
           <section aria-label="Trust signals">
             <TrustMicroBar />
