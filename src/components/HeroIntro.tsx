@@ -7,6 +7,7 @@ const HeroIntro = () => {
           espacio, alineación y libertad a tus pies. Te ayudamos a elegir la
           talla correcta y el modelo adecuado para tu forma de moverte.
         </p>
+
         <p className="font-body text-sm text-muted-foreground mt-5 text-center">
           Una selección curada para caminar con más comodidad, sin perder
           estética.
