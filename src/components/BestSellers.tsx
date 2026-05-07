@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { products } from "@/data/products";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 
 const BestSellers = () => {
@@ -31,9 +32,13 @@ const BestSellers = () => {
                   </span>
                 )}
 
-                <img
+                <ResponsiveImage
                   src={product.images[0]}
                   alt={product.name}
+                  widths={[220, 340, 520, 680]}
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  width={680}
+                  height={680}
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
