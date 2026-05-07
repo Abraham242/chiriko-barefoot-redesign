@@ -5,8 +5,8 @@ const isSvg = (src: string) => /\.svg($|\?)/i.test(src);
 const isAbsoluteUrl = (src: string) => /^https?:\/\//i.test(src);
 const isCloudflareTransformed = (src: string) => src.includes("/cdn-cgi/image/");
 
-const shouldBypassInDev = () =>
-  import.meta.env.DEV && !import.meta.env.VITE_ENABLE_CF_IMAGE_TRANSFORMS;
+const areCloudflareTransformsEnabled = () =>
+  import.meta.env.VITE_ENABLE_CF_IMAGE_TRANSFORMS === "true";
 
 export const getTransformablePath = (src: string): string | null => {
   if (!src || isDataUrl(src) || isSvg(src) || isCloudflareTransformed(src)) {
@@ -20,6 +20,7 @@ export const getTransformablePath = (src: string): string | null => {
   if (isAbsoluteUrl(src)) {
     try {
       const url = new URL(src);
+
       if (typeof window !== "undefined" && url.origin === window.location.origin) {
         return `${url.pathname}${url.search}`;
       }
@@ -36,8 +37,13 @@ export const cfImage = (
   width: number,
   quality: number = DEFAULT_QUALITY
 ) => {
+  if (!areCloudflareTransformsEnabled()) {
+    return src;
+  }
+
   const transformablePath = getTransformablePath(src);
-  if (!transformablePath || shouldBypassInDev()) {
+
+  if (!transformablePath) {
     return src;
   }
 
@@ -49,8 +55,13 @@ export const cfSrcSet = (
   widths: number[],
   quality: number = DEFAULT_QUALITY
 ) => {
+  if (!areCloudflareTransformsEnabled()) {
+    return undefined;
+  }
+
   const transformablePath = getTransformablePath(src);
-  if (!widths.length || !transformablePath || shouldBypassInDev()) {
+
+  if (!widths.length || !transformablePath) {
     return undefined;
   }
 
