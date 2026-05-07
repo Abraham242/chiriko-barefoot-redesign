@@ -1,11 +1,6 @@
 import heroImage from "@/assets/hero-lifestyle.jpg";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
-const phoneNumber = "584221798072";
-const whatsappMessage =
-  "Hola, vengo de chirikostudio.com y quiero ayuda para elegir el modelo y la talla correcta.";
-const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
 const HeroSection = () => {
   return (
     <section className="relative min-h-[92vh] flex items-end overflow-hidden bg-background">
@@ -28,18 +23,16 @@ const HeroSection = () => {
         <div className="container mx-auto px-6 lg:px-12 pb-14 pt-32 md:pb-20 lg:pb-24">
           <div className="max-w-3xl">
             <p className="mb-5 font-body text-[11px] md:text-xs uppercase tracking-[0.22em] text-primary-foreground/80">
-              Calzado natural en Venezuela
+              Barefoot premium en Venezuela
             </p>
 
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
-              Muévete natural. Camina mejor.
+              Camina como naciste
             </h1>
 
             <p className="mt-6 max-w-xl font-body text-base md:text-lg leading-relaxed text-primary-foreground/88">
-              Zapatos barefoot y modelos de transición seleccionados para darle
-              más espacio, alineación y libertad a tus pies. Te ayudamos a
-              elegir la talla correcta y el modelo adecuado para tu forma de
-              moverte.
+              Diseños creados para devolverle a tu pie su forma y movimiento natural.
+              Una colección de barefoot shoes con asesoría personalizada en Venezuela.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -47,26 +40,24 @@ const HeroSection = () => {
                 href="#shop"
                 className="inline-flex h-14 items-center justify-center bg-[#F7F5F0] px-8 font-body text-[12px] uppercase tracking-[0.18em] text-[#1A1A18] transition-all duration-300 hover:bg-white"
               >
-                Ver modelos
+                Ver colección
               </a>
 
               <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#learn"
                 className="inline-flex h-14 items-center justify-center border border-primary-foreground/45 px-8 font-body text-[12px] uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:border-primary-foreground hover:bg-primary-foreground/10"
               >
-                Recibir asesoría
+                La filosofía barefoot
               </a>
             </div>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
               <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
                 <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Modelos
+                  Envíos
                 </p>
                 <p className="mt-1 font-body text-sm text-primary-foreground">
-                  Barefoot y transición
+                  A toda Venezuela
                 </p>
               </div>
 
@@ -81,10 +72,10 @@ const HeroSection = () => {
 
               <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
                 <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Envíos
+                  Curaduría
                 </p>
                 <p className="mt-1 font-body text-sm text-primary-foreground">
-                  A toda Venezuela
+                  Barefoot premium
                 </p>
               </div>
             </div>
