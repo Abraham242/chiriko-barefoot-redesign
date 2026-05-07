@@ -88,6 +88,8 @@ Quiero saber disponibilidad, precio y talla.
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     width={1200}
                     height={1200}
+                    loading="eager"
+                    fetchPriority="high"
                     className="w-full h-[500px] lg:h-[680px] object-cover"
                   />
                 </div>
