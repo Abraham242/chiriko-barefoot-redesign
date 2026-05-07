@@ -1,4 +1,5 @@
 import heroImage from "@/assets/hero-lifestyle.jpg";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const phoneNumber = "584221798072";
 const whatsappMessage =
@@ -9,9 +10,15 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-[92vh] flex items-end overflow-hidden bg-background">
       <div className="absolute inset-0">
-        <img
+        <ResponsiveImage
           src={heroImage}
           alt="Calzado natural Chiriko Studio en Venezuela"
+          widths={[640, 960, 1280, 1600, 1920]}
+          sizes="100vw"
+          width={1920}
+          height={1280}
+          loading="eager"
+          fetchPriority="high"
           className="h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/78 via-[#1A1A18]/34 to-[#1A1A18]/10" />
