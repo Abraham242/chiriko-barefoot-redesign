@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import heroImage from "@/assets/hero-lifestyle.jpg";
-import lifestyle1 from "@/assets/lifestyle-1.jpg";
-import lifestyle2 from "@/assets/lifestyle-2.jpg";
+import heroEnigma from "@/assets/hero-enigma-ivory.jpg";
+import heroUrban from "@/assets/hero-urban-zing.jpg";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const phoneNumber = "584221798072";
@@ -11,16 +10,12 @@ const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(what
 
 const heroSlides = [
   {
-    image: heroImage,
-    alt: "Calzado natural Chiriko Studio en Venezuela",
+    image: heroEnigma,
+    alt: "Calzado barefoot premium Chiriko Studio",
   },
   {
-    image: lifestyle1,
-    alt: "Movimiento natural con calzado barefoot",
-  },
-  {
-    image: lifestyle2,
-    alt: "Calzado natural para caminar con libertad",
+    image: heroUrban,
+    alt: "Calzado barefoot urbano para moverte con libertad",
   },
 ];
 
