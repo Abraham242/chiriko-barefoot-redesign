@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SEO from "@/components/SEO";
 import { Navigate, useParams, Link } from "react-router-dom";
 import {
@@ -13,8 +13,8 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import ResponsiveImage from "@/components/ResponsiveImage";
 import SizeChartModal from "@/components/SizeChartModal";
+import ProductImageGallery from "@/components/ProductImageGallery";
 import { products } from "@/data/products";
 
 const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
@@ -23,15 +23,8 @@ const phoneNumber = "584221798072";
 const ProductPage = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
-  const [selectedImage, setSelectedImage] = useState("");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [isSizeChartOpen, setIsSizeChartOpen] = useState(false);
-
-  useEffect(() => {
-    if (product) {
-      setSelectedImage(product.images[0]);
-    }
-  }, [product]);
 
   if (!product) {
     return <Navigate to="/404" replace />;
@@ -77,48 +70,10 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
             </Link>
 
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-              <div className="space-y-4">
-                <div className="overflow-hidden bg-secondary/40">
-                  <ResponsiveImage
-                    src={selectedImage || product.images[0]}
-                    alt={product.name}
-                    widths={[640, 900, 1200, 1600]}
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    width={1200}
-                    height={1200}
-                    loading="eager"
-                    fetchPriority="high"
-                    className="w-full h-[500px] lg:h-[680px] object-cover"
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 gap-3">
-                  {product.images.map((image, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => setSelectedImage(image)}
-                      className={`overflow-hidden border transition-colors ${
-                        selectedImage === image
-                          ? "border-foreground"
-                          : "border-border"
-                      }`}
-                      aria-label={`Ver imagen ${index + 1} de ${product.name}`}
-                    >
-                      <ResponsiveImage
-                        src={image}
-                        alt={`${product.name} vista ${index + 1}`}
-                        widths={[160, 240, 360]}
-                        sizes="33vw"
-                        width={360}
-                        height={360}
-                        loading="lazy"
-                        className="w-full aspect-square object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <ProductImageGallery
+                images={product.images}
+                productName={product.name}
+              />
 
               <div className="lg:sticky lg:top-28">
                 {product.tag && (
