@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Footprints, Ruler, PenLine, MessageCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -56,6 +56,15 @@ const steps = [
 // ─── Componente ──────────────────────────────────────────────────────────────
 const SizeGuidePage = () => {
   const [activeTab, setActiveTab] = useState("women");
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+      return;
+    }
+    navigate("/");
+  };
 
   return (
     <>
@@ -71,13 +80,14 @@ const SizeGuidePage = () => {
         <div className="pt-20 lg:pt-24">
           <div className="container mx-auto px-6 lg:px-12 py-8">
             {/* ── Breadcrumb ── */}
-            <Link
-              to="/"
+            <button
+              type="button"
+              onClick={handleBack}
               className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
             >
               <ChevronLeft size={16} />
-              Volver a la colección
-            </Link>
+              Volver
+            </button>
 
             {/* ── 1. HEADER PREMIUM ── */}
             <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-20">

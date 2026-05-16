@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import SizeChartModal from "@/components/SizeChartModal";
 import { products } from "@/data/products";
 
 const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
@@ -24,6 +25,7 @@ const ProductPage = () => {
   const product = products.find((p) => p.id === id);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [isSizeChartOpen, setIsSizeChartOpen] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -171,13 +173,14 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                       Selecciona tu talla habitual
                     </p>
 
-                    <Link
-                      to="/size-guide"
+                    <button
+                      type="button"
+                      onClick={() => setIsSizeChartOpen(true)}
                       className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
                     >
                       <Ruler size={14} />
                       Guía de Tallas
-                    </Link>
+                    </button>
                   </div>
 
                   <div className="grid grid-cols-5 gap-3">
@@ -273,7 +276,11 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                   </h2>
 
                   <div className="space-y-4">
-                    {["Más espacio para tus dedos", "Pisada plana y estable", "Movimiento más libre"].map((feature) => (
+                    {[
+                      "Más espacio para tus dedos",
+                      "Pisada plana y estable",
+                      "Movimiento más libre",
+                    ].map((feature) => (
                       <div key={feature} className="flex items-start gap-3">
                         <Check
                           size={16}
@@ -294,11 +301,9 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
                     El diseño drop cero mantiene tu pie plano y alineado. La
                     horma anatómica permite que los dedos se expandan de forma
-                    natural, mejorando estabilidad, postura y libertad de
-                    movimiento.
+                    natural, aportando estabilidad y libertad de movimiento.
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
@@ -306,6 +311,10 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
 
         <Footer />
         <WhatsAppButton />
+        <SizeChartModal
+          open={isSizeChartOpen}
+          onClose={() => setIsSizeChartOpen(false)}
+        />
       </div>
     </>
   );

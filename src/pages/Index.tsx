@@ -8,7 +8,6 @@ import ShoeComparison from "@/components/ShoeComparison";
 import ValueProps from "@/components/ValueProps";
 import BestSellers from "@/components/BestSellers";
 import EducationSection from "@/components/EducationSection";
-import SizeGuidance from "@/components/SizeGuidance";
 import LifestyleSection from "@/components/LifestyleSection";
 import SocialProof from "@/components/SocialProof";
 import PreFooterTrust from "@/components/PreFooterTrust";
@@ -54,10 +53,6 @@ const Index = () => {
 
           <section id="learn" className="scroll-mt-28" aria-label="Barefoot philosophy">
             <EducationSection />
-          </section>
-
-          <section id="size-guide" className="scroll-mt-28" aria-label="Size guidance">
-            <SizeGuidance />
           </section>
 
           <section aria-label="Lifestyle">
