@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import SizeChartModal from "@/components/SizeChartModal";
 import { products } from "@/data/products";
 
 const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
@@ -23,6 +24,8 @@ const ProductPage = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
   const [selectedImage, setSelectedImage] = useState("");
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [isSizeChartOpen, setIsSizeChartOpen] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -34,20 +37,15 @@ const ProductPage = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const whatsappMessage =
-    product.price > 0
-      ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
+  const whatsappMessage = selectedSize
+    ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
 
-Quiero comprar, pero necesito ayuda con la talla.
+Mi talla habitual es ${selectedSize}.
 
-Mi pie mide aproximadamente ___ cm y lo quiero para (uso diario / gimnasio / caminar).
+Quiero confirmar disponibilidad y saber cuál sería mi talla correcta en este modelo.`
+    : `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
 
-¿Me puedes recomendar la talla correcta?`
-      : `Hola, estoy viendo el modelo ${product.name} en Chiriko.
-
-Quiero saber disponibilidad, precio y talla.
-
-¿Me puedes ayudar?`;
+Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     whatsappMessage
@@ -172,16 +170,17 @@ Quiero saber disponibilidad, precio y talla.
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-4 gap-4">
                     <p className="font-body text-sm tracking-[0.16em] uppercase text-muted-foreground">
-                      Talla (EU)
+                      Selecciona tu talla habitual
                     </p>
 
-                    <Link
-                      to="/size-guide"
+                    <button
+                      type="button"
+                      onClick={() => setIsSizeChartOpen(true)}
                       className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
                     >
                       <Ruler size={14} />
                       Guía de Tallas
-                    </Link>
+                    </button>
                   </div>
 
                   <div className="grid grid-cols-5 gap-3">
@@ -189,7 +188,12 @@ Quiero saber disponibilidad, precio y talla.
                       <button
                         key={size}
                         type="button"
-                        className="h-12 border border-border bg-background text-sm text-foreground hover:border-foreground transition-colors"
+                        onClick={() => setSelectedSize(size)}
+                        className={`h-12 border bg-background text-sm transition-colors ${
+                          selectedSize === size
+                            ? "border-foreground text-foreground"
+                            : "border-border text-foreground hover:border-foreground"
+                        }`}
                       >
                         {size}
                       </button>
@@ -197,8 +201,8 @@ Quiero saber disponibilidad, precio y talla.
                   </div>
 
                   <p className="mt-4 font-body text-sm text-muted-foreground">
-                    ¿No sabes cuál elegir? Te ayudamos por WhatsApp en menos de
-                    un minuto.
+                    La confirmaremos por WhatsApp según la medida de tu pie en
+                    centímetros.
                   </p>
                 </div>
 
@@ -212,7 +216,7 @@ Quiero saber disponibilidad, precio y talla.
                   </p>
                 </div>
 
-                <div className="space-y-4 mb-3">
+                <div className="mb-3">
                   <a
                     href={whatsappUrl}
                     target="_blank"
@@ -220,17 +224,7 @@ Quiero saber disponibilidad, precio y talla.
                     className="w-full h-14 bg-foreground text-primary-foreground flex items-center justify-center gap-2 font-body text-sm tracking-[0.18em] uppercase hover:bg-foreground/90 transition-colors"
                   >
                     <MessageCircle size={16} />
-                    Elegir talla por WhatsApp
-                  </a>
-
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full h-14 border border-border flex items-center justify-center gap-2 font-body text-sm tracking-[0.18em] uppercase text-foreground hover:border-foreground transition-colors"
-                  >
-                    <MessageCircle size={16} />
-                    Recibir asesoría por WhatsApp
+                    Confirmar talla y disponibilidad
                   </a>
                 </div>
 
@@ -278,18 +272,18 @@ Quiero saber disponibilidad, precio y talla.
 
                 <div className="border-t border-border pt-8 mb-8">
                   <h2 className="font-heading text-2xl font-light text-foreground mb-5">
-                    Lo que vas a sentir
+                    Lo que notarás al usarlos
                   </h2>
 
                   <div className="space-y-4">
-                    {product.features.map((feature) => (
+                    {["Más espacio para tus dedos", "Pisada plana y estable", "Movimiento más libre"].map((feature) => (
                       <div key={feature} className="flex items-start gap-3">
                         <Check
                           size={16}
                           className="mt-1 text-muted-foreground flex-shrink-0"
                         />
                         <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
-                          • {feature}
+                          {feature}
                         </p>
                       </div>
                     ))}
@@ -308,25 +302,6 @@ Quiero saber disponibilidad, precio y talla.
                   </p>
                 </div>
 
-                <div className="border border-border p-6">
-                  <h3 className="font-heading text-xl font-light text-foreground mb-2">
-                    ¿Necesitas ayuda para elegir?
-                  </h3>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
-                    Te ayudamos a elegir modelo y talla por WhatsApp para que
-                    compres con seguridad desde el inicio.
-                  </p>
-
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 items-center justify-center gap-2 border border-foreground px-5 font-body text-sm tracking-[0.16em] uppercase text-foreground hover:bg-foreground hover:text-primary-foreground transition-colors"
-                  >
-                    <MessageCircle size={16} />
-                    Hablar con Chiriko
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -334,6 +309,10 @@ Quiero saber disponibilidad, precio y talla.
 
         <Footer />
         <WhatsAppButton />
+        <SizeChartModal
+          open={isSizeChartOpen}
+          onClose={() => setIsSizeChartOpen(false)}
+        />
       </div>
     </>
   );
