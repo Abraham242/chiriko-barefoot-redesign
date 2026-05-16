@@ -276,7 +276,11 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                   </h2>
 
                   <div className="space-y-4">
-                    {["Más espacio para tus dedos", "Pisada plana y estable", "Movimiento más libre"].map((feature) => (
+                    {[
+                      "Más espacio para tus dedos",
+                      "Pisada plana y estable",
+                      "Movimiento más libre",
+                    ].map((feature) => (
                       <div key={feature} className="flex items-start gap-3">
                         <Check
                           size={16}
@@ -297,11 +301,9 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
                     El diseño drop cero mantiene tu pie plano y alineado. La
                     horma anatómica permite que los dedos se expandan de forma
-                    natural, mejorando estabilidad, postura y libertad de
-                    movimiento.
+                    natural, aportando estabilidad y libertad de movimiento.
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
