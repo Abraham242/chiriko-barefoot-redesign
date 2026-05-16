@@ -278,18 +278,18 @@ Quiero saber disponibilidad, precio y talla.
 
                 <div className="border-t border-border pt-8 mb-8">
                   <h2 className="font-heading text-2xl font-light text-foreground mb-5">
-                    Lo que vas a sentir
+                    Lo que notarás al usarlos
                   </h2>
 
                   <div className="space-y-4">
-                    {product.features.map((feature) => (
+                    {["Más espacio para tus dedos", "Pisada plana y estable", "Movimiento más libre"].map((feature) => (
                       <div key={feature} className="flex items-start gap-3">
                         <Check
                           size={16}
                           className="mt-1 text-muted-foreground flex-shrink-0"
                         />
                         <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed">
-                          • {feature}
+                          {feature}
                         </p>
                       </div>
                     ))}
