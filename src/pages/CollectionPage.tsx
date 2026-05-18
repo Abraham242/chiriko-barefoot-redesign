@@ -69,22 +69,17 @@ const CollectionPage = () => {
                         width={900}
                         height={900}
                         loading="lazy"
-                        className="h-full w-full object-contain p-8 md:p-10 transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="h-full w-full object-contain p-2 md:p-4 scale-[1.18] md:scale-[1.25] lg:scale-[1.3] transition-transform duration-500 group-hover:scale-[1.33]"
                       />
                     </div>
                   </Link>
 
                   <div className="mt-5">
                     <Link to={`/product/${activeZingProduct.id}`} className="block">
-                      <h2 className="font-body text-[17px] font-medium text-foreground">
-                        Barebarics Zing
-                      </h2>
-                      <p className="mt-1 font-body text-xs tracking-wide text-muted-foreground">
-                        Colores disponibles
+                      <p className="font-body text-xs tracking-[0.14em] uppercase text-muted-foreground">
+                        Barebarics
                       </p>
-                      <p className="mt-1 font-body text-xs tracking-wide text-muted-foreground">
-                        {activeZingProduct.subtitle}
-                      </p>
+                      <h2 className="mt-1 font-body text-[17px] font-medium text-foreground">Zing</h2>
                       <p className="mt-1 font-body text-sm font-medium text-foreground">
                         {activeZingProduct.price > 0
                           ? `${activeZingProduct.currency}${activeZingProduct.price}`
@@ -138,17 +133,17 @@ const CollectionPage = () => {
                         width={900}
                         height={900}
                         loading="lazy"
-                        className="h-full w-full object-contain p-8 md:p-10 transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="h-full w-full object-contain p-2 md:p-4 scale-[1.18] md:scale-[1.25] lg:scale-[1.3] transition-transform duration-500 group-hover:scale-[1.33]"
                       />
                     </div>
 
                     <div className="mt-5">
-                      <h2 className="font-body text-[17px] font-medium text-foreground">
-                        {product.name}
-                      </h2>
-                      <p className="mt-1 font-body text-xs tracking-wide text-muted-foreground">
-                        {product.subtitle}
+                      <p className="font-body text-xs tracking-[0.14em] uppercase text-muted-foreground">
+                        {product.name.split(" ").slice(0, 2).join(" ")}
                       </p>
+                      <h2 className="mt-1 font-body text-[17px] font-medium text-foreground">
+                        {product.name.split(" ").slice(2).join(" ")}
+                      </h2>
                       <p className="mt-1 font-body text-sm font-medium text-foreground">
                         {product.price > 0 ? `${product.currency}${product.price}` : "Consultar"}
                       </p>

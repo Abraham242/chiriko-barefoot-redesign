@@ -37,6 +37,10 @@ import reboundAllWhite7 from "@/assets/rebound-all-white-7.jpg";
 import graceBeige1 from "@/assets/grace-beige-1.png";
 import graceBeige2 from "@/assets/grace-beige-2.png";
 import graceBeige3 from "@/assets/grace-beige-3.png";
+import graceBeige4 from "@/assets/grace-beige-4.png";
+import graceBeige5 from "@/assets/grace-beige-5.png";
+import graceBeige6 from "@/assets/grace-beige-6.png";
+import graceBeige7 from "@/assets/grace-beige-7.png";
 
 export interface Product {
   id: string;
@@ -163,7 +167,15 @@ export const products: Product[] = [
     subtitle: "Beige · sandalia barefoot",
     price: 92,
     currency: "$",
-    images: [graceBeige1, graceBeige2, graceBeige3],
+    images: [
+      graceBeige1,
+      graceBeige2,
+      graceBeige3,
+      graceBeige4,
+      graceBeige5,
+      graceBeige6,
+      graceBeige7,
+    ],
     tag: "Clima cálido",
     features: [
       "Ligera",
