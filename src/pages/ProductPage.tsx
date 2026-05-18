@@ -62,7 +62,7 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
         <main className="pt-20 lg:pt-24">
           <div className="container mx-auto px-6 lg:px-12 py-8 lg:py-12">
             <Link
-              to="/#shop"
+              to="/collection"
               className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
             >
               <ChevronLeft size={16} />
