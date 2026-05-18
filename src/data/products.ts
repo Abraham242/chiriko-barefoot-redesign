@@ -1,6 +1,10 @@
 import zingWhiteBlack1 from "@/assets/zing-white-black-1.jpg";
 import zingWhiteBlack2 from "@/assets/zing-white-black-2.jpg";
 import zingWhiteBlack3 from "@/assets/zing-white-black-3.jpg";
+import zingWhiteBlack4 from "@/assets/zing-white-black-4.jpg";
+import zingWhiteBlack5 from "@/assets/zing-white-black-5.jpg";
+import zingWhiteBlack6 from "@/assets/zing-white-black-6.jpg";
+import zingWhiteBlack7 from "@/assets/zing-white-black-7.jpg";
 
 import zingAllWhite1 from "@/assets/zing-all-white-1.jpg";
 import zingAllWhite2 from "@/assets/zing-all-white-2.jpg";
@@ -48,7 +52,15 @@ export const products: Product[] = [
     subtitle: "Blanco y negro · zapatilla barefoot para uso diario",
     price: 160,
     currency: "$",
-    images: [zingWhiteBlack1, zingWhiteBlack2, zingWhiteBlack3],
+    images: [
+      zingWhiteBlack1,
+      zingWhiteBlack2,
+      zingWhiteBlack3,
+      zingWhiteBlack4,
+      zingWhiteBlack5,
+      zingWhiteBlack6,
+      zingWhiteBlack7,
+    ],
     tag: "Más vendido",
     features: [
       "Diseño urbano fácil de combinar",
