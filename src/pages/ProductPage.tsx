@@ -69,7 +69,7 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
               Volver a la colección
             </Link>
 
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            <div className="grid gap-10 lg:gap-16 items-start lg:grid-cols-[1.15fr_0.85fr] xl:grid-cols-[1.25fr_0.75fr]">
               <ProductImageGallery
                 images={product.images}
                 productName={product.name}

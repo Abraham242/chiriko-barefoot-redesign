@@ -78,7 +78,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
         </div>
 
         <div className="space-y-3">
-          <div className="relative flex items-center justify-center overflow-hidden bg-background aspect-square md:aspect-[4/3]">
+          <div className="relative flex items-center justify-center overflow-hidden bg-background aspect-square md:aspect-[4/3] lg:aspect-[4/3] min-h-[420px] md:min-h-[620px] lg:min-h-[760px]">
             <ResponsiveImage
               src={images[selectedIndex]}
               alt={`${productName} imagen ${selectedIndex + 1}`}
@@ -88,7 +88,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               height={1200}
               loading="eager"
               fetchPriority="high"
-              className="h-full w-full object-contain"
+              className="h-full w-full object-contain scale-105 md:scale-115 lg:scale-125 transition-transform duration-300"
             />
 
             <button
