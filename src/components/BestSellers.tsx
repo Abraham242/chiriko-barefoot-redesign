@@ -19,13 +19,13 @@ const BestSellers = () => {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {products.map((product) => (
+          {products.slice(0, 3).map((product) => (
             <Link
               to={`/product/${product.id}`}
               key={product.id}
               className="group"
             >
-              <div className="relative bg-secondary aspect-square mb-4 overflow-hidden">
+              <div className="relative bg-secondary/30 aspect-square mb-4 overflow-hidden p-5 lg:p-6">
                 {product.tag && (
                   <span className="absolute top-3 left-3 bg-accent text-accent-foreground font-body text-xs tracking-wider uppercase px-3 py-1 z-10">
                     {product.tag}
@@ -40,7 +40,7 @@ const BestSellers = () => {
                   width={680}
                   height={680}
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
 
@@ -63,6 +63,15 @@ const BestSellers = () => {
               </p>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            to="/collection"
+            className="inline-flex h-11 items-center justify-center border border-border px-6 text-[12px] tracking-[0.16em] uppercase text-foreground transition-colors hover:border-foreground"
+          >
+            Ver colección completa
+          </Link>
         </div>
       </div>
     </section>

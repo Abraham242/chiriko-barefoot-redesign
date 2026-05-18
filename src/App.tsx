@@ -10,6 +10,7 @@ import ProductPage from "./pages/ProductPage";
 import SizeGuidePage from "./pages/SizeGuidePage";
 import QueEsCalzadoBarefoot from "./pages/que-es-calzado-barefoot";
 import NotFound from "./pages/NotFound";
+import CollectionPage from "./pages/CollectionPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/size-guide" element={<SizeGuidePage />} />
+          <Route path="/collection" element={<CollectionPage />} />
           {/* ── Contenido educativo ── */}
           <Route
             path="/aprende/que-es-calzado-barefoot"
