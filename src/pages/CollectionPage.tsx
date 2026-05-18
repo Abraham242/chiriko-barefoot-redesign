@@ -77,9 +77,9 @@ const CollectionPage = () => {
                   <div className="mt-5">
                     <Link to={`/product/${activeZingProduct.id}`} className="block">
                       <p className="font-body text-xs tracking-[0.14em] uppercase text-muted-foreground">
-                        Barebarics
+                        {activeZingProduct.brand}
                       </p>
-                      <h2 className="mt-1 font-body text-[17px] font-medium text-foreground">Zing</h2>
+                      <h2 className="mt-1 font-body text-[17px] font-medium text-foreground">{activeZingProduct.model}</h2>
                       <p className="mt-1 font-body text-sm font-medium text-foreground">
                         {activeZingProduct.price > 0
                           ? `${activeZingProduct.currency}${activeZingProduct.price}`
@@ -139,10 +139,10 @@ const CollectionPage = () => {
 
                     <div className="mt-5">
                       <p className="font-body text-xs tracking-[0.14em] uppercase text-muted-foreground">
-                        {product.name.split(" ").slice(0, 2).join(" ")}
+                        {product.brand}
                       </p>
                       <h2 className="mt-1 font-body text-[17px] font-medium text-foreground">
-                        {product.name.split(" ").slice(2).join(" ")}
+                        {product.model}
                       </h2>
                       <p className="mt-1 font-body text-sm font-medium text-foreground">
                         {product.price > 0 ? `${product.currency}${product.price}` : "Consultar"}

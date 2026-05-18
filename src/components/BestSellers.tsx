@@ -8,14 +8,6 @@ const featuredProductIds = [
   "barebarics-enigma-ivory",
 ];
 
-const parseName = (name: string) => {
-  const parts = name.split(" ");
-  return {
-    brand: parts.slice(0, 2).join(" "),
-    model: parts.slice(2).join(" "),
-  };
-};
-
 const BestSellers = () => {
   const featuredProducts = featuredProductIds
     .map((id) => products.find((product) => product.id === id))
@@ -37,8 +29,6 @@ const BestSellers = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {featuredProducts.map((product) => {
-            const { brand, model } = parseName(product.name);
-
             return (
               <Link to={`/product/${product.id}`} key={product.id} className="group block">
                 <div className="relative bg-white aspect-[4/5] md:aspect-square flex items-center justify-center overflow-hidden">
@@ -59,8 +49,8 @@ const BestSellers = () => {
                 </div>
 
                 <div className="mt-5">
-                  <p className="font-body text-xs tracking-[0.14em] uppercase text-muted-foreground">{brand}</p>
-                  <h3 className="mt-1 font-body text-[17px] font-medium text-foreground">{model}</h3>
+                  <p className="font-body text-xs tracking-[0.14em] uppercase text-muted-foreground">{product.brand}</p>
+                  <h3 className="mt-1 font-body text-[17px] font-medium text-foreground">{product.model}</h3>
                   <p className="mt-1 font-body text-sm font-medium text-foreground">
                     {product.price > 0 ? `${product.currency}${product.price}` : "Consultar"}
                   </p>
