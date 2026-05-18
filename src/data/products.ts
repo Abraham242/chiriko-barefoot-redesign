@@ -6,9 +6,13 @@ import zingAllWhite1 from "@/assets/zing-all-white-1.jpg";
 import zingAllWhite2 from "@/assets/zing-all-white-2.jpg";
 import zingAllWhite3 from "@/assets/zing-all-white-3.jpg";
 
-import enigmaIvory1 from "@/assets/enigma-ivory-1.jpg";
+import enigmaIvory1 from "@/assets/enigma-ivory-1.png";
 import enigmaIvory2 from "@/assets/enigma-ivory-2.jpg";
 import enigmaIvory3 from "@/assets/enigma-ivory-3.jpg";
+import enigmaIvory4 from "@/assets/enigma-ivory-4.jpg";
+import enigmaIvory5 from "@/assets/enigma-ivory-5.jpg";
+import enigmaIvory6 from "@/assets/enigma-ivory-6.png";
+import enigmaIvory7 from "@/assets/enigma-ivory-7.jpg";
 
 import waveWhiteDarkGreen1 from "@/assets/wave-white-dark-green-1.jpg";
 import waveWhiteDarkGreen2 from "@/assets/wave-white-dark-green-2.jpg";
@@ -69,7 +73,15 @@ export const products: Product[] = [
     subtitle: "Marfil · diseño barefoot premium",
     price: 160,
     currency: "$",
-    images: [enigmaIvory1, enigmaIvory2, enigmaIvory3],
+    images: [
+      enigmaIvory1,
+      enigmaIvory2,
+      enigmaIvory3,
+      enigmaIvory4,
+      enigmaIvory5,
+      enigmaIvory6,
+      enigmaIvory7,
+    ],
     features: [
       "Diseño distintivo",
       "Movimiento natural",
