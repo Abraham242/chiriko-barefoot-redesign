@@ -52,8 +52,8 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
 
   return (
     <>
-      <div className="grid gap-4 lg:grid-cols-[88px_1fr]">
-        <div className="hidden lg:flex lg:flex-col gap-3">
+      <div className="grid gap-4 lg:grid-cols-[88px_1fr] lg:items-start">
+        <div className="hidden gap-3 lg:flex lg:flex-col">
           {images.map((image, index) => (
             <button
               key={`${image}-${index}`}
@@ -71,14 +71,14 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                 width={180}
                 height={180}
                 loading="lazy"
-                className="w-full aspect-square object-cover"
+                className="aspect-square w-full object-cover"
               />
             </button>
           ))}
         </div>
 
         <div className="space-y-3">
-          <div className="relative overflow-hidden bg-background">
+          <div className="relative flex items-center justify-center overflow-hidden bg-background aspect-square md:aspect-[4/3]">
             <ResponsiveImage
               src={images[selectedIndex]}
               alt={`${productName} imagen ${selectedIndex + 1}`}
@@ -88,7 +88,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               height={1200}
               loading="eager"
               fetchPriority="high"
-              className="w-full h-[min(470px,calc(100vw-48px))] md:h-[620px] lg:h-[880px] object-contain"
+              className="h-full w-full object-contain"
             />
 
             <button
@@ -137,7 +137,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                   width={120}
                   height={120}
                   loading="lazy"
-                  className="h-20 w-20 object-cover"
+                  className="aspect-square h-20 w-20 object-cover"
                 />
               </button>
             ))}
