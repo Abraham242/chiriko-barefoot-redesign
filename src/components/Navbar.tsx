@@ -89,7 +89,7 @@ const Navbar = () => {
             </a>
 
             <a
-              href={isHome ? "/#shop" : "/"}
+              href="/#shop"
               className="inline-flex h-11 items-center justify-center gap-2 bg-foreground px-5 text-[12px] tracking-[0.16em] uppercase text-primary-foreground transition-colors hover:bg-foreground/90"
             >
               <ShoppingBag size={16} />
@@ -146,7 +146,7 @@ const Navbar = () => {
               </a>
 
               <a
-                href={isHome ? "/#shop" : "/"}
+                href="/#shop"
                 className="inline-flex h-12 items-center justify-center gap-2 bg-foreground text-sm tracking-[0.16em] uppercase text-primary-foreground"
               >
                 <ShoppingBag size={16} />

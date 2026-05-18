@@ -21,6 +21,10 @@ import waveWhiteDarkGreen3 from "@/assets/wave-white-dark-green-3.jpg";
 import reboundAllWhite1 from "@/assets/rebound-all-white-1.jpg";
 import reboundAllWhite2 from "@/assets/rebound-all-white-2.jpg";
 import reboundAllWhite3 from "@/assets/rebound-all-white-3.jpg";
+import reboundAllWhite4 from "@/assets/rebound-all-white-4.jpg";
+import reboundAllWhite5 from "@/assets/rebound-all-white-5.jpg";
+import reboundAllWhite6 from "@/assets/rebound-all-white-6.jpg";
+import reboundAllWhite7 from "@/assets/rebound-all-white-7.jpg";
 
 import graceBeige1 from "@/assets/grace-beige-1.png";
 import graceBeige2 from "@/assets/grace-beige-2.png";
@@ -116,6 +120,10 @@ export const products: Product[] = [
       reboundAllWhite1,
       reboundAllWhite2,
       reboundAllWhite3,
+      reboundAllWhite4,
+      reboundAllWhite5,
+      reboundAllWhite6,
+      reboundAllWhite7,
     ],
     tag: "Recomendado",
     features: [
