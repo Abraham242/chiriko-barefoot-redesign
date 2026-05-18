@@ -1,10 +1,18 @@
 import zingWhiteBlack1 from "@/assets/zing-white-black-1.jpg";
 import zingWhiteBlack2 from "@/assets/zing-white-black-2.jpg";
 import zingWhiteBlack3 from "@/assets/zing-white-black-3.jpg";
+import zingWhiteBlack4 from "@/assets/zing-white-black-4.jpg";
+import zingWhiteBlack5 from "@/assets/zing-white-black-5.jpg";
+import zingWhiteBlack6 from "@/assets/zing-white-black-6.jpg";
+import zingWhiteBlack7 from "@/assets/zing-white-black-7.jpg";
 
 import zingAllWhite1 from "@/assets/zing-all-white-1.jpg";
 import zingAllWhite2 from "@/assets/zing-all-white-2.jpg";
 import zingAllWhite3 from "@/assets/zing-all-white-3.jpg";
+import zingAllWhite4 from "@/assets/zing-all-white-4.jpg";
+import zingAllWhite5 from "@/assets/zing-all-white-5.jpg";
+import zingAllWhite6 from "@/assets/zing-all-white-6.jpg";
+import zingAllWhite7 from "@/assets/zing-all-white-7.jpg";
 
 import enigmaIvory1 from "@/assets/enigma-ivory-1.png";
 import enigmaIvory2 from "@/assets/enigma-ivory-2.jpg";
@@ -48,7 +56,15 @@ export const products: Product[] = [
     subtitle: "Blanco y negro · zapatilla barefoot para uso diario",
     price: 160,
     currency: "$",
-    images: [zingWhiteBlack1, zingWhiteBlack2, zingWhiteBlack3],
+    images: [
+      zingWhiteBlack1,
+      zingWhiteBlack2,
+      zingWhiteBlack3,
+      zingWhiteBlack4,
+      zingWhiteBlack5,
+      zingWhiteBlack6,
+      zingWhiteBlack7,
+    ],
     tag: "Más vendido",
     features: [
       "Diseño urbano fácil de combinar",
@@ -63,7 +79,15 @@ export const products: Product[] = [
     subtitle: "Todo blanco · minimalismo limpio",
     price: 160,
     currency: "$",
-    images: [zingAllWhite1, zingAllWhite2, zingAllWhite3],
+    images: [
+      zingAllWhite1,
+      zingAllWhite2,
+      zingAllWhite3,
+      zingAllWhite4,
+      zingAllWhite5,
+      zingAllWhite6,
+      zingAllWhite7,
+    ],
     features: [
       "Estética limpia",
       "Drop cero",
