@@ -60,7 +60,7 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
         <Navbar />
 
         <main className="pt-20 lg:pt-24">
-          <div className="container mx-auto px-6 lg:px-12 py-8 lg:py-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-6 lg:py-12">
             <Link
               to="/collection"
               className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
@@ -69,7 +69,7 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
               Volver a la colección
             </Link>
 
-            <div className="grid lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.9fr)] gap-10 lg:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
               <ProductImageGallery
                 images={product.images}
                 productName={product.name}
@@ -138,13 +138,13 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-5 gap-3">
+                  <div className="grid grid-cols-5 sm:grid-cols-5 gap-2 sm:gap-3">
                     {sizes.map((size) => (
                       <button
                         key={size}
                         type="button"
                         onClick={() => setSelectedSize(size)}
-                        className={`h-12 border bg-background text-sm transition-colors ${
+                        className={`h-11 sm:h-12 border bg-background text-sm transition-colors ${
                           selectedSize === size
                             ? "border-foreground text-foreground"
                             : "border-border text-foreground hover:border-foreground"

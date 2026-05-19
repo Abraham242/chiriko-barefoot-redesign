@@ -52,7 +52,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
 
   return (
     <>
-      <div className="w-full max-w-[760px] xl:max-w-[820px] grid gap-4 lg:grid-cols-[88px_1fr] lg:items-start">
+      <div className="w-full max-w-full overflow-hidden grid gap-3 lg:grid-cols-[78px_minmax(0,1fr)] lg:items-start">
         <div className="hidden gap-3 lg:flex lg:flex-col">
           {images.map((image, index) => (
             <button
@@ -67,7 +67,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                 src={image}
                 alt={`${productName} miniatura ${index + 1}`}
                 widths={[120, 180]}
-                sizes="88px"
+                sizes="78px"
                 width={180}
                 height={180}
                 loading="lazy"
@@ -77,8 +77,8 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
           ))}
         </div>
 
-        <div className="space-y-3">
-          <div className="relative flex items-center justify-center overflow-hidden bg-background aspect-square max-h-[720px]">
+        <div className="space-y-3 w-full max-w-full">
+          <div className="relative flex w-full max-w-full aspect-square lg:aspect-[4/3] items-center justify-center overflow-hidden bg-white">
             <ResponsiveImage
               src={images[selectedIndex]}
               alt={`${productName} imagen ${selectedIndex + 1}`}
@@ -88,14 +88,14 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               height={1200}
               loading="eager"
               fetchPriority="high"
-              className="h-full w-full object-contain scale-105 md:scale-110 transition-transform duration-300"
+              className="h-full w-full object-contain p-2 sm:p-4 md:p-6 lg:scale-105 transition-transform duration-300"
             />
 
             <button
               type="button"
               onClick={goPrev}
               aria-label="Imagen anterior"
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-11 w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
+              className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
             >
               <ChevronLeft size={18} />
             </button>
@@ -104,7 +104,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               type="button"
               onClick={goNext}
               aria-label="Imagen siguiente"
-              className="absolute right-3 top-1/2 -translate-y-1/2 h-11 w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
             >
               <ChevronRight size={18} />
             </button>
@@ -113,19 +113,19 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               type="button"
               onClick={openLightbox}
               aria-label="Ampliar imagen"
-              className="absolute right-3 top-3 h-11 w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
+              className="absolute right-3 top-3 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
             >
               <Expand size={18} />
             </button>
           </div>
 
-          <div className="flex lg:hidden gap-2 overflow-x-auto pb-1">
+          <div className="flex lg:hidden gap-2 overflow-x-auto max-w-full pb-1">
             {images.map((image, index) => (
               <button
                 key={`${image}-mobile-${index}`}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className={`overflow-hidden border min-w-20 ${
+                className={`h-16 w-16 min-w-16 overflow-hidden bg-white border ${
                   selectedIndex === index ? "border-foreground" : "border-border"
                 }`}
               >
@@ -133,11 +133,11 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                   src={image}
                   alt={`${productName} miniatura móvil ${index + 1}`}
                   widths={[120, 180]}
-                  sizes="80px"
+                  sizes="64px"
                   width={120}
                   height={120}
                   loading="lazy"
-                  className="aspect-square h-20 w-20 object-cover"
+                  className="aspect-square h-16 w-16 object-cover"
                 />
               </button>
             ))}
@@ -147,10 +147,10 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
 
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-50 bg-[#1A1A18]/85 p-4 flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-[#1A1A18]/85 p-3 sm:p-4 flex items-center justify-center overflow-hidden"
           onClick={closeLightbox}
         >
-          <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full max-w-5xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={closeLightbox}
@@ -177,7 +177,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               width={1600}
               height={1600}
               loading="eager"
-              className="w-full max-h-[85vh] object-contain"
+              className="max-h-[82vh] w-full object-contain"
             />
 
             <button
