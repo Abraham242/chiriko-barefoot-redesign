@@ -69,8 +69,8 @@ const SizeGuidePage = () => {
   return (
     <>
       <SEO
-        title="Guía de Tallas Barefoot"
-        description="Aprende a medir tu pie y encontrar tu talla ideal en zapatos barefoot. Guía simple, tabla de medidas y asesoría personalizada por WhatsApp en Venezuela."
+        title="Guía de tallas | Zapatos para pies anchos en Venezuela"
+        description="Guía de tallas para calzado barefoot Venezuela: mide tu pie en casa y elige zapatos para pies anchos con una transición responsable. Asesoría desde Caracas."
         path="/size-guide"
       />
 

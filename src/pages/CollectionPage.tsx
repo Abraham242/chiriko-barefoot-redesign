@@ -28,9 +28,16 @@ const CollectionPage = () => {
   return (
     <>
       <SEO
-        title="Colección"
-        description="Descubre todos los modelos barefoot y de transición de Chiriko Studio en una colección premium con asesoría personalizada por preventa."
+        title="Zapatos Barefoot Venezuela | Colección Chiriko Studio"
+        description="Explora zapatos barefoot Venezuela y calzado respetuoso Venezuela de Barebarics y Be Lenka en Caracas. Modelos para pies anchos y transición responsable en preventa."
         path="/collection"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Colección de calzado barefoot y respetuoso en Venezuela",
+          url: "https://chirikostudio.com/collection",
+          inLanguage: "es-VE",
+        }}
       />
 
       <div className="min-h-screen bg-background">
