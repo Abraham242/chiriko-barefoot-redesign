@@ -52,14 +52,14 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
 
   return (
     <>
-      <div className="w-full max-w-full overflow-hidden grid gap-3 lg:grid-cols-[78px_minmax(0,1fr)] lg:items-start">
+      <div className="grid w-full max-w-full gap-3 overflow-hidden lg:grid-cols-[78px_minmax(0,1fr)] lg:items-start">
         <div className="hidden gap-3 lg:flex lg:flex-col">
           {images.map((image, index) => (
             <button
               key={`${image}-${index}`}
               type="button"
               onClick={() => setSelectedIndex(index)}
-              className={`overflow-hidden border transition-colors ${
+              className={`flex h-16 w-16 min-w-[4rem] items-center justify-center overflow-hidden border bg-white p-1 transition-colors ${
                 selectedIndex === index ? "ring-1 ring-foreground" : "ring-1 ring-border"
               }`}
             >
@@ -71,14 +71,14 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                 width={180}
                 height={180}
                 loading="lazy"
-                className="aspect-square w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </button>
           ))}
         </div>
 
-        <div className="space-y-3 w-full max-w-full">
-          <div className="relative flex w-full max-w-full aspect-[4/3] items-center justify-center overflow-hidden bg-white lg:aspect-[4/3]">
+        <div className="w-full max-w-full space-y-3 overflow-hidden">
+          <div className="relative flex w-full max-w-full aspect-[4/3] items-center justify-center overflow-hidden bg-white">
             <ResponsiveImage
               src={images[selectedIndex]}
               alt={`${productName} imagen ${selectedIndex + 1}`}
@@ -119,13 +119,13 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
             </button>
           </div>
 
-          <div className="flex lg:hidden gap-2 overflow-x-auto max-w-full pb-1">
+          <div className="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide pb-1 max-w-full lg:hidden">
             {images.map((image, index) => (
               <button
                 key={`${image}-mobile-${index}`}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className={`h-16 w-16 min-w-[4rem] overflow-hidden bg-white ${
+                className={`flex h-16 w-16 min-w-[4rem] items-center justify-center overflow-hidden border bg-white p-1 ${
                   selectedIndex === index ? "ring-1 ring-foreground" : "ring-1 ring-border"
                 }`}
               >
@@ -137,7 +137,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                   width={120}
                   height={120}
                   loading="lazy"
-                  className="h-16 w-16 object-contain"
+                  className="h-full w-full object-contain"
                 />
               </button>
             ))}
