@@ -43,8 +43,34 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
     whatsappMessage
   )}`;
 
-  const seoTitle = `${product.name} | Barefoot en Venezuela`;
-  const seoDescription = `${product.name}: ${product.subtitle}. Calzado barefoot premium en Venezuela con asesoría personalizada por WhatsApp.`;
+  const seoTitle = `${product.name} | Zapatos barefoot Venezuela`;
+  const seoDescription = `${product.name} de ${product.brand} en Chiriko Studio, Caracas. Calzado respetuoso Venezuela con pisada plana y estable, más espacio para tus dedos y preventa asistida.`;
+
+  const productUrl = `https://chirikostudio.com/product/${product.id}`;
+  const imageUrl = product.images[0].startsWith("http")
+    ? product.images[0]
+    : `https://chirikostudio.com${product.images[0]}`;
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: seoDescription,
+    image: product.images.map((image) =>
+      image.startsWith("http") ? image : `https://chirikostudio.com${image}`
+    ),
+    brand: {
+      "@type": "Brand",
+      name: product.brand,
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: product.price > 0 ? String(product.price) : "0",
+      availability: "https://schema.org/PreOrder",
+      url: productUrl,
+    },
+  };
 
   return (
     <>
@@ -52,7 +78,9 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
         title={seoTitle}
         description={seoDescription}
         path={`/product/${product.id}`}
-        image={product.images[0]}
+        image={imageUrl}
+        ogType="product"
+        jsonLd={productJsonLd}
       />
 
       <div className="min-h-screen bg-background">

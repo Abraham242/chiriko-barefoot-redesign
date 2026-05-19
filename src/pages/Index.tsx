@@ -19,9 +19,16 @@ const Index = () => {
   return (
     <>
       <SEO
-        title="Barefoot Shoes en Venezuela"
-        description="Calzado barefoot premium en Venezuela. Movimiento natural, diseño minimalista y asesoría personalizada por WhatsApp para ayudarte a elegir tu talla."
+        title="Calzado Barefoot Venezuela | Chiriko Studio Caracas"
+        description="Calzado barefoot Venezuela y zapatos respetuosos Venezuela en Chiriko Studio, Caracas. Más espacio para tus dedos, sensación de movimiento natural y transición responsable."
         path="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Chiriko Studio",
+          url: "https://chirikostudio.com/",
+          inLanguage: "es-VE",
+        }}
       />
 
       <div className="min-h-screen bg-background">
