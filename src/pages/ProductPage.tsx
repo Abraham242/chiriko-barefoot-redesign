@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import SizeChartModal from "@/components/SizeChartModal";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import { products } from "@/data/products";
@@ -265,7 +264,6 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
         </main>
 
         <Footer />
-        <WhatsAppButton />
         <SizeChartModal
           open={isSizeChartOpen}
           onClose={() => setIsSizeChartOpen(false)}
