@@ -88,7 +88,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               height={1200}
               loading="eager"
               fetchPriority="high"
-              className="h-full w-full object-contain p-2 sm:p-4 md:p-6 lg:scale-105 transition-transform duration-300"
+              className="max-h-full max-w-full object-contain p-4 sm:p-6 lg:p-8 lg:scale-105"
             />
 
             <button
@@ -125,7 +125,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                 key={`${image}-mobile-${index}`}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className={`h-16 w-16 min-w-16 overflow-hidden bg-white border ${
+                className={`h-16 w-16 min-w-[4rem] overflow-hidden bg-white border ${
                   selectedIndex === index ? "border-foreground" : "border-border"
                 }`}
               >
