@@ -60,7 +60,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               type="button"
               onClick={() => setSelectedIndex(index)}
               className={`overflow-hidden border transition-colors ${
-                selectedIndex === index ? "border-foreground" : "border-border"
+                selectedIndex === index ? "ring-1 ring-foreground" : "ring-1 ring-border"
               }`}
             >
               <ResponsiveImage
@@ -78,7 +78,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
         </div>
 
         <div className="space-y-3 w-full max-w-full">
-          <div className="relative flex w-full max-w-full aspect-square lg:aspect-[4/3] items-center justify-center overflow-hidden bg-white">
+          <div className="relative flex w-full max-w-full aspect-[4/3] items-center justify-center overflow-hidden bg-white lg:aspect-[4/3]">
             <ResponsiveImage
               src={images[selectedIndex]}
               alt={`${productName} imagen ${selectedIndex + 1}`}
@@ -88,14 +88,14 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               height={1200}
               loading="eager"
               fetchPriority="high"
-              className="max-h-full max-w-full object-contain p-4 sm:p-6 lg:p-8 lg:scale-105"
+              className="block max-h-full max-w-full object-contain p-3 sm:p-4 lg:p-6 lg:scale-105"
             />
 
             <button
               type="button"
               onClick={goPrev}
               aria-label="Imagen anterior"
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
             >
               <ChevronLeft size={18} />
             </button>
@@ -104,7 +104,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               type="button"
               onClick={goNext}
               aria-label="Imagen siguiente"
-              className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
             >
               <ChevronRight size={18} />
             </button>
@@ -113,7 +113,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
               type="button"
               onClick={openLightbox}
               aria-label="Ampliar imagen"
-              className="absolute right-3 top-3 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
+              className="absolute right-2 top-2 h-10 w-10 sm:h-11 sm:w-11 border border-border/70 bg-background/85 flex items-center justify-center text-foreground"
             >
               <Expand size={18} />
             </button>
@@ -125,8 +125,8 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                 key={`${image}-mobile-${index}`}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className={`h-16 w-16 min-w-[4rem] overflow-hidden bg-white border ${
-                  selectedIndex === index ? "border-foreground" : "border-border"
+                className={`h-16 w-16 min-w-[4rem] overflow-hidden bg-white ${
+                  selectedIndex === index ? "ring-1 ring-foreground" : "ring-1 ring-border"
                 }`}
               >
                 <ResponsiveImage
@@ -137,7 +137,7 @@ const ProductImageGallery = ({ images, productName }: ProductImageGalleryProps) 
                   width={120}
                   height={120}
                   loading="lazy"
-                  className="aspect-square h-16 w-16 object-cover"
+                  className="h-16 w-16 object-contain"
                 />
               </button>
             ))}
