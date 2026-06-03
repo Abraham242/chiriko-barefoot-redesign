@@ -30,14 +30,17 @@ const ProductPage = () => {
   }
 
   const whatsappMessage = selectedSize
-    ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
+    ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko 👋
 
 Mi talla habitual es ${selectedSize}.
+Quiero confirmar mi talla correcta, color disponible y cómo reservar este modelo en preventa.
 
-Quiero confirmar disponibilidad y saber cuál sería mi talla correcta en este modelo.`
-    : `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko.
+Entiendo que la entrega estimada es de 3 a 4 semanas desde que confirme mi reserva. Si llega antes, mejor.`
+    : `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko 👋
 
-Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
+Quiero reservarlo en preventa, pero primero necesito ayuda para confirmar talla, color y disponibilidad.
+
+Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de la reserva. Si llega antes, mejor.`;
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     whatsappMessage
@@ -139,7 +142,8 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                 </div>
 
                 <p className="text-sm text-muted-foreground mb-6">
-                  Alta demanda — consulta disponibilidad antes de que se agoten
+                  Preventa asistida · entrega estimada 3–4 semanas desde tu
+                  confirmación
                 </p>
 
                 <div className="mb-8 border-l border-foreground/20 pl-4">
@@ -183,18 +187,18 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                   </div>
 
                   <p className="mt-4 font-body text-sm text-muted-foreground">
-                    La confirmaremos por WhatsApp según la medida de tu pie en
-                    centímetros.
+                    Usamos tu talla habitual como referencia y la confirmamos contigo
+                    por WhatsApp antes de reservar.
                   </p>
                 </div>
 
                 <div className="mb-6 bg-secondary/40 p-5">
                   <p className="font-body text-sm text-foreground leading-relaxed">
-                    ✔ Te ayudamos personalmente por WhatsApp
+                    ✔ Te guiamos antes de reservar
                     <br />
-                    ✔ Recomendación de talla exacta
+                    ✔ Confirmamos talla y color por WhatsApp
                     <br />
-                    ✔ Envíos en toda Venezuela
+                    ✔ Entrega estimada 3–4 semanas
                   </p>
                 </div>
 
@@ -206,12 +210,12 @@ Quiero confirmar disponibilidad y recibir ayuda para elegir la talla correcta.`;
                     className="w-full h-14 bg-foreground text-primary-foreground flex items-center justify-center gap-2 font-body text-sm tracking-[0.18em] uppercase hover:bg-foreground/90 transition-colors"
                   >
                     <MessageCircle size={16} />
-                    Confirmar talla y disponibilidad
+                    Reservar en preventa
                   </a>
                 </div>
 
                 <p className="text-xs text-muted-foreground text-center mb-10">
-                  Respuesta en menos de 10 minutos
+                  Te respondemos en el día — generalmente en minutos.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">

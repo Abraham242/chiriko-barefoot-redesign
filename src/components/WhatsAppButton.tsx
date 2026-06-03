@@ -1,15 +1,18 @@
 import { MessageCircle } from "lucide-react";
 
 const phoneNumber = "584221798072";
-const whatsappMessage = `Hola, vengo de chirikostudio.com 👋  
-Quiero ayuda para elegir mi talla y modelo barefoot.`;
+const whatsappMessage = `Hola, vengo de chirikostudio.com 👋
+Estoy interesado/a en la preventa de Chiriko.
+
+Quiero ver modelos disponibles, confirmar mi talla y saber cómo reservar.
+Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación. Si llega antes, mejor.`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
 const WhatsAppButton = () => {
   return (
     <div className="fixed bottom-5 right-5 z-50 flex items-end gap-3">
       <div className="hidden rounded-full border border-border bg-background/95 px-4 py-2 text-sm text-foreground shadow-sm backdrop-blur md:block">
-        Te ayudamos con tu talla
+        Reserva tu talla en preventa
       </div>
 
       <a

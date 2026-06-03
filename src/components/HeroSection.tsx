@@ -4,8 +4,11 @@ import heroUrban from "@/assets/hero-urban-zing.jpg";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const phoneNumber = "584221798072";
-const whatsappMessage =
-  "Hola, vengo de chirikostudio.com y quiero ayuda para elegir el modelo y la talla correcta.";
+const whatsappMessage = `Hola, vengo de chirikostudio.com 👋
+Quiero reservar en preventa un par de Chiriko.
+
+Me gustaría que me ayuden a elegir modelo, color y talla.
+Entiendo que la entrega estimada es de 3 a 4 semanas desde que confirme mi reserva. Si llega antes, mejor.`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
 const heroSlides = [
@@ -56,7 +59,7 @@ const HeroSection = () => {
         <div className="container mx-auto px-6 lg:px-12 pb-14 pt-32 md:pb-20 lg:pb-24">
           <div className="max-w-3xl">
             <p className="mb-5 font-body text-[11px] md:text-xs uppercase tracking-[0.22em] text-primary-foreground/80">
-              Calzado natural en Venezuela
+              Preventa asistida · entrega estimada 3–4 semanas
             </p>
 
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
@@ -68,7 +71,7 @@ const HeroSection = () => {
                 href="#shop"
                 className="inline-flex h-14 items-center justify-center bg-[#F7F5F0] px-8 font-body text-[12px] uppercase tracking-[0.18em] text-[#1A1A18] transition-all duration-300 hover:bg-white"
               >
-                Ver modelos
+                Ver preventa
               </a>
 
               <a
@@ -77,35 +80,35 @@ const HeroSection = () => {
                 rel="noopener noreferrer"
                 className="inline-flex h-14 items-center justify-center border border-primary-foreground/45 px-8 font-body text-[12px] uppercase tracking-[0.18em] text-primary-foreground transition-all duration-300 hover:border-primary-foreground hover:bg-primary-foreground/10"
               >
-                Recibir asesoría
+                Reservar por WhatsApp
               </a>
             </div>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
               <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
                 <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Modelos
+                  Preventa
                 </p>
                 <p className="mt-1 font-body text-sm text-primary-foreground">
-                  Barefoot y transición
+                  Reserva asistida
                 </p>
               </div>
 
               <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
                 <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Asesoría
+                  Talla
                 </p>
                 <p className="mt-1 font-body text-sm text-primary-foreground">
-                  Talla por WhatsApp
+                  La confirmamos contigo
                 </p>
               </div>
 
               <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
                 <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Envíos
+                  Entrega
                 </p>
                 <p className="mt-1 font-body text-sm text-primary-foreground">
-                  A toda Venezuela
+                  Estimada 3–4 semanas
                 </p>
               </div>
             </div>
