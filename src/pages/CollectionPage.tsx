@@ -51,13 +51,17 @@ const CollectionPage = () => {
                   Colección
                 </h1>
                 <p className="font-body text-sm tracking-wide text-muted-foreground max-w-2xl">
-                  Modelos barefoot y de transición disponibles bajo preventa asistida.
+                  Modelos barefoot y de transición disponibles en preventa asistida.
+                  Confirmamos tu talla por WhatsApp y coordinamos tu reserva.
                 </p>
               </div>
 
-              <p className="font-body text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:pb-2">
-                PREVENTA ASISTIDA
-              </p>
+              <div className="font-body text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:pb-2 md:text-right">
+                <p>PREVENTA ASISTIDA</p>
+                <p className="mt-1 normal-case tracking-[0.08em]">
+                  Entrega estimada 3–4 semanas
+                </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-12">

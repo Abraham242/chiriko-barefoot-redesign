@@ -22,8 +22,8 @@ const BestSellers = () => {
           </h2>
 
           <p className="font-body text-muted-foreground text-sm tracking-wide max-w-2xl mx-auto">
-            Una selección de modelos barefoot y de transición para moverte con
-            libertad, mejorar tu postura y caminar con mayor comodidad natural.
+            Modelos barefoot y de transición disponibles en preventa asistida. Te
+            ayudamos a confirmar talla, color y reserva por WhatsApp.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ const BestSellers = () => {
             to="/collection"
             className="inline-flex h-11 items-center justify-center border border-border px-6 text-[12px] tracking-[0.16em] uppercase text-foreground transition-colors hover:border-foreground"
           >
-            Ver colección completa
+            Ver modelos en preventa
           </Link>
         </div>
       </div>
