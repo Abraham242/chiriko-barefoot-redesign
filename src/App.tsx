@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import ProductPage from "./pages/ProductPage";
+import PoliciesPage from "./pages/PoliciesPage";
 import SizeGuidePage from "./pages/SizeGuidePage";
 import QueEsCalzadoBarefoot from "./pages/que-es-calzado-barefoot";
 import NotFound from "./pages/NotFound";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/size-guide" element={<SizeGuidePage />} />
           <Route path="/collection" element={<CollectionPage />} />
+          <Route path="/politicas" element={<PoliciesPage />} />
           {/* ── Contenido educativo ── */}
           <Route
             path="/aprende/que-es-calzado-barefoot"
