@@ -2,8 +2,10 @@ import { Instagram, Mail, MessageCircle } from "lucide-react";
 
 const phoneNumber = "584221798072";
 
-const whatsappMessage = `Hola, vengo de chirikostudio.com 👋  
-Quiero ayuda para elegir mi talla y modelo barefoot.`;
+const whatsappMessage = `Hola, vengo de chirikostudio.com 👋
+Estoy interesado/a en la preventa de Chiriko.
+
+Quiero ver modelos disponibles, confirmar mi talla y saber cómo reservar.`;
 
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
   whatsappMessage
@@ -40,6 +42,7 @@ const Footer = () => {
               <li><a href="/#shop" className="hover:text-foreground transition-colors">Colección</a></li>
               <li><a href="/#learn" className="hover:text-foreground transition-colors">Filosofía</a></li>
               <li><a href="/size-guide" className="hover:text-foreground transition-colors">Guía de Tallas</a></li>
+              <li><a href="/politicas" className="hover:text-foreground transition-colors">Políticas de compra</a></li>
               {/* ── NUEVO: Link al artículo ── */}
               <li>
                 <a href="/aprende/que-es-calzado-barefoot" className="hover:text-foreground transition-colors">

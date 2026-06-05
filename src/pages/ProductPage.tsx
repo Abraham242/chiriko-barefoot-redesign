@@ -214,9 +214,17 @@ Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de l
                   </a>
                 </div>
 
-                <p className="text-xs text-muted-foreground text-center mb-10">
-                  Te respondemos en el día — generalmente en minutos.
-                </p>
+                <div className="text-center mb-10">
+                  <p className="text-xs text-muted-foreground">
+                    Te respondemos en el día — generalmente en minutos.
+                  </p>
+                  <Link
+                    to="/politicas"
+                    className="mt-3 inline-flex font-body text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
+                  >
+                    Ver políticas de reserva, cambios y devoluciones
+                  </Link>
+                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
                   <div className="border border-border p-4">
