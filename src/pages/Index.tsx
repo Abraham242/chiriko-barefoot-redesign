@@ -22,13 +22,26 @@ const Index = () => {
         title="Calzado Barefoot Venezuela | Chiriko Studio Caracas"
         description="Calzado barefoot Venezuela y zapatos respetuosos Venezuela en Chiriko Studio, Caracas. Más espacio para tus dedos, sensación de movimiento natural y transición responsable."
         path="/"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Chiriko Studio",
-          url: "https://chirikostudio.com/",
-          inLanguage: "es-VE",
-        }}
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Chiriko Studio",
+            url: "https://chirikostudio.com/",
+            inLanguage: "es-VE",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Chiriko Studio",
+            url: "https://chirikostudio.com/",
+            logo: "https://chirikostudio.com/logo-black.svg",
+            sameAs: ["https://www.instagram.com/chiriko.studio"],
+            areaServed: "Venezuela",
+            description:
+              "Calzado barefoot y respetuoso en Venezuela con preventa asistida y asesoría personalizada por WhatsApp.",
+          },
+        ]}
       />
 
       <div className="min-h-screen bg-background">

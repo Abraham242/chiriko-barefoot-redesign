@@ -69,9 +69,27 @@ const SizeGuidePage = () => {
   return (
     <>
       <SEO
-        title="Guía de tallas | Zapatos para pies anchos en Venezuela"
-        description="Guía de tallas para calzado barefoot Venezuela: mide tu pie en casa y elige zapatos para pies anchos con una transición responsable. Asesoría desde Caracas."
+        title="Guía de tallas barefoot | Chiriko Studio Venezuela"
+        description="Consulta la guía de tallas barefoot de Chiriko Studio Venezuela y aprende a medir tu pie en centímetros para confirmar tu talla por WhatsApp."
         path="/size-guide"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Inicio",
+              item: "https://chirikostudio.com/",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Guía de tallas",
+              item: "https://chirikostudio.com/size-guide",
+            },
+          ],
+        }}
       />
 
       <div className="min-h-screen bg-background">

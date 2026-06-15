@@ -6,14 +6,12 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 // ─── Schema JSON-LD para Google ─────────────────────────────────────────────
-// Esto le dice a Google que es un artículo de blog con autor y fecha.
-// Mejora drásticamente el ranking en búsquedas informacionales.
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "¿Qué es el calzado barefoot? Guía completa para Venezuela",
+  headline: "¿Qué es el calzado barefoot? Guía para Venezuela",
   description:
-    "Descubre qué es el calzado barefoot o minimalista, sus beneficios para la postura y salud del pie, y cómo elegir tu primer par en Venezuela.",
+    "Descubre qué es el calzado barefoot y el calzado respetuoso, sus características y cómo hacer una transición responsable en Venezuela.",
   author: {
     "@type": "Organization",
     name: "Chiriko Studio",
@@ -23,9 +21,33 @@ const articleSchema = {
     name: "Chiriko Studio",
     url: "https://chirikostudio.com",
   },
-  datePublished: "2025-01-01",
-  dateModified: "2025-01-01",
   mainEntityOfPage: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+  inLanguage: "es-VE",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Inicio",
+      item: "https://chirikostudio.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Aprende",
+      item: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Qué es el calzado barefoot",
+      item: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+    },
+  ],
 };
 
 // ─── Datos de las secciones de beneficios ───────────────────────────────────
@@ -105,15 +127,10 @@ const QueEsCalzadoBarefoot = () => {
   return (
     <>
       <SEO
-        title="¿Qué es el calzado barefoot? Guía completa"
-        description="Descubre qué es el calzado barefoot o minimalista, sus beneficios para la postura y salud del pie, y cómo elegir tu primer par en Venezuela. Guía completa de Chiriko Studio."
+        title="¿Qué es el calzado barefoot? | Guía en Venezuela"
+        description="Descubre qué es el calzado barefoot y el calzado respetuoso, sus características y cómo hacer una transición responsable en Venezuela con Chiriko Studio."
         path="/aprende/que-es-calzado-barefoot"
-      />
-
-      {/* Schema JSON-LD inyectado en el <head> */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        jsonLd={[articleSchema, breadcrumbSchema]}
       />
 
       <div className="min-h-screen bg-background">
