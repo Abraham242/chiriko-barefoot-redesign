@@ -55,7 +55,7 @@ const benefits = [
   {
     title: "Drop cero",
     description:
-      "El talón y la punta están a la misma altura. Esto elimina la inclinación artificial que obliga a tu cuerpo a compensar con la postura, generando tensión en rodillas, cadera y espalda baja.",
+      "El talón y la punta están a la misma altura. Esto elimina la inclinación artificial que obliga a tu cuerpo a compensar con la postura, haciendo que tu cuerpo compense de forma innecesaria.",
     icon: (
       <svg width="36" height="28" viewBox="0 0 40 24" fill="none" className="text-foreground">
         <line x1="0" y1="22" x2="40" y2="22" stroke="currentColor" strokeWidth="1.5" />
@@ -66,7 +66,7 @@ const benefits = [
   {
     title: "Caja de dedos ancha",
     description:
-      "Los zapatos convencionales comprimen los dedos hacia un punto. El barefoot los libera, permitiendo que se expandan y funcionen como la base de estabilidad que son. Previene juanetes y fascitis plantar.",
+      "Los zapatos convencionales comprimen los dedos hacia un punto. El barefoot los libera, permitiendo que se expandan y funcionen como la base de estabilidad que son. Puede ayudar a que los dedos tengan más espacio y se muevan con mayor libertad.",
     icon: (
       <svg width="32" height="36" viewBox="0 0 32 36" fill="none" className="text-foreground">
         <path d="M6 30 C6 30 8 6 16 4 C24 6 26 30 26 30" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
@@ -106,7 +106,7 @@ const faqs = [
   },
   {
     q: "¿Sirve para fascitis plantar o juanetes?",
-    a: "Muchos usuarios reportan mejoría significativa en fascitis plantar y dolor de juanetes después de varios meses de transición. Sin embargo, si tienes una condición diagnosticada, consulta siempre con un especialista antes de cambiar tu calzado.",
+    a: "El calzado barefoot puede resultar más cómodo para algunas personas porque ofrece más espacio para los dedos y una pisada más natural. Pero si tienes dolor, fascitis plantar, juanetes o una condición diagnosticada, lo correcto es consultar con un especialista antes de hacer la transición.",
   },
   {
     q: "¿Cuánto tiempo tarda la transición?",
