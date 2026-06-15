@@ -6,14 +6,12 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 // ─── Schema JSON-LD para Google ─────────────────────────────────────────────
-// Esto le dice a Google que es un artículo de blog con autor y fecha.
-// Mejora drásticamente el ranking en búsquedas informacionales.
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "¿Qué es el calzado barefoot? Guía completa para Venezuela",
+  headline: "¿Qué es el calzado barefoot? Guía para Venezuela",
   description:
-    "Descubre qué es el calzado barefoot o minimalista, sus beneficios para la postura y salud del pie, y cómo elegir tu primer par en Venezuela.",
+    "Descubre qué es el calzado barefoot y el calzado respetuoso, sus características y cómo hacer una transición responsable en Venezuela.",
   author: {
     "@type": "Organization",
     name: "Chiriko Studio",
@@ -23,9 +21,33 @@ const articleSchema = {
     name: "Chiriko Studio",
     url: "https://chirikostudio.com",
   },
-  datePublished: "2025-01-01",
-  dateModified: "2025-01-01",
   mainEntityOfPage: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+  inLanguage: "es-VE",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Inicio",
+      item: "https://chirikostudio.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Aprende",
+      item: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Qué es el calzado barefoot",
+      item: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+    },
+  ],
 };
 
 // ─── Datos de las secciones de beneficios ───────────────────────────────────
@@ -33,7 +55,7 @@ const benefits = [
   {
     title: "Drop cero",
     description:
-      "El talón y la punta están a la misma altura. Esto elimina la inclinación artificial que obliga a tu cuerpo a compensar con la postura, generando tensión en rodillas, cadera y espalda baja.",
+      "El talón y la punta están a la misma altura. Esto elimina la inclinación artificial que obliga a tu cuerpo a compensar con la postura, haciendo que tu cuerpo compense de forma innecesaria.",
     icon: (
       <svg width="36" height="28" viewBox="0 0 40 24" fill="none" className="text-foreground">
         <line x1="0" y1="22" x2="40" y2="22" stroke="currentColor" strokeWidth="1.5" />
@@ -44,7 +66,7 @@ const benefits = [
   {
     title: "Caja de dedos ancha",
     description:
-      "Los zapatos convencionales comprimen los dedos hacia un punto. El barefoot los libera, permitiendo que se expandan y funcionen como la base de estabilidad que son. Previene juanetes y fascitis plantar.",
+      "Los zapatos convencionales comprimen los dedos hacia un punto. El barefoot los libera, permitiendo que se expandan y funcionen como la base de estabilidad que son. Puede ayudar a que los dedos tengan más espacio y se muevan con mayor libertad.",
     icon: (
       <svg width="32" height="36" viewBox="0 0 32 36" fill="none" className="text-foreground">
         <path d="M6 30 C6 30 8 6 16 4 C24 6 26 30 26 30" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
@@ -84,7 +106,7 @@ const faqs = [
   },
   {
     q: "¿Sirve para fascitis plantar o juanetes?",
-    a: "Muchos usuarios reportan mejoría significativa en fascitis plantar y dolor de juanetes después de varios meses de transición. Sin embargo, si tienes una condición diagnosticada, consulta siempre con un especialista antes de cambiar tu calzado.",
+    a: "El calzado barefoot puede resultar más cómodo para algunas personas porque ofrece más espacio para los dedos y una pisada más natural. Pero si tienes dolor, fascitis plantar, juanetes o una condición diagnosticada, lo correcto es consultar con un especialista antes de hacer la transición.",
   },
   {
     q: "¿Cuánto tiempo tarda la transición?",
@@ -92,7 +114,7 @@ const faqs = [
   },
   {
     q: "¿Los niños pueden usar barefoot?",
-    a: "Sí, y muchos podólogos lo recomiendan activamente. Los pies de los niños están en desarrollo y el barefoot permite que esa formación ocurra de manera natural, sin deformar la estructura del pie.",
+    a: "Sí, siempre que sea un calzado adecuado para su etapa y se elija bien la talla. Los pies de los niños están en desarrollo y el barefoot permite que esa formación ocurra de manera natural, sin deformar la estructura del pie.",
   },
   {
     q: "¿Dónde puedo conseguir calzado barefoot en Venezuela?",
@@ -105,15 +127,10 @@ const QueEsCalzadoBarefoot = () => {
   return (
     <>
       <SEO
-        title="¿Qué es el calzado barefoot? Guía completa"
-        description="Descubre qué es el calzado barefoot o minimalista, sus beneficios para la postura y salud del pie, y cómo elegir tu primer par en Venezuela. Guía completa de Chiriko Studio."
+        title="¿Qué es el calzado barefoot? | Guía en Venezuela"
+        description="Descubre qué es el calzado barefoot y el calzado respetuoso, sus características y cómo hacer una transición responsable en Venezuela con Chiriko Studio."
         path="/aprende/que-es-calzado-barefoot"
-      />
-
-      {/* Schema JSON-LD inyectado en el <head> */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        jsonLd={[articleSchema, breadcrumbSchema]}
       />
 
       <div className="min-h-screen bg-background">

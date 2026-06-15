@@ -46,8 +46,8 @@ Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de l
     whatsappMessage
   )}`;
 
-  const seoTitle = `${product.name} | Zapatos barefoot Venezuela`;
-  const seoDescription = `${product.name} de ${product.brand} en Chiriko Studio, Caracas. Calzado respetuoso Venezuela con pisada plana y estable, más espacio para tus dedos y preventa asistida.`;
+  const seoTitle = `${product.name} en Venezuela | Chiriko Studio`;
+  const seoDescription = `${product.name} de ${product.brand} en preventa asistida en Venezuela. Calzado barefoot y respetuoso con talla confirmada por WhatsApp y entrega estimada 3–4 semanas.`;
 
   const productUrl = `https://chirikostudio.com/product/${product.id}`;
   const imageUrl = product.images[0].startsWith("http")
@@ -58,6 +58,8 @@ Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de l
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
+    sku: product.id,
+    category: "Calzado barefoot y respetuoso",
     description: seoDescription,
     image: product.images.map((image) =>
       image.startsWith("http") ? image : `https://chirikostudio.com${image}`
@@ -71,8 +73,39 @@ Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de l
       priceCurrency: "USD",
       price: product.price > 0 ? String(product.price) : "0",
       availability: "https://schema.org/PreOrder",
+      itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
+      seller: {
+        "@type": "Organization",
+        name: "Chiriko Studio",
+        url: "https://chirikostudio.com",
+      },
     },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Inicio",
+        item: "https://chirikostudio.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Colección",
+        item: "https://chirikostudio.com/collection",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.name,
+        item: productUrl,
+      },
+    ],
   };
 
   return (
@@ -83,7 +116,7 @@ Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de l
         path={`/product/${product.id}`}
         image={imageUrl}
         ogType="product"
-        jsonLd={productJsonLd}
+        jsonLd={[productJsonLd, breadcrumbJsonLd]}
       />
 
       <div className="min-h-screen bg-background">

@@ -58,6 +58,34 @@ const PoliciesPage = () => {
         title="Políticas de compra, reservas y devoluciones | Chiriko Studio"
         description="Consulta las políticas de reserva, preventa asistida, cambios, devoluciones y reembolsos de Chiriko Studio. Calzado barefoot y respetuoso en Venezuela."
         path="/politicas"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Políticas de compra, reservas y devoluciones",
+            url: "https://chirikostudio.com/politicas",
+            inLanguage: "es-VE",
+            about: "Preventa asistida, cambios, devoluciones y reembolsos",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Inicio",
+                item: "https://chirikostudio.com/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Políticas",
+                item: "https://chirikostudio.com/politicas",
+              },
+            ],
+          },
+        ]}
       />
 
       <div className="min-h-screen bg-background">
