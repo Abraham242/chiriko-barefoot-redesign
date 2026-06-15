@@ -114,7 +114,7 @@ const faqs = [
   },
   {
     q: "¿Los niños pueden usar barefoot?",
-    a: "Sí, y muchos podólogos lo recomiendan activamente. Los pies de los niños están en desarrollo y el barefoot permite que esa formación ocurra de manera natural, sin deformar la estructura del pie.",
+    a: "Sí, siempre que sea un calzado adecuado para su etapa y se elija bien la talla. Los pies de los niños están en desarrollo y el barefoot permite que esa formación ocurra de manera natural, sin deformar la estructura del pie.",
   },
   {
     q: "¿Dónde puedo conseguir calzado barefoot en Venezuela?",
