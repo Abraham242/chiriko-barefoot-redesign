@@ -4,8 +4,13 @@ const phoneNumber = "584221798072";
 const whatsappMessage = `Hola, vengo de chirikostudio.com 👋
 Estoy interesado/a en la preventa de Chiriko.
 
-Quiero ver modelos disponibles, confirmar mi talla y saber cómo reservar.
-Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación. Si llega antes, mejor.`;
+Me gustaría revisar:
+1. Modelo que me gusta
+2. Color
+3. Talla habitual
+4. Medida de mi pie en centímetros
+
+Quiero ver opciones disponibles en preventa y confirmar mi talla antes de reservar.`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
 const WhatsAppButton = () => {

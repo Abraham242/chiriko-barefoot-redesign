@@ -329,7 +329,24 @@ const PoliciesPage = () => {
 
                 <section className="border-t border-border py-10 lg:py-12">
                   <h2 className="font-heading text-2xl md:text-3xl font-light text-foreground mb-6">
-                    11. Nota importante
+                    11. Cashea
+                  </h2>
+                  <div className="space-y-5 font-body text-base text-muted-foreground leading-relaxed">
+                    <p>
+                      Por ahora todavía no tenemos Cashea activo. Apenas esté
+                      disponible lo anunciaremos por nuestra web e Instagram.
+                    </p>
+                    <p>
+                      Mientras tanto, para activar una reserva trabajamos con el
+                      pago inicial acordado por WhatsApp, que se descuenta del
+                      total final del producto.
+                    </p>
+                  </div>
+                </section>
+
+                <section className="border-t border-border py-10 lg:py-12">
+                  <h2 className="font-heading text-2xl md:text-3xl font-light text-foreground mb-6">
+                    12. Nota importante
                   </h2>
                   <p className="font-body text-base text-muted-foreground leading-relaxed">
                     Estas políticas aplican al proceso comercial de Chiriko
@@ -340,7 +357,7 @@ const PoliciesPage = () => {
 
                 <section className="border-t border-border py-10 lg:py-12">
                   <h2 className="font-heading text-2xl md:text-3xl font-light text-foreground mb-6">
-                    12. Contacto
+                    13. Contacto
                   </h2>
                   <div className="space-y-7 font-body text-base text-muted-foreground leading-relaxed">
                     <p>
