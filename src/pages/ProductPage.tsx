@@ -32,15 +32,19 @@ const ProductPage = () => {
   const whatsappMessage = selectedSize
     ? `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko 👋
 
-Mi talla habitual es ${selectedSize}.
-Quiero confirmar mi talla correcta, color disponible y cómo reservar este modelo en preventa.
+Modelo: ${product.name}
+Talla habitual: ${selectedSize}
+Medida de mi pie en centímetros: [cm]
+Preferencia de ajuste: [ajustado / más espacio]
 
-Entiendo que la entrega estimada es de 3 a 4 semanas desde que confirme mi reserva. Si llega antes, mejor.`
+Quiero confirmar la talla más segura, color disponible y cómo reservar este modelo en preventa.`
     : `Hola, estoy viendo el modelo ${product.name} en la web de Chiriko 👋
 
-Quiero reservarlo en preventa, pero primero necesito ayuda para confirmar talla, color y disponibilidad.
-
-Entiendo que la entrega estimada es de 3 a 4 semanas desde la confirmación de la reserva. Si llega antes, mejor.`;
+Quiero reservarlo en preventa, pero primero necesito ayuda para confirmar:
+1. Color disponible
+2. Mi talla habitual
+3. Medida de mi pie en centímetros
+4. Si me conviene un ajuste más preciso o con más espacio.`;
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     whatsappMessage
