@@ -11,6 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+
+# Local catalog imports may contain confidential supplier data.
+tools/catalog-manager/input/
+tools/catalog-manager/output/
 
 # Editor directories and files
 .vscode/*
