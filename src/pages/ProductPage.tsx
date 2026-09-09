@@ -12,6 +12,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import { products } from "@/data/products";
+import { getProductVariants } from "@/data/catalogHelpers";
 
 const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 const phoneNumber = "584221798072";
@@ -25,10 +26,9 @@ const ProductPage = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const color =
-    "color" in product && typeof product.color === "string"
-      ? product.color
-      : null;
+  const variants = getProductVariants(product);
+
+  const color = product.colorName;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
 
 Quiero reservar este modelo en preventa.
@@ -159,12 +159,37 @@ Preferencia de ajuste: [más preciso / más espacio]
                   {product.price > 0 ? `${product.currency}${product.price}` : "Consultar disponibilidad"}
                 </p>
 
-                {color && (
+                {variants.length > 1 ? (
+                  <div className="mt-7 border-t border-border/70 pt-6">
+                    <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                      Color <span className="normal-case tracking-normal text-foreground">· {color}</span>
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-3" aria-label="Colores disponibles">
+                      {variants.map((variant) => {
+                        const isCurrent = variant.id === product.id;
+                        return (
+                          <Link
+                            key={variant.id}
+                            to={`/product/${variant.slug}`}
+                            aria-current={isCurrent ? "page" : undefined}
+                            aria-label={`${variant.colorName}${isCurrent ? ", color seleccionado" : ""}`}
+                            className={`flex min-h-11 items-center gap-2 rounded-sm border px-3 py-2 font-body text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 ${
+                              isCurrent ? "border-foreground bg-secondary/60 text-foreground" : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+                            }`}
+                          >
+                            <span className={`h-5 w-5 rounded-full border ${isCurrent ? "ring-2 ring-foreground ring-offset-2" : "border-foreground/20"}`} style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
+                            {variant.colorName}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : color ? (
                   <div className="mt-7 border-t border-border/70 pt-6">
                     <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">Color</p>
                     <p className="mt-2 font-body text-sm text-foreground">{color}</p>
                   </div>
-                )}
+                ) : null}
 
                 <div className="mt-7">
                   <div className="mb-4 flex items-center justify-between gap-4">
