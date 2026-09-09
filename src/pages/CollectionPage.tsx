@@ -90,7 +90,9 @@ const groupPriceLabel = (group: CatalogGroup) => {
   if (prices.length === 0) return "Consultar disponibilidad";
 
   const currency = group.cover.currency;
-  return prices.length === 1 ? `${currency}${prices[0]}` : `${currency}${prices[0]}–${currency}${prices.at(-1)}`;
+  return prices.length === 1
+    ? `${currency}${prices[0]}`
+    : `${currency}${prices[0]}–${currency}${prices[prices.length - 1]}`;
 };
 
 const CollectionPage = () => {
