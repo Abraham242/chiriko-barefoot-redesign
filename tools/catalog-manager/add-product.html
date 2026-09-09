@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chiriko Catalog Manager · Add Product</title>
+<style>
+:root {
+  --paper:#f3f0e9;
+  --card:#fbfaf7;
+  --ink:#24231f;
+  --muted:#706d65;
+  --line:#d8d2c6;
+  --sage:#465c4e;
+  --soft:#e7ebe5;
+  --error:#9c493e
+}
+
+* {
+  box-sizing:border-box
+}
+
+body {
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Arial,sans-serif
+}
+
+.wrap {
+  max-width:920px;
+  margin:auto;
+  padding:48px 24px 100px
+}
+
+.eyebrow {
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:11px;
+  color:var(--sage)
+}
+
+h1,h2 {
+  font-family:Georgia,serif;
+  font-weight:400
+}
+
+h1 {
+  font-size:38px;
+  margin:8px 0
+}
+
+.lede {
+  color:var(--muted);
+  max-width:65ch;
+  line-height:1.6;
+  margin-bottom:30px
+}
+
+.notice {
+  border-left:3px solid var(--sage);
+  background:var(--soft);
+  padding:12px 16px;
+  font-size:13px;
+  margin-bottom:24px
+}
+
+fieldset {
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:22px;
+  margin:0 0 18px
+}
+
+legend {
+  font-family:Georgia,serif;
+  font-size:18px;
+  padding:0 8px
+}
+
+label {
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin:14px 0 6px
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 18px
+}
+
+.thirds {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0 18px
+}
+
+input,textarea,select {
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:11px;
+  font:14px inherit;
+  color:var(--ink);
+  border-radius:2px
+}
+
+input[type=color] {
+  height:42px;
+  padding:4px
+}
+
+textarea {
+  min-height:90px;
+  resize:vertical
+}
+
+.hint {
+  font-size:11px;
+  color:var(--muted)
+}
+
+.drop {
+  border:1px dashed #989287;
+  padding:28px;
+  text-align:center;
+  cursor:pointer;
+  background:#fff;
+  color:var(--muted)
+}
+
+.drop.drag {
+  border-color:var(--sage);
+  background:var(--soft)
+}
+
+.thumbs {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px
+}
+
+.thumb {
+  width:105px;
+  position:relative
+}
+
+.thumb img {
+  width:105px;
+  height:120px;
+  object-fit:cover
+}
+
+.thumb small {
+  display:block;
+  word-break:break-word;
+  margin-top:4px
+}
+
+.remove {
+  position:absolute;
+  right:-7px;
+  top:-7px;
+  width:23px;
+  height:23px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:var(--ink);
+  color:white;
+  cursor:pointer
+}
+
+.actions,.toolbar {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap
+}
+
+.primary,.secondary {
+  border:1px solid var(--sage);
+  padding:12px 18px;
+  cursor:pointer;
+  font:13px inherit
+}
+
+.primary {
+  background:var(--sage);
+  color:#fff
+}
+
+.secondary {
+  background:transparent;
+  color:var(--sage)
+}
+
+.output {
+  display:none;
+  margin-top:28px
+}
+
+.output.show {
+  display:block
+}
+
+pre {
+  background:#282925;
+  color:#f4f1e9;
+  padding:18px;
+  overflow:auto;
+  font-size:12px;
+  line-height:1.5;
+  white-space:pre-wrap
+}
+
+.instructions {
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:16px;
+  font-size:13px;
+  line-height:1.6
+}
+
+.status {
+  font-size:13px;
+  margin:12px 0
+}
+
+.ok {
+  color:var(--sage)
+}
+
+.err {
+  color:var(--error)
+}
+
+@media(max-width:650px) {
+  .grid,.thirds {
+  grid-template-columns:1fr
+}
+
+.wrap {
+  padding:28px 16px
+}
+
+h1 {
+  font-size:31px
+}
+
+
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="eyebrow">Chiriko Studio · Internal tool</div>
+<h1>Add a catalog product</h1>
+<p class="lede">Prepare public catalog data and web-ready product photos locally. This standalone file does not send or publish anything.</p>
+<div class="notice">
+<strong>Public copy only.</strong> Do not enter supplier prices, costs, margins, logistics notes, or other internal business data.</div>
+<form id="form">
+<fieldset>
+<legend>Identity</legend>
+<div class="grid">
+<div>
+<label for="brand">Brand</label>
+<input id="brand" required placeholder="Groundies">
+</div>
+<div>
+<label for="parentBrand">Parent brand <span class="hint">optional</span>
+</label>
+<input id="parentBrand" placeholder="Be Lenka">
+</div>
+</div>
+<label for="model">Model</label>
+<input id="model" required placeholder="Universe">
+<label for="name">Product name</label>
+<input id="name" required placeholder="Groundies Universe">
+<label for="subtitle">Subtitle</label>
+<input id="subtitle" placeholder="White · everyday barefoot sneaker">
+</fieldset>
+<fieldset>
+<legend>Collection details</legend>
+<div class="thirds">
+<div>
+<label for="gender">Gender</label>
+<select id="gender">
+<option value="unisex">Unisex</option>
+<option value="women">Women</option>
+<option value="men">Men</option>
+<option value="kids">Kids</option>
+</select>
+</div>
+<div>
+<label for="category">Category</label>
+<input id="category" required placeholder="Zapatillas">
+</div>
+<div>
+<label for="status">Status</label>
+<select id="status">
+<option value="preorder">Preventa asistida</option>
+<option value="in_stock">In stock</option>
+<option value="coming_soon">Coming soon</option>
+</select>
+</div>
+</div>
+<div class="thirds">
+<div>
+<label for="colorName">Color name</label>
+<input id="colorName" required placeholder="White / Sand">
+</div>
+<div>
+<label for="colorFamily">Color family</label>
+<input id="colorFamily" placeholder="White">
+</div>
+<div>
+<label for="colorHex">Color swatch</label>
+<input type="color" id="colorHex" value="#eeeae1">
+</div>
+</div>
+<div class="grid">
+<div>
+<label for="price">Public price</label>
+<input type="number" min="0" step="0.01" id="price" required>
+</div>
+<div>
+<label for="currency">Display currency</label>
+<input id="currency" value="$" required>
+</div>
+</div>
+<label for="consultableSizes">Consultable sizes <span class="hint">comma separated; requests still require confirmation</span>
+</label>
+<input id="consultableSizes" required placeholder="36, 37, 38, 39, 40">
+<label for="sizes">Confirmed in-stock sizes <span class="hint">comma separated; leave empty unless stock is verified</span>
+</label>
+<input id="sizes" placeholder="">
+</fieldset>
+<fieldset>
+<legend>Storefront copy</legend>
+<label for="features">Features <span class="hint">one per line</span>
+</label>
+<textarea id="features" placeholder="Wide toe box&#10;Zero drop&#10;Flexible sole">
+</textarea>
+<label for="tags">Tags <span class="hint">comma separated</span>
+</label>
+<input id="tags" placeholder="uso diario, cuero, neutro">
+<div class="grid">
+<div>
+<label for="seoTitle">SEO title</label>
+<input id="seoTitle" maxlength="70">
+</div>
+<div>
+<label for="seoDescription">SEO description</label>
+<textarea id="seoDescription" maxlength="170" placeholder="Preventa asistida con confirmación de talla por WhatsApp y entrega estimada de 3–4 semanas.">
+</textarea>
+</div>
+</div>
+<label>
+<input type="checkbox" id="featured" style="width:auto"> Featured product</label>
+<label>
+<input type="checkbox" id="isNew" style="width:auto"> New product</label>
+</fieldset>
+<fieldset>
+<legend>Product images</legend>
+<div class="drop" id="drop" tabindex="0">Drop product images here or click to select<br>
+<span class="hint">Converted to JPEG, compressed, and resized to 1600 px maximum. The first image is the cover.</span>
+</div>
+<input type="file" id="files" accept="image/*" multiple hidden>
+<div class="thumbs" id="thumbs">
+</div>
+</fieldset>
+<div class="actions">
+<button class="primary" type="submit">Generate product object</button>
+</div>
+<div id="formStatus" class="status" aria-live="polite">
+</div>
+</form>
+<section class="output" id="output">
+<h2>Ready for the catalog</h2>
+<div class="instructions" id="instructions">
+</div>
+<div class="toolbar">
+<button class="secondary" id="copy" type="button">Copy TypeScript object</button>
+<button class="secondary" id="download" type="button">Download images + JSON</button>
+<button class="secondary" id="save" type="button">Save to a local folder…</button>
+</div>
+<pre id="result">
+</pre>
+<div id="saveStatus" class="status" aria-live="polite">
+</div>
+</section>
+</main>
+<script>
+const MAX_DIM = 1600, QUALITY = .82;
+let images = [], last = null, lastFiles = [];
+const $ = id => document.getElementById(id), drop = $('drop'), picker = $('files');
+const slugify = value => value.normalize('NFD')
+                             .replace(/[\u0300-\u036f]/g, '')
+                             .toLowerCase()
+                             .trim()
+                             .replace(/[^a-z0-9]+/g, '-')
+                             .replace(/^-|-$/g, '');
+const list = (value, separator = ',') => value.split(separator).map(x => x.trim()).filter(Boolean);
+async function resize(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = await new Promise((resolve, reject) => {
+      const el = new Image;
+      el.onload = () => resolve(el);
+      el.onerror = reject;
+      el.src = url
+    });
+    const scale = Math.min(1, MAX_DIM / Math.max(image.width, image.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(image.width * scale);
+    canvas.height = Math.round(image.height * scale);
+    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+    return await new Promise(
+        (resolve, reject) => canvas.toBlob(
+            blob => blob ? resolve(blob) : reject(new Error('Image conversion failed')),
+            'image/jpeg', QUALITY))
+  } finally {
+    URL.revokeObjectURL(url)
+  }
+}
+async function addFiles(fileList) {
+  $('formStatus').textContent = 'Preparing images…';
+  for (const file of fileList) {
+    if (file.type.startsWith('image/')) try {
+        images.push({original: file.name, blob: await resize(file)})
+      } catch {
+        $('formStatus').className = 'status err';
+        $('formStatus').textContent = `Could not process ${file.name}.`
+      }
+  }
+  render();
+  $('formStatus').textContent = ''
+}
+function render() {
+  $('thumbs').innerHTML = '';
+  images.forEach((item, index) => {
+    const el = document.createElement('div');
+    el.className = 'thumb';
+    const img = document.createElement('img'), button = document.createElement('button'),
+          caption = document.createElement('small');
+    img.src = URL.createObjectURL(item.blob);
+    img.onload = () => URL.revokeObjectURL(img.src);
+    button.className = 'remove';
+    button.type = 'button';
+    button.textContent = '×';
+    button.setAttribute('aria-label', `Remove ${item.original}`);
+    button.onclick = () => {
+      images.splice(index, 1);
+      render()
+    };
+    caption.textContent = (index ? '' : 'Cover · ') + item.original;
+    el.append(img, button, caption);
+    $('thumbs').append(el)
+  })
+}
+drop.onclick = () => picker.click();
+drop.onkeydown = e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    picker.click()
+  }
+};
+picker.onchange = e => addFiles(e.target.files);
+drop.ondragover = e => {
+  e.preventDefault();
+  drop.classList.add('drag')
+};
+drop.ondragleave = () => drop.classList.remove('drag');
+drop.ondrop = e => {
+  e.preventDefault();
+  drop.classList.remove('drag');
+  addFiles(e.dataTransfer.files)
+};
+function makeObject() {
+  const brand = $('brand').value.trim(), model = $('model').value.trim(),
+        color = $('colorName').value.trim(), name = $('name').value.trim();
+  const id = slugify(`${brand}-${model}-${color}`),
+        base = `@/assets/products/${slugify(brand)}/${slugify(model)}/${slugify(color)}`;
+  const names = images.map((_, i) => `${slugify(model)}-${slugify(color)}-${i + 1}.jpg`);
+  return {
+    product: {
+      id,
+      slug: id,
+      brand,
+      ...($('parentBrand').value.trim() && {parentBrand: $('parentBrand').value.trim()}),
+      model,
+      name,
+      subtitle: $('subtitle').value.trim(),
+      gender: $('gender').value,
+      category: $('category').value.trim(),
+      colorName: color,
+      colorFamily: $('colorFamily').value.trim() || color,
+      colorHex: $('colorHex').value,
+      price: Number($('price').value),
+      currency: $('currency').value.trim(),
+      status: $('status').value,
+      consultableSizes: list($('consultableSizes').value),
+      sizes: list($('sizes').value),
+      images: names,
+      features: list($('features').value, '\n'),
+      tags: list($('tags').value),
+      isFeatured: $('featured').checked,
+      isNew: $('isNew').checked,
+      seoTitle: $('seoTitle').value.trim() || `${name} | Chiriko Studio`,
+      seoDescription: $('seoDescription').value.trim() ||
+          `${name}. Preventa asistida con confirmación de talla por WhatsApp y entrega estimada de 3–4 semanas.`
+    },
+        base, names
+  }
+}
+function imageVariableBase(data) {
+  const pascal = value =>
+      value.split('-').filter(Boolean).map(part => part[0].toUpperCase() + part.slice(1)).join('');
+  const raw = [data.product.brand, data.product.model, data.product.colorName].map(slugify);
+  return raw[0] + pascal(raw.slice(1).join('-'))
+}
+function tsOutput(data) {
+  const variableBase = imageVariableBase(data);
+  const imports =
+      data.names.map((name, i) => `import ${variableBase}${i + 1} from "${data.base}/${name}";`)
+          .join('\n');
+  const product = {...data.product, images: data.names.map((_, i) => `__image${i + 1}__`)};
+  let body = JSON.stringify(product, null, 2);
+  data.names.forEach(
+      (_, i) => body = body.replace(`"__image${i + 1}__"`, `${variableBase}${i + 1}`));
+  return `${imports}\n\n${body},`
+}
+$('form').onsubmit = e => {
+  e.preventDefault();
+  const status = $('formStatus');
+  if (!images.length) {
+    status.className = 'status err';
+    status.textContent = 'Add at least one product image.';
+    return
+  }
+  const data = makeObject();
+  last = data;
+  lastFiles = images.map((item, i) => ({name: data.names[i], blob: item.blob}));
+  $('result').textContent = tsOutput(data);
+  $('instructions').innerHTML = `<strong>Asset destination</strong><br><code>src/assets/products/${
+      slugify(data.product.brand)}/${slugify(data.product.model)}/${
+      slugify(
+          data.product
+              .colorName)}/</code><br>Place the downloaded images there. Then paste the generated import statements with the other imports in <code>src/data/products.ts</code>, and paste the object inside the exported <code>products</code> array.`;
+  $('output').classList.add('show');
+  status.textContent = '';
+  $('output').scrollIntoView({behavior: 'smooth'})
+};
+function flash(message, ok = true) {
+  $('saveStatus').className = `status ${ok ? 'ok' : 'err'}`;
+  $('saveStatus').textContent = message
+}
+$('copy').onclick = async () => {
+  if (!last) return;
+  try {
+    await navigator.clipboard.writeText(tsOutput(last));
+    flash('TypeScript object copied.')
+  } catch {
+    flash('Clipboard access was blocked. Select the output and copy it manually.', false)
+  }
+};
+function download(blob, name) {
+  const a = document.createElement('a'), url = URL.createObjectURL(blob);
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
+$('download').onclick = () => {
+  if (!last) return;
+  lastFiles.forEach(file => download(file.blob, file.name));
+  download(
+      new Blob([JSON.stringify(last.product, null, 2)], {type: 'application/json'}),
+      `${last.product.id}.json`);
+  flash('Downloaded compressed images and reference JSON.')
+};
+$('save').onclick = async () => {
+  if (!last) return;
+  if (!window.showDirectoryPicker) {
+    flash('Direct folder saving is not supported here. Use Download instead.', false);
+    return
+  }
+  try {
+    const root = await window.showDirectoryPicker();
+    let dir = root;
+    for (const part
+             of ['src', 'assets', 'products', slugify(last.product.brand),
+                 slugify(last.product.model), slugify(last.product.colorName)])
+      dir = await dir.getDirectoryHandle(part, {create: true});
+    for (const file of lastFiles) {
+      const handle = await dir.getFileHandle(file.name, {create: true}),
+            writer = await handle.createWritable();
+      await writer.write(file.blob);
+      await writer.close()
+    }
+    const json = await root.getFileHandle(`${last.product.id}.json`, {create: true}),
+          writer = await json.createWritable();
+    await writer.write(JSON.stringify(last.product, null, 2));
+    await writer.close();
+    flash(
+        'Images saved in the suggested asset folder; reference JSON saved at the selected root. Add the imports and object manually.')
+  } catch (error) {
+    if (error.name !== 'AbortError') flash(`Could not save: ${error.message}`, false)
+  }
+};
+</script>
+</body></html>
