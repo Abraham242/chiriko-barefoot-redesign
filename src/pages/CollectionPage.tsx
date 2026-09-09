@@ -10,6 +10,15 @@ import type { Product, ProductStatus } from "@/data/productTypes";
 
 type CatalogFilter = "Todos" | "Barebarics" | "Be Lenka" | "Groundies" | "Zapatillas" | "Sandalias";
 
+type CatalogGroup = {
+  key: string;
+  variants: Product[];
+  cover: Product;
+  isFeatured: boolean;
+  isNew: boolean;
+  status: ProductStatus;
+};
+
 const catalogFilters: CatalogFilter[] = [
   "Todos",
   "Barebarics",
@@ -41,22 +50,64 @@ const matchesCatalogFilter = (product: Product, filter: CatalogFilter) => {
   return product.brand === filter;
 };
 
+const groupStatus = (variants: Product[]): ProductStatus => {
+  if (variants.some((variant) => variant.status === "in_stock")) return "in_stock";
+  if (variants.some((variant) => variant.status === "preorder")) return "preorder";
+  return "coming_soon";
+};
+
+const groupedCatalog = products.reduce<CatalogGroup[]>((groups, product) => {
+  const key = `${product.brand}-${product.model}`.toLocaleLowerCase();
+  const existingGroup = groups.find((group) => group.key === key);
+
+  if (existingGroup) {
+    existingGroup.variants.push(product);
+    existingGroup.isFeatured ||= product.isFeatured;
+    existingGroup.isNew ||= product.isNew;
+    existingGroup.status = groupStatus(existingGroup.variants);
+    return groups;
+  }
+
+  groups.push({
+    key,
+    variants: [product],
+    cover: product,
+    isFeatured: product.isFeatured,
+    isNew: product.isNew,
+    status: product.status,
+  });
+  return groups;
+}, []);
+
+const pricesForGroup = (group: CatalogGroup) =>
+  [...new Set(group.variants.map((variant) => variant.price).filter((price) => price > 0))].sort((a, b) => a - b);
+
+const groupPriceLabel = (group: CatalogGroup) => {
+  const prices = pricesForGroup(group);
+  if (prices.length === 0) return "Consultar disponibilidad";
+
+  const currency = group.cover.currency;
+  return prices.length === 1 ? `${currency}${prices[0]}` : `${currency}${prices[0]}–${currency}${prices.at(-1)}`;
+};
+
 const CollectionPage = () => {
   const [activeFilter, setActiveFilter] = useState<CatalogFilter>("Todos");
   const [activeSize, setActiveSize] = useState<string | null>(null);
 
   const availableSizes = useMemo(
     () =>
-      [...new Set(products.filter((product) => matchesCatalogFilter(product, activeFilter)).flatMap(sizesForProduct))]
+      [...new Set(groupedCatalog
+        .filter((group) => group.variants.some((variant) => matchesCatalogFilter(variant, activeFilter)))
+        .flatMap((group) => group.variants.flatMap(sizesForProduct)))]
         .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
     [activeFilter],
   );
 
-  const filteredProducts = useMemo(
+  const filteredGroups = useMemo(
     () =>
-      products
-        .filter((product) => matchesCatalogFilter(product, activeFilter))
-        .filter((product) => !activeSize || sizesForProduct(product).includes(activeSize))
+      groupedCatalog
+        .filter((group) => group.variants.some((variant) => matchesCatalogFilter(variant, activeFilter)))
+        .filter((group) => !activeSize || group.variants.some((variant) => sizesForProduct(variant).includes(activeSize)))
         .sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured)),
     [activeFilter, activeSize],
   );
@@ -165,7 +216,7 @@ const CollectionPage = () => {
 
             <div className="mb-7 flex flex-wrap items-center justify-between gap-3 border-t border-foreground/10 pt-5 font-body text-xs text-muted-foreground">
               <p>
-                {filteredProducts.length} {filteredProducts.length === 1 ? "modelo" : "modelos"}
+                {filteredGroups.length} {filteredGroups.length === 1 ? "modelo" : "modelos"}
                 {(activeFilter !== "Todos" || activeSize) && (
                   <span className="ml-2 text-foreground">· {activeFilter !== "Todos" ? activeFilter : "Todos"}{activeSize ? ` · Talla ${activeSize}` : ""}</span>
                 )}
@@ -173,22 +224,24 @@ const CollectionPage = () => {
               <p>Ordenar: <span className="text-foreground">destacados</span></p>
             </div>
 
-            {filteredProducts.length > 0 ? (
+            {filteredGroups.length > 0 ? (
               <div className="grid grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
-                {filteredProducts.map((product) => (
-                  <article key={product.id} className="group min-w-0">
-                    <Link to={`/product/${product.slug}`} className="block">
+                {filteredGroups.map((group) => {
+                  const product = group.cover;
+                  return (
+                  <article key={group.key} className="group min-w-0">
+                    <Link to={`/product/${product.slug}`} className="block" aria-label={`Ver ${product.brand} ${product.model}`}>
                       <div className="relative aspect-[4/5] overflow-hidden bg-[#f3f1ec] sm:aspect-square">
                         <div className="absolute left-3 top-3 z-10 flex max-w-[calc(100%-1.5rem)] flex-wrap gap-1.5">
                           <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">
-                            {statusLabels[product.status]}
+                            {statusLabels[group.status]}
                           </span>
-                          {product.isNew && <span className="bg-foreground px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-background">Nuevo</span>}
-                          {product.isFeatured && <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">Destacado</span>}
+                          {group.isNew && <span className="bg-foreground px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-background">Nuevo</span>}
+                          {group.isFeatured && <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">Destacado</span>}
                         </div>
                         <ResponsiveImage
                           src={product.images[0]}
-                          alt={`${product.name} en ${product.colorName}`}
+                          alt={`${product.brand} ${product.model} en ${product.colorName}`}
                           widths={[420, 640, 900]}
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                           width={900}
@@ -198,23 +251,31 @@ const CollectionPage = () => {
                         />
                       </div>
 
+                    </Link>
+
                       <div className="mt-5">
                         <p className="font-body text-[10px] uppercase tracking-[0.19em] text-muted-foreground">{product.brand}</p>
                         <div className="mt-1.5 flex items-start justify-between gap-4">
-                          <h2 className="font-body text-base font-medium text-foreground sm:text-[17px]">{product.name}</h2>
+                          <h2 className="font-body text-base font-medium text-foreground sm:text-[17px]">
+                            <Link to={`/product/${product.slug}`} className="transition-opacity hover:opacity-65">{product.model}</Link>
+                          </h2>
                           <p className="shrink-0 font-body text-sm font-medium text-foreground">
-                            {product.price > 0 ? `${product.currency}${product.price}` : "Consultar disponibilidad"}
+                            {groupPriceLabel(group)}
                           </p>
                         </div>
-                        <div className="mt-2 flex items-center gap-2 font-body text-xs text-muted-foreground">
-                          <span className="h-3.5 w-3.5 rounded-full border border-foreground/10" style={{ backgroundColor: product.colorHex }} aria-hidden="true" />
-                          <span>{product.colorName}</span>
+                        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2" aria-label="Colores disponibles">
+                          {group.variants.map((variant) => (
+                            <div key={variant.id} className="flex items-center gap-2 font-body text-xs text-muted-foreground">
+                              <span className="h-3.5 w-3.5 shrink-0 rounded-full border border-foreground/10" style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
+                              <span>{variant.colorName}</span>
+                            </div>
+                          ))}
                         </div>
-                        <span className="mt-5 inline-flex border-b border-foreground pb-1 font-body text-xs font-medium text-foreground">Ver modelo</span>
+                        <Link to={`/product/${product.slug}`} className="mt-5 inline-flex border-b border-foreground pb-1 font-body text-xs font-medium text-foreground">Ver modelo</Link>
                       </div>
-                    </Link>
                   </article>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="flex min-h-72 flex-col items-center justify-center bg-white px-6 text-center">
