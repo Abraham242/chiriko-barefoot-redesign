@@ -111,7 +111,7 @@ export const products: Product[] = [
     gender: "unisex", category: "Zapatillas", colorName: "Blanco / Verde oscuro", colorFamily: "Blanco", colorHex: "#F3F1E9",
     price: 0,
     currency: "$",
-    status: "coming_soon", consultableSizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"], sizes: [], tags: ["ligero", "flexible"], isFeatured: false, isNew: true,
+    status: "preorder", consultableSizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"], sizes: [], tags: ["ligero", "flexible"], isFeatured: false, isNew: true,
     seoTitle: "Barebarics Wave White Dark Green | Chiriko Studio", seoDescription: "Barebarics Wave en blanco y verde oscuro. Consulta disponibilidad y talla por WhatsApp.",
     images: [waveWhiteDarkGreen1, waveWhiteDarkGreen2, waveWhiteDarkGreen3],
     tag: "Consultar",

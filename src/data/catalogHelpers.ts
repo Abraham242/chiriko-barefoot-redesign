@@ -27,6 +27,20 @@ export const getProductsByGender = (gender: ProductGender): Product[] =>
 export const getProductsByStatus = (status: ProductStatus): Product[] =>
   products.filter((product) => product.status === status);
 
+/** Returns every color variant belonging to the same storefront model. */
+export const getProductVariants = (product: Product): Product[] => {
+  const groupKey = product.groupSlug
+    ? normalize(product.groupSlug)
+    : `${normalize(product.brand)}::${normalize(product.model)}`;
+
+  return products.filter((candidate) => {
+    const candidateKey = candidate.groupSlug
+      ? normalize(candidate.groupSlug)
+      : `${normalize(candidate.brand)}::${normalize(candidate.model)}`;
+    return candidateKey === groupKey;
+  });
+};
+
 export const getAvailableSizes = (catalog: Product[] = products): string[] =>
   [...new Set(catalog.flatMap((product) => product.sizes))].sort((a, b) =>
     a.localeCompare(b, undefined, { numeric: true }),

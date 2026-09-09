@@ -11,27 +11,43 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductImageGallery from "@/components/ProductImageGallery";
-import { products } from "@/data/products";
+import { getProductById, getProductVariants } from "@/data/catalogHelpers";
 
-const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 const phoneNumber = "584221798072";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const product = products.find((item) => item.id === id);
-  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const product = id ? getProductById(id) : undefined;
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   if (!product) {
     return <Navigate to="/404" replace />;
   }
 
-  const color =
-    "color" in product && typeof product.color === "string"
-      ? product.color
-      : null;
+  const variants = getProductVariants(product);
+  const displaySizes =
+    product.status === "preorder"
+      ? product.consultableSizes
+      : product.sizes;
+  const isPreorder = product.status === "preorder";
+  const hasPublicPrice = product.price > 0;
+  const canReserve = isPreorder && hasPublicPrice;
+  const statusBadge = isPreorder ? "Preventa asistida" : "Stock confirmado";
+  const statusCopy = canReserve
+    ? "Entrega estimada 3–4 semanas"
+    : isPreorder
+      ? "Disponibilidad y precio sujetos a confirmación por WhatsApp"
+    : "Disponibilidad sujeta a confirmación por WhatsApp";
+  const whatsappIntent = canReserve
+    ? "Quiero reservar este modelo en preventa."
+    : isPreorder
+      ? "Quiero consultar disponibilidad y precio de este modelo."
+      : "Quiero consultar este modelo.";
+
+  const color = product.colorName;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
 
-Quiero reservar este modelo en preventa.
+${whatsappIntent}
 Modelo: ${product.name}
 Color disponible: ${color || "[confirmar]"}${
     selectedSize ? `\nTalla habitual: ${selectedSize}` : "\nTalla habitual: [por indicar]"
@@ -39,12 +55,18 @@ Color disponible: ${color || "[confirmar]"}${
 Medida de mi pie en centímetros: [cm]
 Preferencia de ajuste: [más preciso / más espacio]
 
-¿Me ayudan a confirmar modelo, color y talla antes de reservar? Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva.`;
+¿Me ayudan a confirmar modelo, color y talla por WhatsApp?${
+    canReserve
+      ? " Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva."
+      : ""
+  }`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
-  const seoTitle = `${product.name} en Venezuela | Chiriko Studio`;
-  const seoDescription = `${product.name} de ${product.brand} en preventa asistida en Venezuela. Calzado barefoot y respetuoso con talla confirmada por WhatsApp y entrega estimada 3–4 semanas.`;
-  const productUrl = `https://chirikostudio.com/product/${product.id}`;
+  const seoTitle = product.seoTitle || `${product.name} en Venezuela | Chiriko Studio`;
+  const seoDescription =
+    product.seoDescription ||
+    `${product.name} de ${product.brand} en Venezuela. Calzado barefoot y respetuoso con talla y disponibilidad confirmadas por WhatsApp.`;
+  const productUrl = `https://chirikostudio.com/product/${product.slug}`;
   const imageUrl = product.images[0].startsWith("http")
     ? product.images[0]
     : `https://chirikostudio.com${product.images[0]}`;
@@ -63,8 +85,8 @@ Preferencia de ajuste: [más preciso / más espacio]
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",
-      ...(product.price > 0 && { price: String(product.price) }),
-      availability: "https://schema.org/PreOrder",
+      ...(hasPublicPrice && { price: String(product.price) }),
+      availability: isPreorder ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
       seller: {
@@ -85,12 +107,26 @@ Preferencia de ajuste: [más preciso / más espacio]
     ],
   };
 
-  const benefits = [
-    "Confirmamos talla por WhatsApp",
-    "Reserva con 50%",
-    "Entrega estimada 3–4 semanas",
-    "Acompañamiento antes de reservar",
-  ];
+  const benefits = canReserve
+    ? [
+        "Confirmamos talla por WhatsApp",
+        "Reserva con 50%",
+        "Entrega estimada 3–4 semanas",
+        "Acompañamiento antes de reservar",
+      ]
+    : isPreorder
+      ? [
+          "Confirmamos talla por WhatsApp",
+          "Precio sujeto a confirmación",
+          "Disponibilidad sujeta a confirmación",
+          "Acompañamiento antes de decidir",
+        ]
+    : [
+        "Confirmamos talla por WhatsApp",
+        "Disponibilidad sujeta a confirmación",
+        "Atención personalizada",
+        "Acompañamiento antes de elegir",
+      ];
 
   const information = [
     {
@@ -102,21 +138,30 @@ Preferencia de ajuste: [más preciso / más espacio]
       content: product.features.join(" · "),
     },
     {
-      title: "Tallas y preventa",
-      content: "Antes de reservar, confirmamos contigo la talla y la medida del pie por WhatsApp. La reserva se realiza con el 50% una vez revisados el modelo, color y disponibilidad.",
+      title: isPreorder ? "Tallas y preventa" : "Tallas y disponibilidad",
+      content: canReserve
+        ? "Antes de reservar, confirmamos contigo la talla y la medida del pie por WhatsApp. La reserva se realiza con el 50% una vez revisados el modelo, color y disponibilidad."
+        : isPreorder
+          ? "Antes de avanzar, confirmamos contigo por WhatsApp el precio, la disponibilidad, el color y la talla. La consulta no implica una reserva."
+        : "Antes de confirmar, revisamos contigo por WhatsApp la talla, la medida del pie, el color y la disponibilidad.",
     },
     {
       title: "Envíos, cambios y devoluciones",
       content: "La entrega es estimada y puede variar según logística, proveedor y aduana. Consulta nuestras políticas para conocer las condiciones de reserva, cambios y devoluciones.",
     },
   ];
+  const processSteps = canReserve
+    ? ["Preventa asistida", "Talla confirmada contigo", "Entrega estimada 3–4 semanas", "Atención por WhatsApp"]
+    : isPreorder
+      ? ["Consulta asistida", "Talla confirmada contigo", "Precio por confirmar", "Atención por WhatsApp"]
+    : ["Stock confirmado", "Talla confirmada contigo", "Disponibilidad por confirmar", "Atención por WhatsApp"];
 
   return (
     <>
       <SEO
         title={seoTitle}
         description={seoDescription}
-        path={`/product/${product.id}`}
+        path={`/product/${product.slug}`}
         image={imageUrl}
         ogType="product"
         jsonLd={[productJsonLd, breadcrumbJsonLd]}
@@ -150,21 +195,46 @@ Preferencia de ajuste: [más preciso / más espacio]
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <span className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs font-medium uppercase tracking-[0.12em] text-foreground">
-                    Preventa asistida
+                    {statusBadge}
                   </span>
-                  <span className="font-body text-sm text-muted-foreground">Entrega estimada 3–4 semanas</span>
+                  <span className="font-body text-sm text-muted-foreground">{statusCopy}</span>
                 </div>
 
                 <p className="mt-6 font-heading text-3xl text-foreground">
-                  {product.price > 0 ? `${product.currency}${product.price}` : "Consultar disponibilidad"}
+                  {hasPublicPrice ? `${product.currency}${product.price}` : "Consultar disponibilidad"}
                 </p>
 
-                {color && (
+                {variants.length > 1 ? (
+                  <div className="mt-7 border-t border-border/70 pt-6">
+                    <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                      Color <span className="normal-case tracking-normal text-foreground">· {color}</span>
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-3" aria-label="Colores disponibles">
+                      {variants.map((variant) => {
+                        const isCurrent = variant.id === product.id;
+                        return (
+                          <Link
+                            key={variant.id}
+                            to={`/product/${variant.slug}`}
+                            aria-current={isCurrent ? "page" : undefined}
+                            aria-label={`${variant.colorName}${isCurrent ? ", color seleccionado" : ""}`}
+                            className={`flex min-h-11 items-center gap-2 rounded-sm border px-3 py-2 font-body text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 ${
+                              isCurrent ? "border-foreground bg-secondary/60 text-foreground" : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+                            }`}
+                          >
+                            <span className={`h-5 w-5 rounded-full border ${isCurrent ? "ring-2 ring-foreground ring-offset-2" : "border-foreground/20"}`} style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
+                            {variant.colorName}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : color ? (
                   <div className="mt-7 border-t border-border/70 pt-6">
                     <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">Color</p>
                     <p className="mt-2 font-body text-sm text-foreground">{color}</p>
                   </div>
-                )}
+                ) : null}
 
                 <div className="mt-7">
                   <div className="mb-4 flex items-center justify-between gap-4">
@@ -177,7 +247,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                     </Link>
                   </div>
                   <div className="grid grid-cols-5 gap-2 sm:gap-3">
-                    {sizes.map((size) => (
+                    {displaySizes.map((size) => (
                       <button
                         key={size}
                         type="button"
@@ -194,7 +264,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                     ))}
                   </div>
                   <p className="mt-4 font-body text-sm leading-relaxed text-muted-foreground">
-                    Usamos tu talla habitual como referencia y la confirmamos contigo por WhatsApp antes de reservar.
+                    Usamos tu talla habitual como referencia y la confirmamos contigo por WhatsApp antes de {canReserve ? "reservar" : "avanzar"}.
                   </p>
                 </div>
 
@@ -204,7 +274,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                   rel="noopener noreferrer"
                   className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.16em] text-primary-foreground transition-opacity hover:opacity-90"
                 >
-                  <MessageCircle size={18} /> Reservar por WhatsApp
+                  <MessageCircle size={18} /> {canReserve ? "Reservar" : "Consultar"} por WhatsApp
                 </a>
                 <p className="mt-3 font-body text-xs leading-relaxed text-muted-foreground">
                   No compres a ciegas: revisamos tu talla, medida del pie y disponibilidad antes de confirmar.
@@ -242,8 +312,8 @@ Preferencia de ajuste: [más preciso / más espacio]
               ))}
             </section>
 
-            <section className="my-12 grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-border/70 sm:grid-cols-4 lg:my-16" aria-label="Cómo funciona la preventa">
-              {["Preventa asistida", "Talla confirmada contigo", "Entrega estimada 3–4 semanas", "Atención por WhatsApp"].map((item) => (
+            <section className="my-12 grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-border/70 sm:grid-cols-4 lg:my-16" aria-label={isPreorder ? "Cómo funciona la preventa" : "Cómo confirmamos la disponibilidad"}>
+              {processSteps.map((item) => (
                 <div key={item} className="flex min-h-24 items-center justify-center bg-secondary/40 px-4 py-6 text-center font-body text-xs uppercase leading-relaxed tracking-[0.12em] text-foreground sm:text-sm">
                   {item}
                 </div>
@@ -259,7 +329,7 @@ Preferencia de ajuste: [más preciso / más espacio]
             rel="noopener noreferrer"
             className="flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.14em] text-primary-foreground transition-opacity hover:opacity-90"
           >
-            <MessageCircle size={18} /> Reservar por WhatsApp
+            <MessageCircle size={18} /> {canReserve ? "Reservar" : "Consultar"} por WhatsApp
           </a>
         </div>
       </div>

@@ -1,6 +1,6 @@
 export type ProductGender = "men" | "women" | "unisex" | "kids";
 
-export type ProductStatus = "preorder" | "in_stock" | "coming_soon";
+export type ProductStatus = "preorder" | "in_stock";
 
 /** Public, storefront-safe catalog data. Keep sourcing and margin data elsewhere. */
 export interface Product {
