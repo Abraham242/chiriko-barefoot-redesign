@@ -9,6 +9,10 @@ export interface Product {
   brand: string;
   parentBrand?: string;
   model: string;
+  /** Stable key used to combine color variants into one storefront card. */
+  groupSlug?: string;
+  /** Customer-facing name shared by every variant in a storefront group. */
+  groupName?: string;
   name: string;
   subtitle: string;
   gender: ProductGender;

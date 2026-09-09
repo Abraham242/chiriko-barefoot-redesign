@@ -277,6 +277,18 @@ h1 {
 </div>
 <label for="model">Model</label>
 <input id="model" required placeholder="Universe">
+<div class="grid">
+<div>
+<label for="groupName">Group name <span class="hint">optional; shared by color variants</span>
+</label>
+<input id="groupName" placeholder="Groundies Universe">
+</div>
+<div>
+<label for="groupSlug">Group slug <span class="hint">optional; use the same value for every color</span>
+</label>
+<input id="groupSlug" placeholder="groundies-universe">
+</div>
+</div>
 <label for="name">Product name</label>
 <input id="name" required placeholder="Groundies Universe">
 <label for="subtitle">Subtitle</label>
@@ -492,6 +504,8 @@ function makeObject() {
       brand,
       ...($('parentBrand').value.trim() && {parentBrand: $('parentBrand').value.trim()}),
       model,
+      ...($('groupSlug').value.trim() && {groupSlug: slugify($('groupSlug').value)}),
+      ...($('groupName').value.trim() && {groupName: $('groupName').value.trim()}),
       name,
       subtitle: $('subtitle').value.trim(),
       gender: $('gender').value,
