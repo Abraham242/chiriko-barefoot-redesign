@@ -265,10 +265,15 @@ const CollectionPage = () => {
                         </div>
                         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2" aria-label="Colores disponibles">
                           {group.variants.map((variant) => (
-                            <div key={variant.id} className="flex items-center gap-2 font-body text-xs text-muted-foreground">
+                            <Link
+                              key={variant.id}
+                              to={`/product/${variant.slug}`}
+                              aria-label={`Ver ${product.brand} ${product.model} en ${variant.colorName}`}
+                              className="flex items-center gap-2 rounded-sm font-body text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+                            >
                               <span className="h-3.5 w-3.5 shrink-0 rounded-full border border-foreground/10" style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
                               <span>{variant.colorName}</span>
-                            </div>
+                            </Link>
                           ))}
                         </div>
                         <Link to={`/product/${product.slug}`} className="mt-5 inline-flex border-b border-foreground pb-1 font-body text-xs font-medium text-foreground">Ver modelo</Link>
