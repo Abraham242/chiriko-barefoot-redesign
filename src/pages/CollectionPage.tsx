@@ -14,6 +14,7 @@ type CatalogGroup = {
   key: string;
   variants: Product[];
   cover: Product;
+  displayName: string;
   isFeatured: boolean;
   isNew: boolean;
   status: ProductStatus;
@@ -57,13 +58,14 @@ const groupStatus = (variants: Product[]): ProductStatus => {
 };
 
 const groupedCatalog = products.reduce<CatalogGroup[]>((groups, product) => {
-  const key = `${product.brand}-${product.model}`.toLocaleLowerCase();
+  const key = (product.groupSlug || `${product.brand}-${product.model}`).toLocaleLowerCase();
   const existingGroup = groups.find((group) => group.key === key);
 
   if (existingGroup) {
     existingGroup.variants.push(product);
     existingGroup.isFeatured ||= product.isFeatured;
     existingGroup.isNew ||= product.isNew;
+    if (product.groupName) existingGroup.displayName = product.groupName;
     existingGroup.status = groupStatus(existingGroup.variants);
     return groups;
   }
@@ -72,6 +74,7 @@ const groupedCatalog = products.reduce<CatalogGroup[]>((groups, product) => {
     key,
     variants: [product],
     cover: product,
+    displayName: product.groupName || `${product.brand} ${product.model}`,
     isFeatured: product.isFeatured,
     isNew: product.isNew,
     status: product.status,
@@ -230,7 +233,7 @@ const CollectionPage = () => {
                   const product = group.cover;
                   return (
                   <article key={group.key} className="group min-w-0">
-                    <Link to={`/product/${product.slug}`} className="block" aria-label={`Ver ${product.brand} ${product.model}`}>
+                    <Link to={`/product/${product.slug}`} className="block" aria-label={`Ver ${group.displayName}`}>
                       <div className="relative aspect-[4/5] overflow-hidden bg-[#f3f1ec] sm:aspect-square">
                         <div className="absolute left-3 top-3 z-10 flex max-w-[calc(100%-1.5rem)] flex-wrap gap-1.5">
                           <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">
@@ -241,7 +244,7 @@ const CollectionPage = () => {
                         </div>
                         <ResponsiveImage
                           src={product.images[0]}
-                          alt={`${product.brand} ${product.model} en ${product.colorName}`}
+                          alt={`${group.displayName} en ${product.colorName}`}
                           widths={[420, 640, 900]}
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                           width={900}
@@ -257,7 +260,7 @@ const CollectionPage = () => {
                         <p className="font-body text-[10px] uppercase tracking-[0.19em] text-muted-foreground">{product.brand}</p>
                         <div className="mt-1.5 flex items-start justify-between gap-4">
                           <h2 className="font-body text-base font-medium text-foreground sm:text-[17px]">
-                            <Link to={`/product/${product.slug}`} className="transition-opacity hover:opacity-65">{product.model}</Link>
+                            <Link to={`/product/${product.slug}`} className="transition-opacity hover:opacity-65">{group.displayName}</Link>
                           </h2>
                           <p className="shrink-0 font-body text-sm font-medium text-foreground">
                             {groupPriceLabel(group)}
@@ -268,7 +271,7 @@ const CollectionPage = () => {
                             <Link
                               key={variant.id}
                               to={`/product/${variant.slug}`}
-                              aria-label={`Ver ${product.brand} ${product.model} en ${variant.colorName}`}
+                              aria-label={`Ver ${group.displayName} en ${variant.colorName}`}
                               className="flex items-center gap-2 rounded-sm font-body text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
                             >
                               <span className="h-3.5 w-3.5 shrink-0 rounded-full border border-foreground/10" style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
