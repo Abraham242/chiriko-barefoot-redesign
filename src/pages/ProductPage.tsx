@@ -25,14 +25,15 @@ const ProductPage = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const color = product.subtitle.includes("·")
-    ? product.subtitle.split("·")[0].trim()
-    : null;
+  const color =
+    "color" in product && typeof product.color === "string"
+      ? product.color
+      : null;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
 
 Quiero reservar este modelo en preventa.
 Modelo: ${product.name}
-Color: ${color || "por confirmar"}${
+Color disponible: ${color || "[confirmar]"}${
     selectedSize ? `\nTalla habitual: ${selectedSize}` : "\nTalla habitual: [por indicar]"
   }
 Medida de mi pie en centímetros: [cm]
