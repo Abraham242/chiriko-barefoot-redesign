@@ -30,13 +30,19 @@ const ProductPage = () => {
       ? product.consultableSizes
       : product.sizes;
   const isPreorder = product.status === "preorder";
+  const hasPublicPrice = product.price > 0;
+  const canReserve = isPreorder && hasPublicPrice;
   const statusBadge = isPreorder ? "Preventa asistida" : "Stock confirmado";
-  const statusCopy = isPreorder
+  const statusCopy = canReserve
     ? "Entrega estimada 3–4 semanas"
+    : isPreorder
+      ? "Disponibilidad y precio sujetos a confirmación por WhatsApp"
     : "Disponibilidad sujeta a confirmación por WhatsApp";
-  const whatsappIntent = isPreorder
+  const whatsappIntent = canReserve
     ? "Quiero reservar este modelo en preventa."
-    : "Quiero consultar este modelo.";
+    : isPreorder
+      ? "Quiero consultar disponibilidad y precio de este modelo."
+      : "Quiero consultar este modelo.";
 
   const color = product.colorName;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
@@ -50,7 +56,7 @@ Medida de mi pie en centímetros: [cm]
 Preferencia de ajuste: [más preciso / más espacio]
 
 ¿Me ayudan a confirmar modelo, color y talla por WhatsApp?${
-    isPreorder
+    canReserve
       ? " Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva."
       : ""
   }`;
@@ -79,7 +85,7 @@ Preferencia de ajuste: [más preciso / más espacio]
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",
-      ...(product.price > 0 && { price: String(product.price) }),
+      ...(hasPublicPrice && { price: String(product.price) }),
       availability: isPreorder ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
@@ -101,13 +107,20 @@ Preferencia de ajuste: [más preciso / más espacio]
     ],
   };
 
-  const benefits = isPreorder
+  const benefits = canReserve
     ? [
         "Confirmamos talla por WhatsApp",
         "Reserva con 50%",
         "Entrega estimada 3–4 semanas",
         "Acompañamiento antes de reservar",
       ]
+    : isPreorder
+      ? [
+          "Confirmamos talla por WhatsApp",
+          "Precio sujeto a confirmación",
+          "Disponibilidad sujeta a confirmación",
+          "Acompañamiento antes de decidir",
+        ]
     : [
         "Confirmamos talla por WhatsApp",
         "Disponibilidad sujeta a confirmación",
@@ -126,8 +139,10 @@ Preferencia de ajuste: [más preciso / más espacio]
     },
     {
       title: isPreorder ? "Tallas y preventa" : "Tallas y disponibilidad",
-      content: isPreorder
+      content: canReserve
         ? "Antes de reservar, confirmamos contigo la talla y la medida del pie por WhatsApp. La reserva se realiza con el 50% una vez revisados el modelo, color y disponibilidad."
+        : isPreorder
+          ? "Antes de avanzar, confirmamos contigo por WhatsApp el precio, la disponibilidad, el color y la talla. La consulta no implica una reserva."
         : "Antes de confirmar, revisamos contigo por WhatsApp la talla, la medida del pie, el color y la disponibilidad.",
     },
     {
@@ -135,8 +150,10 @@ Preferencia de ajuste: [más preciso / más espacio]
       content: "La entrega es estimada y puede variar según logística, proveedor y aduana. Consulta nuestras políticas para conocer las condiciones de reserva, cambios y devoluciones.",
     },
   ];
-  const processSteps = isPreorder
+  const processSteps = canReserve
     ? ["Preventa asistida", "Talla confirmada contigo", "Entrega estimada 3–4 semanas", "Atención por WhatsApp"]
+    : isPreorder
+      ? ["Consulta asistida", "Talla confirmada contigo", "Precio por confirmar", "Atención por WhatsApp"]
     : ["Stock confirmado", "Talla confirmada contigo", "Disponibilidad por confirmar", "Atención por WhatsApp"];
 
   return (
@@ -184,7 +201,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                 </div>
 
                 <p className="mt-6 font-heading text-3xl text-foreground">
-                  {product.price > 0 ? `${product.currency}${product.price}` : "Consultar disponibilidad"}
+                  {hasPublicPrice ? `${product.currency}${product.price}` : "Consultar disponibilidad"}
                 </p>
 
                 {variants.length > 1 ? (
@@ -247,7 +264,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                     ))}
                   </div>
                   <p className="mt-4 font-body text-sm leading-relaxed text-muted-foreground">
-                    Usamos tu talla habitual como referencia y la confirmamos contigo por WhatsApp antes de reservar.
+                    Usamos tu talla habitual como referencia y la confirmamos contigo por WhatsApp antes de {canReserve ? "reservar" : "avanzar"}.
                   </p>
                 </div>
 
@@ -257,7 +274,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                   rel="noopener noreferrer"
                   className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.16em] text-primary-foreground transition-opacity hover:opacity-90"
                 >
-                  <MessageCircle size={18} /> {isPreorder ? "Reservar" : "Consultar"} por WhatsApp
+                  <MessageCircle size={18} /> {canReserve ? "Reservar" : "Consultar"} por WhatsApp
                 </a>
                 <p className="mt-3 font-body text-xs leading-relaxed text-muted-foreground">
                   No compres a ciegas: revisamos tu talla, medida del pie y disponibilidad antes de confirmar.
@@ -312,7 +329,7 @@ Preferencia de ajuste: [más preciso / más espacio]
             rel="noopener noreferrer"
             className="flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.14em] text-primary-foreground transition-opacity hover:opacity-90"
           >
-            <MessageCircle size={18} /> {isPreorder ? "Reservar" : "Consultar"} por WhatsApp
+            <MessageCircle size={18} /> {canReserve ? "Reservar" : "Consultar"} por WhatsApp
           </a>
         </div>
       </div>
