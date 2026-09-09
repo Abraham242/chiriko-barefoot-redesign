@@ -29,14 +29,20 @@ const ProductPage = () => {
   const displaySizes =
     product.status === "preorder"
       ? product.consultableSizes
-      : product.status === "in_stock"
-        ? product.sizes
-        : product.consultableSizes;
+      : product.sizes;
+  const isPreorder = product.status === "preorder";
+  const statusBadge = isPreorder ? "Preventa asistida" : "Stock confirmado";
+  const statusCopy = isPreorder
+    ? "Entrega estimada 3–4 semanas"
+    : "Disponibilidad sujeta a confirmación por WhatsApp";
+  const whatsappIntent = isPreorder
+    ? "Quiero reservar este modelo en preventa."
+    : "Quiero consultar este modelo.";
 
   const color = product.colorName;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
 
-Quiero reservar este modelo en preventa.
+${whatsappIntent}
 Modelo: ${product.name}
 Color disponible: ${color || "[confirmar]"}${
     selectedSize ? `\nTalla habitual: ${selectedSize}` : "\nTalla habitual: [por indicar]"
@@ -44,11 +50,15 @@ Color disponible: ${color || "[confirmar]"}${
 Medida de mi pie en centímetros: [cm]
 Preferencia de ajuste: [más preciso / más espacio]
 
-¿Me ayudan a confirmar modelo, color y talla antes de reservar? Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva.`;
+¿Me ayudan a confirmar modelo, color y talla por WhatsApp?${
+    isPreorder
+      ? " Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva."
+      : ""
+  }`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   const seoTitle = `${product.name} en Venezuela | Chiriko Studio`;
-  const seoDescription = `${product.name} de ${product.brand} en preventa asistida en Venezuela. Calzado barefoot y respetuoso con talla confirmada por WhatsApp y entrega estimada 3–4 semanas.`;
+  const seoDescription = `${product.name} de ${product.brand} en Venezuela. Calzado barefoot y respetuoso con talla y disponibilidad confirmadas por WhatsApp.`;
   const productUrl = `https://chirikostudio.com/product/${product.slug}`;
   const imageUrl = product.images[0].startsWith("http")
     ? product.images[0]
@@ -69,7 +79,7 @@ Preferencia de ajuste: [más preciso / más espacio]
       "@type": "Offer",
       priceCurrency: "USD",
       ...(product.price > 0 && { price: String(product.price) }),
-      availability: "https://schema.org/PreOrder",
+      availability: isPreorder ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
       seller: {
@@ -90,12 +100,19 @@ Preferencia de ajuste: [más preciso / más espacio]
     ],
   };
 
-  const benefits = [
-    "Confirmamos talla por WhatsApp",
-    "Reserva con 50%",
-    "Entrega estimada 3–4 semanas",
-    "Acompañamiento antes de reservar",
-  ];
+  const benefits = isPreorder
+    ? [
+        "Confirmamos talla por WhatsApp",
+        "Reserva con 50%",
+        "Entrega estimada 3–4 semanas",
+        "Acompañamiento antes de reservar",
+      ]
+    : [
+        "Confirmamos talla por WhatsApp",
+        "Disponibilidad sujeta a confirmación",
+        "Atención personalizada",
+        "Acompañamiento antes de elegir",
+      ];
 
   const information = [
     {
@@ -107,14 +124,19 @@ Preferencia de ajuste: [más preciso / más espacio]
       content: product.features.join(" · "),
     },
     {
-      title: "Tallas y preventa",
-      content: "Antes de reservar, confirmamos contigo la talla y la medida del pie por WhatsApp. La reserva se realiza con el 50% una vez revisados el modelo, color y disponibilidad.",
+      title: isPreorder ? "Tallas y preventa" : "Tallas y disponibilidad",
+      content: isPreorder
+        ? "Antes de reservar, confirmamos contigo la talla y la medida del pie por WhatsApp. La reserva se realiza con el 50% una vez revisados el modelo, color y disponibilidad."
+        : "Antes de confirmar, revisamos contigo por WhatsApp la talla, la medida del pie, el color y la disponibilidad.",
     },
     {
       title: "Envíos, cambios y devoluciones",
       content: "La entrega es estimada y puede variar según logística, proveedor y aduana. Consulta nuestras políticas para conocer las condiciones de reserva, cambios y devoluciones.",
     },
   ];
+  const processSteps = isPreorder
+    ? ["Preventa asistida", "Talla confirmada contigo", "Entrega estimada 3–4 semanas", "Atención por WhatsApp"]
+    : ["Stock confirmado", "Talla confirmada contigo", "Disponibilidad por confirmar", "Atención por WhatsApp"];
 
   return (
     <>
@@ -155,9 +177,9 @@ Preferencia de ajuste: [más preciso / más espacio]
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <span className="rounded-full bg-secondary px-3 py-1.5 font-body text-xs font-medium uppercase tracking-[0.12em] text-foreground">
-                    Preventa asistida
+                    {statusBadge}
                   </span>
-                  <span className="font-body text-sm text-muted-foreground">Entrega estimada 3–4 semanas</span>
+                  <span className="font-body text-sm text-muted-foreground">{statusCopy}</span>
                 </div>
 
                 <p className="mt-6 font-heading text-3xl text-foreground">
@@ -234,7 +256,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                   rel="noopener noreferrer"
                   className="mt-7 flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.16em] text-primary-foreground transition-opacity hover:opacity-90"
                 >
-                  <MessageCircle size={18} /> Reservar por WhatsApp
+                  <MessageCircle size={18} /> {isPreorder ? "Reservar" : "Consultar"} por WhatsApp
                 </a>
                 <p className="mt-3 font-body text-xs leading-relaxed text-muted-foreground">
                   No compres a ciegas: revisamos tu talla, medida del pie y disponibilidad antes de confirmar.
@@ -272,8 +294,8 @@ Preferencia de ajuste: [más preciso / más espacio]
               ))}
             </section>
 
-            <section className="my-12 grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-border/70 sm:grid-cols-4 lg:my-16" aria-label="Cómo funciona la preventa">
-              {["Preventa asistida", "Talla confirmada contigo", "Entrega estimada 3–4 semanas", "Atención por WhatsApp"].map((item) => (
+            <section className="my-12 grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-border/70 sm:grid-cols-4 lg:my-16" aria-label={isPreorder ? "Cómo funciona la preventa" : "Cómo confirmamos la disponibilidad"}>
+              {processSteps.map((item) => (
                 <div key={item} className="flex min-h-24 items-center justify-center bg-secondary/40 px-4 py-6 text-center font-body text-xs uppercase leading-relaxed tracking-[0.12em] text-foreground sm:text-sm">
                   {item}
                 </div>
@@ -289,7 +311,7 @@ Preferencia de ajuste: [más preciso / más espacio]
             rel="noopener noreferrer"
             className="flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.14em] text-primary-foreground transition-opacity hover:opacity-90"
           >
-            <MessageCircle size={18} /> Reservar por WhatsApp
+            <MessageCircle size={18} /> {isPreorder ? "Reservar" : "Consultar"} por WhatsApp
           </a>
         </div>
       </div>

@@ -22,7 +22,6 @@ type CatalogGroup = {
 
 const statusLabels: Record<ProductStatus, string> = {
   preorder: "Preventa",
-  coming_soon: "Próximamente",
   in_stock: "Stock confirmado",
 };
 
@@ -32,14 +31,12 @@ const whatsappUrl = `https://wa.me/584221798072?text=${encodeURIComponent(
 
 const sizesForProduct = (product: Product) => {
   if (product.status === "preorder") return product.consultableSizes;
-  if (product.status === "in_stock") return product.sizes;
-  return [];
+  return product.sizes;
 };
 
 const groupStatus = (variants: Product[]): ProductStatus => {
   if (variants.some((variant) => variant.status === "in_stock")) return "in_stock";
-  if (variants.some((variant) => variant.status === "preorder")) return "preorder";
-  return "coming_soon";
+  return "preorder";
 };
 
 const groupedCatalog = products.reduce<CatalogGroup[]>((groups, product) => {
@@ -206,7 +203,7 @@ const CollectionPage = () => {
                     </fieldset>
                     <fieldset>
                       <legend className="font-body text-xs font-medium uppercase tracking-[0.16em]">Estado</legend>
-                      <div className="mt-3 flex flex-wrap gap-2">{(["preorder", "coming_soon", "in_stock"] as ProductStatus[]).map((status) => <button key={status} type="button" aria-pressed={activeStatus === status} onClick={() => setActiveStatus(activeStatus === status ? null : status)} className={`rounded-full px-3.5 py-2 font-body text-xs ${activeStatus === status ? "bg-foreground text-background" : "bg-secondary text-foreground hover:bg-foreground/10"}`}>{statusLabels[status]}</button>)}</div>
+                      <div className="mt-3 flex flex-wrap gap-2">{(["preorder", "in_stock"] as ProductStatus[]).map((status) => <button key={status} type="button" aria-pressed={activeStatus === status} onClick={() => setActiveStatus(activeStatus === status ? null : status)} className={`rounded-full px-3.5 py-2 font-body text-xs ${activeStatus === status ? "bg-foreground text-background" : "bg-secondary text-foreground hover:bg-foreground/10"}`}>{statusLabels[status]}</button>)}</div>
                     </fieldset>
                   </div>
                   <div className="mt-10 grid gap-3">
