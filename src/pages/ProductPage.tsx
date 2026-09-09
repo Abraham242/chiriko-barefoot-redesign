@@ -25,7 +25,9 @@ const ProductPage = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const color = product.subtitle.split("·")[0]?.trim();
+  const color = product.subtitle.includes("·")
+    ? product.subtitle.split("·")[0].trim()
+    : null;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
 
 Quiero reservar este modelo en preventa.
@@ -34,6 +36,7 @@ Color: ${color || "por confirmar"}${
     selectedSize ? `\nTalla habitual: ${selectedSize}` : "\nTalla habitual: [por indicar]"
   }
 Medida de mi pie en centímetros: [cm]
+Preferencia de ajuste: [más preciso / más espacio]
 
 ¿Me ayudan a confirmar modelo, color y talla antes de reservar? Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva.`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -59,7 +62,7 @@ Medida de mi pie en centímetros: [cm]
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",
-      price: product.price > 0 ? String(product.price) : "0",
+      ...(product.price > 0 && { price: String(product.price) }),
       availability: "https://schema.org/PreOrder",
       itemCondition: "https://schema.org/NewCondition",
       url: productUrl,
@@ -118,7 +121,7 @@ Medida de mi pie en centímetros: [cm]
         jsonLd={[productJsonLd, breadcrumbJsonLd]}
       />
 
-      <div className="min-h-screen overflow-x-hidden bg-background">
+      <div className="min-h-screen overflow-x-hidden bg-background pb-24 md:pb-0">
         <Navbar />
         <main className="pt-20 lg:pt-24">
           <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-12 lg:py-12">
@@ -248,6 +251,16 @@ Medida de mi pie en centímetros: [cm]
           </div>
         </main>
         <Footer />
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur md:hidden">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-foreground px-5 font-body text-sm uppercase tracking-[0.14em] text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            <MessageCircle size={18} /> Reservar por WhatsApp
+          </a>
+        </div>
       </div>
     </>
   );
