@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import heroEnigma from "@/assets/hero-enigma-ivory.jpg";
 import heroUrban from "@/assets/hero-urban-zing.jpg";
 import ResponsiveImage from "@/components/ResponsiveImage";
@@ -71,12 +72,12 @@ const HeroSection = () => {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a
-                href="/collection"
+              <Link
+                to="/collection"
                 className="inline-flex h-14 items-center justify-center bg-[#F7F5F0] px-8 font-body text-[12px] uppercase tracking-[0.18em] text-[#1A1A18] transition-all duration-300 hover:bg-white"
               >
                 Ver colección
-              </a>
+              </Link>
 
               <a
                 href={whatsappUrl}

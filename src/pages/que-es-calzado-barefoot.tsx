@@ -102,19 +102,19 @@ const benefits = [
 const faqs = [
   {
     q: "¿Me van a doler los pies si nunca he usado barefoot?",
-    a: "Es posible sentir algo de fatiga los primeros días, especialmente en el arco y el talón de Aquiles. Es completamente normal: son músculos que no estaban siendo usados. La clave es la transición gradual — empieza usando el calzado barefoot 1-2 horas al día y auméntalo semana a semana.",
+    a: "El cambio puede sentirse diferente al principio. Empieza con períodos cortos, alterna con tu calzado habitual y aumenta el uso poco a poco según cómo te sientas.",
   },
   {
-    q: "¿Sirve para fascitis plantar o juanetes?",
-    a: "El calzado barefoot puede resultar más cómodo para algunas personas porque ofrece más espacio para los dedos y una pisada más natural. Pero si tienes dolor, fascitis plantar, juanetes o una condición diagnosticada, lo correcto es consultar con un especialista antes de hacer la transición.",
+    q: "¿Puedo usarlo si tengo una condición diagnosticada?",
+    a: "El calzado barefoot ofrece más espacio para los dedos y una sensación de pisada diferente. Si tienes dolor o una condición diagnosticada, consulta con un profesional de salud antes de cambiar de calzado.",
   },
   {
     q: "¿Cuánto tiempo tarda la transición?",
-    a: "Depende de la persona y del uso previo de calzado. En promedio, entre 4 y 12 semanas para adaptar la musculatura. Durante ese período, alterna entre tu calzado habitual y el barefoot.",
+    a: "Depende de cada persona y del calzado que usa habitualmente. Lo importante es hacer la transición de forma gradual, alternando ambos tipos de calzado y atendiendo a cómo te sientes.",
   },
   {
     q: "¿Los niños pueden usar barefoot?",
-    a: "Sí, siempre que sea un calzado adecuado para su etapa y se elija bien la talla. Los pies de los niños están en desarrollo y el barefoot permite que esa formación ocurra de manera natural, sin deformar la estructura del pie.",
+    a: "Puede ser una opción si el modelo corresponde a su etapa y la talla es adecuada. Busca una horma que respete el espacio y el movimiento natural del pie y, ante cualquier duda, consulta con un profesional.",
   },
   {
     q: "¿Dónde puedo conseguir calzado barefoot en Venezuela?",
@@ -314,8 +314,8 @@ const QueEsCalzadoBarefoot = () => {
                     <span className="text-foreground font-medium">Nota importante:</span>{" "}
                     si tienes una condición específica como fascitis plantar diagnosticada,
                     hallux valgus severo o neuromas, consulta con un podólogo antes de
-                    iniciar la transición. El barefoot es una herramienta poderosa, pero
-                    requiere proceso.
+                    iniciar la transición. Es una opción que requiere adaptación
+                    progresiva.
                   </p>
                 </div>
               </div>
@@ -326,11 +326,11 @@ const QueEsCalzadoBarefoot = () => {
           <section className="container mx-auto px-6 lg:px-12 mb-16">
             <div className="max-w-3xl mx-auto">
               <h2 className="font-heading text-2xl md:text-3xl font-light text-foreground mb-3">
-                Cómo hacer la transición sin hacerte daño
+                Cómo hacer una transición gradual
               </h2>
               <p className="font-body text-sm text-muted-foreground mb-10">
-                Este es el punto donde más personas cometen errores. La transición gradual
-                no es opcional — es lo que determina si el proceso funciona o no.
+                Cada persona se adapta a un ritmo distinto. Empieza poco a poco,
+                alterna con tu calzado habitual y presta atención a cómo te sientes.
               </p>
 
               <div className="space-y-8">
@@ -351,13 +351,13 @@ const QueEsCalzadoBarefoot = () => {
                     semana: "Semanas 5–8",
                     titulo: "Integración",
                     texto:
-                      "La musculatura ya empieza a adaptarse. Puedes usar el barefoot como calzado principal. Introduce actividad física ligera con ellos. El zapato convencional pasa a ser la excepción.",
+                      "Si te sientes cómodo, amplía el tiempo de uso en actividades cotidianas. Mantén la alternancia siempre que la necesites.",
                   },
                   {
                     semana: "A partir del mes 3",
                     titulo: "Uso completo",
                     texto:
-                      "El pie ya trabaja como fue diseñado. La mayoría de los usuarios reporta en este punto que ya no quieren volver al calzado convencional.",
+                      "Valora cómo ha sido tu experiencia y decide cuándo ampliar el uso. No hay un plazo único ni es necesario abandonar por completo tu calzado habitual.",
                   },
                 ].map((step) => (
                   <div key={step.semana} className="flex gap-6 pb-8 border-b border-border/50 last:border-0 last:pb-0">

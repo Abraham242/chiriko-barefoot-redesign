@@ -40,7 +40,7 @@ const BestSellers = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {featuredProducts.map((product) => {
             return (
-              <Link to={`/product/${product.id}`} key={product.id} className="group block">
+              <Link to={`/product/${product.slug}`} key={product.id} className="group block">
                 <div className="relative bg-white aspect-[4/5] md:aspect-square flex items-center justify-center overflow-hidden">
                   <span className="absolute right-4 top-4 font-body text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                     {product.status === "in_stock" ? "Disponible" : "Preventa"}
