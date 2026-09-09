@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import heroEnigma from "@/assets/hero-enigma-ivory.jpg";
 import heroUrban from "@/assets/hero-urban-zing.jpg";
 import ResponsiveImage from "@/components/ResponsiveImage";
@@ -63,16 +64,20 @@ const HeroSection = () => {
             </p>
 
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-light leading-[0.95] text-primary-foreground max-w-2xl">
-              Muévete natural. Camina mejor.
+              Calzado que deja espacio para moverte.
             </h1>
 
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-primary-foreground/80 md:text-lg">
+              Barefoot y transición para tu día a día, con ayuda para confirmar tu talla antes de reservar.
+            </p>
+
             <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a
-                href="#shop"
+              <Link
+                to="/collection"
                 className="inline-flex h-14 items-center justify-center bg-[#F7F5F0] px-8 font-body text-[12px] uppercase tracking-[0.18em] text-[#1A1A18] transition-all duration-300 hover:bg-white"
               >
-                Ver preventa
-              </a>
+                Ver colección
+              </Link>
 
               <a
                 href={whatsappUrl}
@@ -84,34 +89,6 @@ const HeroSection = () => {
               </a>
             </div>
 
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
-              <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
-                <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Preventa
-                </p>
-                <p className="mt-1 font-body text-sm text-primary-foreground">
-                  Reserva asistida
-                </p>
-              </div>
-
-              <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
-                <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Talla
-                </p>
-                <p className="mt-1 font-body text-sm text-primary-foreground">
-                  La confirmamos contigo
-                </p>
-              </div>
-
-              <div className="border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm">
-                <p className="font-body text-[11px] uppercase tracking-[0.18em] text-primary-foreground/72">
-                  Entrega
-                </p>
-                <p className="mt-1 font-body text-sm text-primary-foreground">
-                  Estimada 3–4 semanas
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
