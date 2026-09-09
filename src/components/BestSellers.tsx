@@ -14,17 +14,27 @@ const BestSellers = () => {
     .filter((product): product is (typeof products)[number] => Boolean(product));
 
   return (
-    <section className="py-24 lg:py-32">
+    <section className="py-20 lg:py-28">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-3">
-            Colección natural
-          </h2>
+        <div className="flex flex-col gap-4 mb-12 md:flex-row md:items-end md:justify-between lg:mb-16">
+          <div>
+            <p className="mb-3 font-body text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Selección Chiriko
+            </p>
+            <h2 className="font-heading text-3xl md:text-5xl font-light text-foreground mb-3">
+              Colección natural
+            </h2>
 
-          <p className="font-body text-muted-foreground text-sm tracking-wide max-w-2xl mx-auto">
-            Modelos barefoot y de transición disponibles en preventa asistida. Te
-            ayudamos a confirmar talla, color y reserva por WhatsApp.
-          </p>
+            <p className="font-body text-muted-foreground text-sm tracking-wide max-w-xl">
+              Diseños barefoot y de transición elegidos para acompañar tu movimiento.
+            </p>
+          </div>
+          <Link
+            to="/collection"
+            className="font-body text-xs uppercase tracking-[0.16em] text-foreground underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
+          >
+            Explorar colección
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -33,7 +43,7 @@ const BestSellers = () => {
               <Link to={`/product/${product.id}`} key={product.id} className="group block">
                 <div className="relative bg-white aspect-[4/5] md:aspect-square flex items-center justify-center overflow-hidden">
                   <span className="absolute right-4 top-4 font-body text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                    Preventa
+                    {product.status === "in_stock" ? "Disponible" : "Preventa"}
                   </span>
 
                   <ResponsiveImage
@@ -65,7 +75,7 @@ const BestSellers = () => {
             to="/collection"
             className="inline-flex h-11 items-center justify-center border border-border px-6 text-[12px] tracking-[0.16em] uppercase text-foreground transition-colors hover:border-foreground"
           >
-            Ver modelos en preventa
+            Ver colección completa
           </Link>
         </div>
       </div>

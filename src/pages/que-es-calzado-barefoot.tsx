@@ -21,7 +21,7 @@ const articleSchema = {
     name: "Chiriko Studio",
     url: "https://chirikostudio.com",
   },
-  mainEntityOfPage: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+  mainEntityOfPage: "https://chirikostudio.com/que-es-calzado-barefoot",
   inLanguage: "es-VE",
 };
 
@@ -39,13 +39,13 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 2,
       name: "Aprende",
-      item: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+      item: "https://chirikostudio.com/que-es-calzado-barefoot",
     },
     {
       "@type": "ListItem",
       position: 3,
       name: "Qué es el calzado barefoot",
-      item: "https://chirikostudio.com/aprende/que-es-calzado-barefoot",
+      item: "https://chirikostudio.com/que-es-calzado-barefoot",
     },
   ],
 };
@@ -55,7 +55,7 @@ const benefits = [
   {
     title: "Drop cero",
     description:
-      "El talón y la punta están a la misma altura. Esto elimina la inclinación artificial que obliga a tu cuerpo a compensar con la postura, haciendo que tu cuerpo compense de forma innecesaria.",
+      "El talón y la punta están a la misma altura, una geometría pensada para ofrecer una sensación de apoyo más plana.",
     icon: (
       <svg width="36" height="28" viewBox="0 0 40 24" fill="none" className="text-foreground">
         <line x1="0" y1="22" x2="40" y2="22" stroke="currentColor" strokeWidth="1.5" />
@@ -77,7 +77,7 @@ const benefits = [
   {
     title: "Suela delgada y flexible",
     description:
-      "Una suela de 3 a 6mm permite que el pie sienta el suelo — lo que los científicos llaman propiocepción. Tu cerebro recibe información real sobre cada superficie, mejorando el equilibrio y activando músculos que el zapato tradicional tiene 'apagados'.",
+      "Una suela delgada y flexible permite percibir mejor la superficie y acompaña el movimiento del pie con menos rigidez.",
     icon: (
       <svg width="40" height="20" viewBox="0 0 40 20" fill="none" className="text-foreground">
         <rect x="0" y="14" width="40" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" fill="none" />
@@ -86,9 +86,9 @@ const benefits = [
     ),
   },
   {
-    title: "Sin soporte artificial",
+    title: "Estructura mínima",
     description:
-      "Los arcos de soporte que traen la mayoría de los zapatos debilitan los músculos del pie con el tiempo. El barefoot trabaja al revés: fortalece progresivamente la musculatura intrínseca, igual que caminar descalzo pero con protección.",
+      "El diseño reduce elementos rígidos para acercarse a una sensación de movimiento natural, sin dejar de proteger el pie del entorno.",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="text-foreground">
         <path d="M6 28 C6 20 10 10 18 8 C26 10 30 20 30 28" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
@@ -129,7 +129,7 @@ const QueEsCalzadoBarefoot = () => {
       <SEO
         title="¿Qué es el calzado barefoot? | Guía en Venezuela"
         description="Descubre qué es el calzado barefoot y el calzado respetuoso, sus características y cómo hacer una transición responsable en Venezuela con Chiriko Studio."
-        path="/aprende/que-es-calzado-barefoot"
+        path="/que-es-calzado-barefoot"
         jsonLd={[articleSchema, breadcrumbSchema]}
       />
 
@@ -158,9 +158,8 @@ const QueEsCalzadoBarefoot = () => {
                 ¿Qué es el calzado barefoot?
               </h1>
               <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                Una guía completa para entender el calzado minimalista, sus beneficios
-                reales para la postura y la salud del pie, y cómo hacer la transición
-                de manera inteligente.
+                Una guía para entender el calzado minimalista, sus características
+                y cómo hacer una transición gradual y responsable.
               </p>
 
               {/* Meta info del artículo */}
@@ -230,12 +229,12 @@ const QueEsCalzadoBarefoot = () => {
                     {
                       num: "02",
                       title: "Caja de dedos estrecha",
-                      text: "Los zapatos con punta estrecha o redondeada comprimen los dedos, deformando progresivamente su posición natural. Con el tiempo esto genera juanetes (hallux valgus) y dedos en martillo.",
+                      text: "Los zapatos con punta estrecha o redondeada pueden comprimir los dedos y limitar el espacio disponible para que se muevan.",
                     },
                     {
                       num: "03",
                       title: "Amortiguación excesiva",
-                      text: "La suela gruesa aisla el pie de la información del suelo. El cerebro deja de recibir señales propioceptivas, los músculos del pie se debilitan y el cuerpo pierde capacidad de equilibrio natural.",
+                      text: "Una suela gruesa ofrece una sensación más aislada del suelo. Una suela delgada busca una experiencia más cercana a la superficie.",
                     },
                   ].map((item) => (
                     <div key={item.num} className="flex gap-6">
@@ -280,29 +279,28 @@ const QueEsCalzadoBarefoot = () => {
             </div>
           </section>
 
-          {/* ── SECCIÓN 4: BENEFICIOS REALES ── */}
+          {/* ── SECCIÓN 4: EXPERIENCIA DE USO ── */}
           <section className="bg-muted/30 py-16 lg:py-20 mb-16">
             <div className="container mx-auto px-6 lg:px-12">
               <div className="max-w-3xl mx-auto">
                 <h2 className="font-heading text-2xl md:text-3xl font-light text-foreground mb-6">
-                  ¿Qué beneficios reales tiene?
+                  ¿Qué cambia en la experiencia de uso?
                 </h2>
                 <p className="font-body text-base text-muted-foreground leading-relaxed mb-8">
-                  Los beneficios no son inmediatos — requieren una transición. Pero los
-                  usuarios que completan el proceso reportan cambios que van mucho más
-                  allá de los pies:
+                  El cambio de un calzado estructurado a uno barefoot puede sentirse
+                  diferente. Estas son sus características prácticas:
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
                   {[
-                    "Reducción del dolor en talones y arco plantar",
-                    "Mejora de la postura y alineación de columna",
-                    "Mayor equilibrio y coordinación",
-                    "Fortalecimiento de músculos del pie y pantorrilla",
-                    "Disminución de dolor lumbar en muchos casos",
-                    "Mejor amortiguación natural (la que da tu propio cuerpo)",
-                    "Prevención de juanetes y deformidades progresivas",
-                    "Mayor conciencia corporal al caminar",
+                    "Más espacio para que los dedos se muevan",
+                    "Una base plana, sin talón elevado",
+                    "Mayor percepción de la superficie al caminar",
+                    "Materiales que acompañan el movimiento del pie",
+                    "Menos estructura y rigidez en el calzado",
+                    "Una sensación de pisada más cercana al suelo",
+                    "Opciones para una transición gradual",
+                    "Asesoría para elegir modelo y talla",
                   ].map((benefit) => (
                     <div key={benefit} className="flex items-start gap-3">
                       <span className="text-foreground mt-0.5 flex-shrink-0">—</span>

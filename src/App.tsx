@@ -34,6 +34,7 @@ const App = () => (
             path="/aprende/que-es-calzado-barefoot"
             element={<QueEsCalzadoBarefoot />}
           />
+          <Route path="/que-es-calzado-barefoot" element={<QueEsCalzadoBarefoot />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
