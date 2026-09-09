@@ -11,14 +11,13 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductImageGallery from "@/components/ProductImageGallery";
-import { products } from "@/data/products";
-import { getProductVariants } from "@/data/catalogHelpers";
+import { getProductById, getProductVariants } from "@/data/catalogHelpers";
 
 const phoneNumber = "584221798072";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const product = products.find((item) => item.id === id);
+  const product = id ? getProductById(id) : undefined;
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   if (!product) {
@@ -57,8 +56,10 @@ Preferencia de ajuste: [más preciso / más espacio]
   }`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
-  const seoTitle = `${product.name} en Venezuela | Chiriko Studio`;
-  const seoDescription = `${product.name} de ${product.brand} en Venezuela. Calzado barefoot y respetuoso con talla y disponibilidad confirmadas por WhatsApp.`;
+  const seoTitle = product.seoTitle || `${product.name} en Venezuela | Chiriko Studio`;
+  const seoDescription =
+    product.seoDescription ||
+    `${product.name} de ${product.brand} en Venezuela. Calzado barefoot y respetuoso con talla y disponibilidad confirmadas por WhatsApp.`;
   const productUrl = `https://chirikostudio.com/product/${product.slug}`;
   const imageUrl = product.images[0].startsWith("http")
     ? product.images[0]
@@ -143,7 +144,7 @@ Preferencia de ajuste: [más preciso / más espacio]
       <SEO
         title={seoTitle}
         description={seoDescription}
-        path={`/product/${product.id}`}
+        path={`/product/${product.slug}`}
         image={imageUrl}
         ogType="product"
         jsonLd={[productJsonLd, breadcrumbJsonLd]}
