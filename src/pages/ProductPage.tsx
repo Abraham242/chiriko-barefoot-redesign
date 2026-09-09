@@ -14,19 +14,24 @@ import ProductImageGallery from "@/components/ProductImageGallery";
 import { products } from "@/data/products";
 import { getProductVariants } from "@/data/catalogHelpers";
 
-const sizes = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 const phoneNumber = "584221798072";
 
 const ProductPage = () => {
   const { id } = useParams();
   const product = products.find((item) => item.id === id);
-  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   if (!product) {
     return <Navigate to="/404" replace />;
   }
 
   const variants = getProductVariants(product);
+  const displaySizes =
+    product.status === "preorder"
+      ? product.consultableSizes
+      : product.status === "in_stock"
+        ? product.sizes
+        : product.consultableSizes;
 
   const color = product.colorName;
   const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
@@ -44,7 +49,7 @@ Preferencia de ajuste: [más preciso / más espacio]
 
   const seoTitle = `${product.name} en Venezuela | Chiriko Studio`;
   const seoDescription = `${product.name} de ${product.brand} en preventa asistida en Venezuela. Calzado barefoot y respetuoso con talla confirmada por WhatsApp y entrega estimada 3–4 semanas.`;
-  const productUrl = `https://chirikostudio.com/product/${product.id}`;
+  const productUrl = `https://chirikostudio.com/product/${product.slug}`;
   const imageUrl = product.images[0].startsWith("http")
     ? product.images[0]
     : `https://chirikostudio.com${product.images[0]}`;
@@ -202,7 +207,7 @@ Preferencia de ajuste: [más preciso / más espacio]
                     </Link>
                   </div>
                   <div className="grid grid-cols-5 gap-2 sm:gap-3">
-                    {sizes.map((size) => (
+                    {displaySizes.map((size) => (
                       <button
                         key={size}
                         type="button"
