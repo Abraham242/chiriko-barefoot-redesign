@@ -98,5 +98,20 @@ strict public-field allowlist. Supplier prices, stock quantities,
 accessed nor written to the proposal.
 
 Both the approved selection and generated proposal remain in the Git-ignored
-`output/` directory. Review the proposal before manually integrating it; the
-helper never modifies `src/data/products.ts` or any storefront code.
+`output/` directory. Review the proposal before applying it.
+
+## Apply the approved launch proposal
+
+Once `launch-products.proposal.json` has been reviewed and approved, update the
+storefront catalog from the repository root:
+
+```sh
+node tools/catalog-manager/apply-launch-products.mjs
+```
+
+The apply helper accepts exactly 22 products, validates the public storefront
+fields and remote image URLs, and replaces the exported catalog in
+`src/data/products.ts`. It deliberately enforces launch pricing/status display
+defaults and generates Spanish customer-facing copy; it does not read the feed
+or either intermediate draft/selection file. The local files under `output/`
+remain ignored and must not be committed.
