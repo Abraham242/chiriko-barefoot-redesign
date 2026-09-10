@@ -15,6 +15,11 @@ import { fileURLToPath } from "node:url";
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const outputPath = resolve(toolDirectory, "output/product-drafts.json");
 const itemElementNames = new Set(["product", "item", "article"]);
+const genericProductTypes = new Set([
+  "barefoot-tenisky", "barefoot-topanky", "barefoot-sandale",
+  "zimne-barefoot-topanky", "barefoot-snehule", "detske-barefoot-topanky",
+  "barefoot-baleriny", "barefoot-ponozky", "stielka", "unisex-tricko",
+]);
 
 function usage(message) {
   if (message) console.error(`Error: ${message}\n`);
@@ -146,10 +151,27 @@ function normalizeBrand(value, title) {
 
 function normalizeCategory(value) {
   const category = slugify(value);
-  if (/sandal/.test(category)) return "Sandalias";
-  if (/boot/.test(category)) return "Botas";
-  if (/barefoot-shoe|shoe|sneaker/.test(category)) return "Zapatillas";
+  if (/sandal|sandale/.test(category)) return "Sandalias";
+  if (/boot|zimne|snehule/.test(category)) return "Botas";
+  if (/barefoot-shoe|shoe|sneaker|tenisky|topanky/.test(category)) return "Zapatillas";
   return "Zapatillas";
+}
+
+function parseCommercialTitle(secondLine, fallbackTitle, firstLine, xmlColor) {
+  const commercialTitle = clean(secondLine) || clean(fallbackTitle) ||
+    (!genericProductTypes.has(slugify(firstLine)) ? clean(firstLine) : "") || "Product to review";
+  const separator = commercialTitle.indexOf(" - ");
+  if (separator === -1) return { model: commercialTitle, colorName: clean(xmlColor, "Color to review") };
+
+  return {
+    model: clean(commercialTitle.slice(0, separator), "Product to review"),
+    colorName: clean(commercialTitle.slice(separator + 3), clean(xmlColor, "Color to review")),
+  };
+}
+
+function isNonFootwear(row) {
+  const searchable = slugify([row.brand, row.model, row.colorName, row.productType, row.sourceTitle].join(" "));
+  return /(^|-)(waterproofing-spray|collonil|pedag|stielka|insole|insoles|ponozky|sock|socks|tricko|t-shirt|shirt|cleaner|wax|protector|waterproofer|shoe-fresh)(-|$)/.test(searchable);
 }
 
 function normalizeAvailability(value) {
@@ -163,10 +185,10 @@ function toSafeRow(node) {
   const title = clean(directValue(node, ["title"]));
   const firstLine = clean(directValue(node, ["title_first_line", "titleFirstLine"]));
   const secondLine = clean(directValue(node, ["title_second_line", "titleSecondLine"]));
-  const model = firstLine || title || "Product to review";
   const normalizedBrand = normalizeBrand(directValue(node, ["brand", "manufacturer", "maker"]), `${title} ${firstLine} ${secondLine}`);
   const colorNode = directNode(node, ["color", "colour", "colorName"]);
-  const colorName = clean(colorNode ? nodeValue(colorNode) : "", "Color to review");
+  const colorFamily = clean(colorNode ? nodeValue(colorNode) : "", "Color to review");
+  const { model, colorName } = parseCommercialTitle(secondLine, title, firstLine, colorFamily);
   const rawColorHex = clean(colorNode?.attributes.hexcode || directValue(node, ["colorHex", "color_hex"]));
   const availabilityNode = directNode(node, ["availability"]);
   const availability = clean(availabilityNode ? nodeValue(availabilityNode) : "");
@@ -176,11 +198,11 @@ function toSafeRow(node) {
   return {
     ...normalizedBrand,
     model,
-    subtitle: secondLine,
     colorName,
+    colorFamily,
     colorHex: /^#[0-9a-f]{6}$/i.test(rawColorHex) ? rawColorHex : "#E5E1DA",
     gender: normalizeGender(directValue(node, ["gender", "sex", "department"])),
-    category: normalizeCategory(directValue(node, ["product_type", "main_category", "category", "productType", "type"])),
+    category: normalizeCategory(firstLine || directValue(node, ["product_type", "main_category", "category", "productType", "type"])),
     size: clean(directValue(node, ["size", "sizeName", "size_name", "euSize", "eu_size"])),
     images,
     // These are deliberately read only as safe grouping/size hints, never emitted.
@@ -188,6 +210,8 @@ function toSafeRow(node) {
     availability,
     availabilityPresent: Boolean(availabilityNode),
     availabilityState: normalizeAvailability(availability),
+    productType: firstLine,
+    sourceTitle: title,
   };
 }
 
@@ -211,11 +235,11 @@ function toDraft(rows) {
     groupSlug,
     groupName,
     name: groupName,
-    subtitle: first.subtitle || `${colorName} · borrador pendiente de revisión`,
+    subtitle: `${colorName} · borrador pendiente de revisión`,
     gender: first.gender,
     category: first.category,
     colorName,
-    colorFamily: colorName,
+    colorFamily: first.colorFamily,
     colorHex: first.colorHex,
     // Supplier feed prices are intentionally not imported until Chiriko confirms which field is safe as a public customer-facing price.
     price: 0,
@@ -236,7 +260,7 @@ function toDraft(rows) {
 function groupRows(rows) {
   const groups = new Map();
   for (const row of rows) {
-    const key = [row.brand, row.model, row.colorName].map((value) => clean(value).toLocaleLowerCase()).join("\u0000");
+    const key = [row.brand, row.model, row.colorName].map(slugify).join("\u0000");
     const group = groups.get(key) ?? [];
     group.push(row);
     groups.set(key, group);
@@ -266,12 +290,15 @@ async function main() {
   if (!items.length) throw new Error("No <product>, <item>, or <article> elements were found");
 
   const rows = items.map(toSafeRow);
-  const drafts = groupRows(rows).map(toDraft);
+  const groupedRows = groupRows(rows);
+  const excludedGroups = groupedRows.filter((group) => group.some(isNonFootwear));
+  const drafts = groupedRows.filter((group) => !group.some(isNonFootwear)).map(toDraft);
   await mkdir(dirname(outputPath), { recursive: true });
   await writeFile(outputPath, `${JSON.stringify(drafts, null, 2)}\n`, { mode: 0o600 });
 
   console.log(`XML items read: ${items.length}`);
-  console.log(`Draft products generated: ${drafts.length}`);
+  console.log(`Footwear draft products generated: ${drafts.length}`);
+  console.log(`Excluded non-footwear groups: ${excludedGroups.length}`);
   console.log(`Drafts with images: ${drafts.filter((draft) => draft.images.length).length}`);
   console.log(`Drafts without images: ${drafts.filter((draft) => !draft.images.length).length}`);
   console.log(`Drafts with consultable sizes: ${drafts.filter((draft) => draft.consultableSizes.length).length}`);
