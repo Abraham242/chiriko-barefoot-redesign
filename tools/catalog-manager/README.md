@@ -28,6 +28,7 @@ model/name, and color. It never creates a separate Chiriko product merely
 because the size or item group differs.
 
 Imported size labels go into `consultableSizes` only; `sizes` stays empty
+codex/improve-xml-importer-for-be-lenka-feed-avrezq
 because feed availability is not a customer stock guarantee. The feed's
 `availability` yes/no value is used only to decide which sizes are consultable
 in review drafts. A size with an explicitly unavailable or unclear value is
@@ -40,6 +41,13 @@ Prices are intentionally not imported until Chiriko confirms a safe public
 customer-facing field, so every draft has `price: 0` and requires review. Every
 record defaults to `preorder`. The generated output is review-only and never
 updates the storefront by itself.
+=======
+because feed availability is not a customer stock guarantee. Prices are
+intentionally not imported until Chiriko confirms a safe public
+customer-facing field, so every draft has `price: 0` and requires review.
+Stock quantities are never published, and every record defaults to `preorder`.
+The generated output is review-only and never updates the storefront by itself.
+
 
 ## Security and review checklist
 
