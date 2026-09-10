@@ -122,6 +122,72 @@ function unique(values) {
   return [...new Set(values.map((value) => clean(value)).filter(Boolean))];
 }
 
+const colorStopWords = new Set(["all", "and", "with", "vegan", "leather", "color", "colour"]);
+
+function urlSlug(value) {
+  try {
+    return slugify(decodeURIComponent(new URL(value).pathname));
+  } catch {
+    return "";
+  }
+}
+
+function identityTokens(value) {
+  return slugify(value).split("-").filter((token) => token.length > 1);
+}
+
+function colorTokens(value) {
+  return identityTokens(value).filter((token) => !colorStopWords.has(token) && !/^\d+$/.test(token));
+}
+
+function containsTokens(haystack, tokens) {
+  const padded = `-${haystack}-`;
+  return tokens.length > 0 && tokens.every((token) => padded.includes(`-${token}-`));
+}
+
+function imageMatchesProduct(image, product, catalog, { strictColor = true } = {}) {
+  const path = urlSlug(image);
+  const modelTokens = identityTokens(product.model);
+  if (!path || !containsTokens(path, modelTokens)) return false;
+
+  const otherModels = unique(catalog
+    .filter((candidate) => slugify(candidate.model) !== slugify(product.model))
+    .map((candidate) => candidate.model))
+    .filter((model) => !identityTokens(model).every((token) => modelTokens.includes(token)));
+  if (otherModels.some((model) => containsTokens(path, identityTokens(model)))) return false;
+  const otherBrands = unique(catalog
+    .filter((candidate) => slugify(candidate.brand) !== slugify(product.brand))
+    .map((candidate) => candidate.brand));
+  if (otherBrands.some((brand) => containsTokens(path, identityTokens(brand)))) return false;
+
+  const wantsLeather = /\bleather\b/i.test(product.colorName);
+  if (!wantsLeather && /(^|-)leather(-|$)/.test(path)) return false;
+  const sameModelRows = catalog.filter((candidate) => slugify(candidate.model) === slugify(product.model));
+  const leatherIsAvailable = sameModelRows.some((candidate) =>
+    /\bleather\b/i.test(candidate.colorName) && candidate.images.some((url) => /(^|-)leather(-|$)/.test(urlSlug(url))),
+  );
+  if (wantsLeather && leatherIsAvailable && !/(^|-)leather(-|$)/.test(path)) return false;
+
+  const selected = colorTokens(product.colorName);
+  const selectedTokenMatch = selected.some((token) => containsTokens(path, [token]));
+  const selectedColorMatch = containsTokens(path, selected);
+  const otherColors = unique(sameModelRows
+    .filter((candidate) => slugify(candidate.colorName) !== slugify(product.colorName))
+    .map((candidate) => candidate.colorName));
+  const obviousOtherColor = otherColors.some((color) => {
+    const tokens = colorTokens(color);
+    return containsTokens(path, tokens) && !selectedTokenMatch;
+  });
+  if (obviousOtherColor) return false;
+  if (!strictColor) return true;
+
+  // Some supplier filenames omit colors entirely. Only demand a color match when
+  // the path contains color tokens belonging to one of this model's variants.
+  const knownColorTokens = new Set(sameModelRows.flatMap((candidate) => colorTokens(candidate.colorName)));
+  const pathHasKnownColor = [...knownColorTokens].some((token) => containsTokens(path, [token]));
+  return !pathHasKnownColor || selectedColorMatch;
+}
+
 function normalizeGender(value) {
   const gender = slugify(value);
   if (/^(men|male|man|hombre|hombres)$/.test(gender)) return "men";
@@ -194,6 +260,7 @@ function toSafeRow(node) {
   const availability = clean(availabilityNode ? nodeValue(availabilityNode) : "");
   const images = unique(descendantValues(node, ["image_link", "additional_image_link", "image", "imageUrl", "image_url", "picture", "photo"])
     .map(safeUrl));
+  const primaryImage = safeUrl(directValue(node, ["image_link"]));
 
   return {
     ...normalizedBrand,
@@ -205,6 +272,7 @@ function toSafeRow(node) {
     category: normalizeCategory(firstLine || directValue(node, ["product_type", "main_category", "category", "productType", "type"])),
     size: clean(directValue(node, ["size", "sizeName", "size_name", "euSize", "eu_size"])),
     images,
+    primaryImage,
     // These are deliberately read only as safe grouping/size hints, never emitted.
     groupHint: clean(directValue(node, ["item_group_id"])),
     availability,
@@ -215,13 +283,25 @@ function toSafeRow(node) {
   };
 }
 
-function toDraft(rows) {
+function toDraft(rows, catalog, imageStats) {
   const first = rows[0];
   const { brand, parentBrand, model, colorName } = first;
   const groupSlug = slugify(`${brand}-${model}`);
   const groupName = clean(`${brand} ${model}`);
   const variantSlug = slugify(`${groupName}-${colorName}`);
-  const images = unique(rows.flatMap((row) => row.images));
+  const allImages = unique(rows.flatMap((row) => row.images));
+  const strictlyMatchingImages = allImages.filter((image) => imageMatchesProduct(image, first, catalog));
+  let images = strictlyMatchingImages;
+  if (!images.length) {
+    images = unique(rows.map((row) => row.primaryImage))
+      .filter((image) => imageMatchesProduct(image, first, catalog, { strictColor: false }));
+  }
+  images = images.slice(0, 8);
+  imageStats.read += rows.reduce((count, row) => count + row.images.length, 0);
+  imageStats.kept += images.length;
+  imageStats.removed += allImages.filter((image) =>
+    !strictlyMatchingImages.includes(image) && !images.includes(image),
+  ).length;
   const sizes = unique(rows
     .filter((row) => row.availabilityState === "available" || !row.availabilityPresent)
     .map((row) => row.size));
@@ -292,13 +372,19 @@ async function main() {
   const rows = items.map(toSafeRow);
   const groupedRows = groupRows(rows);
   const excludedGroups = groupedRows.filter((group) => group.some(isNonFootwear));
-  const drafts = groupedRows.filter((group) => !group.some(isNonFootwear)).map(toDraft);
+  const footwearGroups = groupedRows.filter((group) => !group.some(isNonFootwear));
+  const footwearRows = footwearGroups.flat();
+  const imageStats = { read: 0, kept: 0, removed: 0 };
+  const drafts = footwearGroups.map((group) => toDraft(group, footwearRows, imageStats));
   await mkdir(dirname(outputPath), { recursive: true });
   await writeFile(outputPath, `${JSON.stringify(drafts, null, 2)}\n`, { mode: 0o600 });
 
   console.log(`XML items read: ${items.length}`);
   console.log(`Footwear draft products generated: ${drafts.length}`);
   console.log(`Excluded non-footwear groups: ${excludedGroups.length}`);
+  console.log(`Image URLs read: ${imageStats.read}`);
+  console.log(`Image URLs kept after product/color filtering: ${imageStats.kept}`);
+  console.log(`Image URLs removed as cross-product mismatches: ${imageStats.removed}`);
   console.log(`Drafts with images: ${drafts.filter((draft) => draft.images.length).length}`);
   console.log(`Drafts without images: ${drafts.filter((draft) => !draft.images.length).length}`);
   console.log(`Drafts with consultable sizes: ${drafts.filter((draft) => draft.consultableSizes.length).length}`);

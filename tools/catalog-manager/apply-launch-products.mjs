@@ -52,6 +52,7 @@ const blockedTextPatterns = [
   /token/i,
 ];
 const credentialMarkerPattern = /(?:secret|token|api[_-]?key|auth|signature|password)/i;
+const maximumLaunchImages = 8;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -76,6 +77,7 @@ function validateProposalProduct(product, index) {
     `${label}.consultableSizes must contain only non-empty strings`,
   );
   assert(Array.isArray(product.images) && product.images.length > 0, `${label}.images must be a non-empty array`);
+  assert(product.images.length <= maximumLaunchImages, `${label}.images exceeds the launch maximum of ${maximumLaunchImages}`);
   assert(
     product.images.every((image) => typeof image === "string" && /^https:\/\//i.test(image)),
     `${label}.images must contain only remote HTTPS URLs`,

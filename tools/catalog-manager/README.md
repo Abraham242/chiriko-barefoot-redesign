@@ -35,6 +35,12 @@ example, `Zing - White & Black Vegan` becomes model `Zing` and color name
 Rows without a second line fall back safely to `title` or a non-generic first
 line.
 
+Before a draft is written, image URL filenames and paths are filtered against
+the normalized commercial brand/model and color variant. Obvious images from a
+different model, color, or leather variant are removed, and launch drafts are
+limited to eight images. If strict color matching leaves no images, only safe
+primary `image_link` values from the matching rows may be retained.
+
 Non-footwear accessories and care products—including insoles, socks, shirts,
 sprays, cleaners, waxes, and protectors—are excluded from the main product
 drafts by default. The console reports how many such groups were excluded.
@@ -76,6 +82,10 @@ descriptions contain no private supplier information. Copy approved objects to
 `src/data/products.ts` manually; running this importer never changes the public
 catalog.
 
+Generated images must be visually reviewed before publishing. URL filtering is
+a safety check, not a replacement for confirming that every photograph shows
+the intended commercial product and color.
+
 ## Prepare an approved launch selection
 
 After curating and approving the local selection, save it as:
@@ -90,7 +100,8 @@ From the repository root, generate a public-safe, review-only proposal with:
 node tools/catalog-manager/prepare-launch-products.mjs
 ```
 
-The helper validates the required catalog fields and writes
+The helper validates the required catalog fields, rejects cross-product/model/
+color image contamination, enforces the eight-image launch limit, and writes
 `tools/catalog-manager/output/launch-products.proposal.json`. It rejects image
 URLs containing common credential markers and copies properties through a
 strict public-field allowlist. Supplier prices, stock quantities,
