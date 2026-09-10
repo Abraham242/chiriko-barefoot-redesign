@@ -27,12 +27,18 @@ then groups them into one product/color draft by normalized brand, commercial
 model/name, and color. It never creates a separate Chiriko product merely
 because the size or item group differs.
 
-Imported size labels go into `consultableSizes` only; `sizes` stays empty
-because feed availability is not a customer stock guarantee. Prices are
-intentionally not imported until Chiriko confirms a safe public
-customer-facing field, so every draft has `price: 0` and requires review.
-Stock quantities are never published, and every record defaults to `preorder`.
-The generated output is review-only and never updates the storefront by itself.
+Imported size labels go into `consultableSizes` only; `sizes` stays empty. The
+feed's `availability` yes/no value only decides which sizes appear as
+consultable in review drafts: unavailable or unclear values are excluded, while
+a missing field remains eligible for manual review. The feed's
+`availability_count` is never exposed, and stock is never published. Final
+availability must always be confirmed manually before offering a pair to a
+customer.
+
+Prices are intentionally not imported until Chiriko confirms a safe public
+customer-facing field, so every draft keeps `price: 0` and defaults to
+`preorder`. The generated output is review-only and never updates the
+storefront by itself.
 
 ## Security and review checklist
 

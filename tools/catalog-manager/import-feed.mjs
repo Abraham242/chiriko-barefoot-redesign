@@ -152,6 +152,13 @@ function normalizeCategory(value) {
   return "Zapatillas";
 }
 
+function normalizeAvailability(value) {
+  const availability = slugify(value);
+  if (/^(yes|true|in-stock|available)$/.test(availability)) return "available";
+  if (/^(no|false|out-of-stock|unavailable)$/.test(availability)) return "unavailable";
+  return "unclear";
+}
+
 function toSafeRow(node) {
   const title = clean(directValue(node, ["title"]));
   const firstLine = clean(directValue(node, ["title_first_line", "titleFirstLine"]));
@@ -161,6 +168,8 @@ function toSafeRow(node) {
   const colorNode = directNode(node, ["color", "colour", "colorName"]);
   const colorName = clean(colorNode ? nodeValue(colorNode) : "", "Color to review");
   const rawColorHex = clean(colorNode?.attributes.hexcode || directValue(node, ["colorHex", "color_hex"]));
+  const availabilityNode = directNode(node, ["availability"]);
+  const availability = clean(availabilityNode ? nodeValue(availabilityNode) : "");
   const images = unique(descendantValues(node, ["image_link", "additional_image_link", "image", "imageUrl", "image_url", "picture", "photo"])
     .map(safeUrl));
 
@@ -174,9 +183,11 @@ function toSafeRow(node) {
     category: normalizeCategory(directValue(node, ["product_type", "main_category", "category", "productType", "type"])),
     size: clean(directValue(node, ["size", "sizeName", "size_name", "euSize", "eu_size"])),
     images,
-    // These are deliberately read only as safe grouping/status hints, never emitted.
+    // These are deliberately read only as safe grouping/size hints, never emitted.
     groupHint: clean(directValue(node, ["item_group_id"])),
-    availability: clean(directValue(node, ["availability"])),
+    availability,
+    availabilityPresent: Boolean(availabilityNode),
+    availabilityState: normalizeAvailability(availability),
   };
 }
 
@@ -187,7 +198,9 @@ function toDraft(rows) {
   const groupName = clean(`${brand} ${model}`);
   const variantSlug = slugify(`${groupName}-${colorName}`);
   const images = unique(rows.flatMap((row) => row.images));
-  const sizes = unique(rows.map((row) => row.size));
+  const sizes = unique(rows
+    .filter((row) => row.availabilityState === "available" || !row.availabilityPresent)
+    .map((row) => row.size));
 
   return {
     id: variantSlug,
@@ -264,6 +277,7 @@ async function main() {
   console.log(`Drafts with consultable sizes: ${drafts.filter((draft) => draft.consultableSizes.length).length}`);
   console.log(`Drafts without consultable sizes: ${drafts.filter((draft) => !draft.consultableSizes.length).length}`);
   console.log(`Drafts with price 0: ${drafts.filter((draft) => draft.price === 0).length}`);
+  console.log(`Rows skipped from consultableSizes because availability was no: ${rows.filter((row) => row.availabilityState === "unavailable").length}`);
 }
 
 main().catch((error) => {
