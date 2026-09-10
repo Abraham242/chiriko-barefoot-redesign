@@ -20,13 +20,26 @@ public-shaped drafts only, but it remains local so that every record can be
 checked before selected records are manually copied into
 `src/data/products.ts`.
 
-The importer recognizes `<product>`, `<item>`, and `<article>` records. Supplier
-schemas vary, so missing public values receive conservative placeholders.
-Only an explicitly named public price is imported; otherwise `price` is `0`.
-Only an explicit `public_status`/`publicStatus` value of `in_stock` produces an
-in-stock draft. All other records default to `preorder`. Imported size labels
-go into `consultableSizes`; `sizes` stays empty because feed availability is
-not a customer stock guarantee.
+The importer recognizes `<product>`, `<item>`, and `<article>` records, including
+the Be Lenka/Venalio merchant feed structure. Merchant-feed items may each be a
+single SKU/size row, so the importer first creates safe intermediate rows and
+then groups them into one product/color draft by normalized brand, commercial
+model/name, and color. It never creates a separate Chiriko product merely
+because the size or item group differs.
+
+Imported size labels go into `consultableSizes` only; `sizes` stays empty
+because feed availability is not a customer stock guarantee. The feed's
+`availability` yes/no value is used only to decide which sizes are consultable
+in review drafts. A size with an explicitly unavailable or unclear value is
+not included; a missing availability field remains eligible for manual review.
+The feed's `availability_count` is never exposed, stock is never published, and
+final availability must be confirmed manually before offering a pair to a
+customer.
+
+Prices are intentionally not imported until Chiriko confirms a safe public
+customer-facing field, so every draft has `price: 0` and requires review. Every
+record defaults to `preorder`. The generated output is review-only and never
+updates the storefront by itself.
 
 ## Security and review checklist
 

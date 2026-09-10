@@ -80,6 +80,11 @@ function directValue(node, aliases) {
   return attribute?.[1] ?? "";
 }
 
+function directNode(node, aliases) {
+  const accepted = new Set(aliases.map(normalizedName));
+  return node.children.find((candidate) => accepted.has(normalizedName(candidate.name)));
+}
+
 function descendantValues(node, aliases) {
   const accepted = new Set(aliases.map(normalizedName));
   const values = [];
@@ -123,49 +128,99 @@ function normalizeGender(value) {
 function safeUrl(value) {
   try {
     const url = new URL(clean(value));
-    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+    if (!["http:", "https:"].includes(url.protocol)) return "";
+    const credentialPattern = /secret(?:key)?|token|api_?key|auth|signature|password/i;
+    if ([...url.searchParams].some(([key, value]) => credentialPattern.test(key) || credentialPattern.test(value))) return "";
+    return url.href;
   } catch {
     return "";
   }
 }
 
-function publicPrice(node) {
-  const raw = directValue(node, ["publicPrice", "public_price", "consumerPrice", "consumer_price"]);
-  if (!raw) return 0;
-  const number = Number(raw.replace(/[^\d.,-]/g, "").replace(",", "."));
-  return Number.isFinite(number) && number >= 0 ? number : 0;
+function normalizeBrand(value, title) {
+  const source = `${value} ${title}`;
+  if (/bare\s*barics/i.test(source)) return { brand: "Barebarics", parentBrand: "Be Lenka" };
+  if (/be\s*lenka/i.test(source)) return { brand: "Be Lenka", parentBrand: "" };
+  return { brand: clean(value, "Brand to review"), parentBrand: "" };
 }
 
-function toDraft(node, index) {
-  const brand = clean(directValue(node, ["brand", "manufacturer", "maker"]), "Brand to review");
-  const model = clean(directValue(node, ["model", "modelName", "style"]), `Model ${index + 1}`);
-  const colorName = clean(directValue(node, ["color", "colour", "colorName"]), "Color to review");
+function normalizeCategory(value) {
+  const category = slugify(value);
+  if (/sandal/.test(category)) return "Sandalias";
+  if (/boot/.test(category)) return "Botas";
+  if (/barefoot-shoe|shoe|sneaker/.test(category)) return "Zapatillas";
+  return "Zapatillas";
+}
+
+function normalizeAvailability(value) {
+  const availability = slugify(value);
+  if (/^(yes|true|in-stock|available)$/.test(availability)) return "available";
+  if (/^(no|false|out-of-stock|unavailable)$/.test(availability)) return "unavailable";
+  return "unclear";
+}
+
+function toSafeRow(node) {
+  const title = clean(directValue(node, ["title"]));
+  const firstLine = clean(directValue(node, ["title_first_line", "titleFirstLine"]));
+  const secondLine = clean(directValue(node, ["title_second_line", "titleSecondLine"]));
+  const model = firstLine || title || "Product to review";
+  const normalizedBrand = normalizeBrand(directValue(node, ["brand", "manufacturer", "maker"]), `${title} ${firstLine} ${secondLine}`);
+  const colorNode = directNode(node, ["color", "colour", "colorName"]);
+  const colorName = clean(colorNode ? nodeValue(colorNode) : "", "Color to review");
+  const rawColorHex = clean(colorNode?.attributes.hexcode || directValue(node, ["colorHex", "color_hex"]));
+  const availabilityNode = directNode(node, ["availability"]);
+  const availability = clean(availabilityNode ? nodeValue(availabilityNode) : "");
+  const images = unique(descendantValues(node, ["image_link", "additional_image_link", "image", "imageUrl", "image_url", "picture", "photo"])
+    .map(safeUrl));
+
+  return {
+    ...normalizedBrand,
+    model,
+    subtitle: secondLine,
+    colorName,
+    colorHex: /^#[0-9a-f]{6}$/i.test(rawColorHex) ? rawColorHex : "#E5E1DA",
+    gender: normalizeGender(directValue(node, ["gender", "sex", "department"])),
+    category: normalizeCategory(directValue(node, ["product_type", "main_category", "category", "productType", "type"])),
+    size: clean(directValue(node, ["size", "sizeName", "size_name", "euSize", "eu_size"])),
+    images,
+    // These are deliberately read only as safe grouping/size hints, never emitted.
+    groupHint: clean(directValue(node, ["item_group_id"])),
+    availability,
+    availabilityPresent: Boolean(availabilityNode),
+    availabilityState: normalizeAvailability(availability),
+  };
+}
+
+function toDraft(rows) {
+  const first = rows[0];
+  const { brand, parentBrand, model, colorName } = first;
   const groupSlug = slugify(`${brand}-${model}`);
   const groupName = clean(`${brand} ${model}`);
   const variantSlug = slugify(`${groupName}-${colorName}`);
-  const category = clean(directValue(node, ["category", "productType", "type"]), "Category to review");
-  const images = unique(descendantValues(node, ["image", "imageUrl", "image_url", "picture", "photo"]).map(safeUrl));
-  const sizes = unique(descendantValues(node, ["size", "sizeName", "size_name", "euSize", "eu_size"]));
-  const explicitStatus = slugify(directValue(node, ["publicStatus", "public_status"]));
+  const images = unique(rows.flatMap((row) => row.images));
+  const sizes = unique(rows
+    .filter((row) => row.availabilityState === "available" || !row.availabilityPresent)
+    .map((row) => row.size));
 
   return {
     id: variantSlug,
     slug: variantSlug,
     brand,
-    parentBrand: clean(directValue(node, ["parentBrand", "parent_brand"])),
+    parentBrand,
     model,
     groupSlug,
     groupName,
     name: groupName,
-    subtitle: `${colorName} · borrador pendiente de revisión`,
-    gender: normalizeGender(directValue(node, ["gender", "sex", "department"])),
-    category,
+    subtitle: first.subtitle || `${colorName} · borrador pendiente de revisión`,
+    gender: first.gender,
+    category: first.category,
     colorName,
-    colorFamily: clean(directValue(node, ["colorFamily", "color_family"]), colorName),
-    colorHex: clean(directValue(node, ["colorHex", "color_hex"]), "#E5E1DA"),
-    price: publicPrice(node),
-    currency: clean(directValue(node, ["publicCurrency", "public_currency", "currency"]), "$"),
-    status: explicitStatus === "in-stock" ? "in_stock" : "preorder",
+    colorFamily: colorName,
+    colorHex: first.colorHex,
+    // Supplier feed prices are intentionally not imported until Chiriko confirms which field is safe as a public customer-facing price.
+    price: 0,
+    currency: "$",
+    status: "preorder",
     consultableSizes: sizes,
     sizes: [],
     images,
@@ -176,6 +231,17 @@ function toDraft(node, index) {
     seoTitle: `${groupName} ${colorName} | Chiriko Studio`.slice(0, 70),
     seoDescription: `${groupName} en ${colorName}. Consulta disponibilidad y talla con Chiriko Studio.`.slice(0, 160),
   };
+}
+
+function groupRows(rows) {
+  const groups = new Map();
+  for (const row of rows) {
+    const key = [row.brand, row.model, row.colorName].map((value) => clean(value).toLocaleLowerCase()).join("\u0000");
+    const group = groups.get(key) ?? [];
+    group.push(row);
+    groups.set(key, group);
+  }
+  return [...groups.values()];
 }
 
 function findItems(root) {
@@ -193,20 +259,25 @@ async function main() {
   if (!inputArgument || process.argv.length > 3) return usage("provide exactly one local XML file path");
 
   const inputPath = resolve(process.cwd(), inputArgument);
-  const allowedInputDirectory = resolve(toolDirectory, "input");
   if (inputPath === outputPath) return usage("the output file cannot be used as input");
 
   const xml = await readFile(inputPath, "utf8");
   const items = findItems(parseXml(xml));
   if (!items.length) throw new Error("No <product>, <item>, or <article> elements were found");
 
-  const drafts = items.map(toDraft);
+  const rows = items.map(toSafeRow);
+  const drafts = groupRows(rows).map(toDraft);
   await mkdir(dirname(outputPath), { recursive: true });
   await writeFile(outputPath, `${JSON.stringify(drafts, null, 2)}\n`, { mode: 0o600 });
 
-  const locationWarning = inputPath.startsWith(`${allowedInputDirectory}/`) ? "" : " (consider moving the source into the ignored input directory)";
-  console.log(`Created ${drafts.length} review-only draft(s) at ${outputPath}${locationWarning}.`);
-  console.log("Nothing was published or copied into src/data/products.ts.");
+  console.log(`XML items read: ${items.length}`);
+  console.log(`Draft products generated: ${drafts.length}`);
+  console.log(`Drafts with images: ${drafts.filter((draft) => draft.images.length).length}`);
+  console.log(`Drafts without images: ${drafts.filter((draft) => !draft.images.length).length}`);
+  console.log(`Drafts with consultable sizes: ${drafts.filter((draft) => draft.consultableSizes.length).length}`);
+  console.log(`Drafts without consultable sizes: ${drafts.filter((draft) => !draft.consultableSizes.length).length}`);
+  console.log(`Drafts with price 0: ${drafts.filter((draft) => draft.price === 0).length}`);
+  console.log(`Rows skipped from consultableSizes because availability was no: ${rows.filter((row) => row.availabilityState === "unavailable").length}`);
 }
 
 main().catch((error) => {
