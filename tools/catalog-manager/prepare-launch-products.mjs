@@ -29,6 +29,55 @@ const optionalStringFields = [
 ];
 const optionalArrayFields = ["sizes", "features", "tags"];
 const forbiddenImageUrlPattern = /secret|token|api_key|auth|signature|password/i;
+const maximumLaunchImages = 8;
+
+function slugify(value) {
+  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function urlSlug(value) {
+  try { return slugify(decodeURIComponent(new URL(value).pathname)); } catch { return ""; }
+}
+
+function tokens(value, ignored = new Set()) {
+  return slugify(value).split("-").filter((token) => token.length > 1 && !ignored.has(token));
+}
+
+function containsTokens(path, expected) {
+  const padded = `-${path}-`;
+  return expected.length > 0 && expected.every((token) => padded.includes(`-${token}-`));
+}
+
+function validateImageIdentity(product, products, label) {
+  const modelTokens = tokens(product.model);
+  const ignoredColors = new Set(["all", "and", "with", "vegan", "leather", "color", "colour"]);
+  const selectedColors = tokens(product.colorName, ignoredColors);
+  for (const image of product.images) {
+    const path = urlSlug(image);
+    assert(containsTokens(path, modelTokens), `${label} has an image URL that does not match model "${product.model}"`);
+    const unrelated = products.find((other) => {
+      const otherModelTokens = tokens(other.model);
+      return other !== product && slugify(other.model) !== slugify(product.model)
+        && !otherModelTokens.every((token) => modelTokens.includes(token))
+        && containsTokens(path, otherModelTokens);
+    });
+    assert(!unrelated, `${label} has an image URL matching another selected model "${unrelated?.model}"`);
+
+    const otherVariant = products.find((other) => other !== product
+      && slugify(other.model) === slugify(product.model)
+      && slugify(other.colorName) !== slugify(product.colorName)
+      && containsTokens(path, tokens(other.colorName, ignoredColors))
+      && !selectedColors.some((color) => containsTokens(path, [color])));
+    assert(!otherVariant, `${label} has an image URL matching another selected color "${otherVariant?.colorName}"`);
+    const knownColorTokens = new Set(products
+      .filter((other) => slugify(other.model) === slugify(product.model))
+      .flatMap((other) => tokens(other.colorName, ignoredColors)));
+    const pathHasKnownColor = [...knownColorTokens].some((color) => containsTokens(path, [color]));
+    assert(!pathHasKnownColor || containsTokens(path, selectedColors), `${label} has an image URL that does not match color "${product.colorName}"`);
+    assert(/\bleather\b/i.test(product.colorName) || !/(^|-)leather(-|$)/.test(path), `${label} has a leather image for a non-leather product`);
+  }
+}
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -40,7 +89,7 @@ function selectedProducts(parsed) {
   return parsed;
 }
 
-function validateProduct(product, index) {
+function validateProduct(product, index, products) {
   const label = `Product ${index + 1}`;
   assert(product && typeof product === "object" && !Array.isArray(product), `${label} must be an object`);
 
@@ -55,11 +104,13 @@ function validateProduct(product, index) {
   assert(Array.isArray(product.consultableSizes), `${label}.consultableSizes must be an array`);
   assert(product.consultableSizes.every((size) => typeof size === "string" && size.trim()), `${label}.consultableSizes must contain only non-empty strings`);
   assert(Array.isArray(product.images) && product.images.length > 0, `${label}.images must be a non-empty array`);
+  assert(product.images.length <= maximumLaunchImages, `${label}.images exceeds the launch maximum of ${maximumLaunchImages}`);
   assert(product.images.every((image) => typeof image === "string" && image.trim()), `${label}.images must contain only non-empty strings`);
 
   for (const image of product.images) {
     assert(!forbiddenImageUrlPattern.test(image), `${label} has an image URL containing a forbidden credential marker`);
   }
+  validateImageIdentity(product, products, label);
   for (const field of optionalStringFields) {
     assert(!Object.hasOwn(product, field) || typeof product[field] === "string", `${label}.${field} must be a string when provided`);
   }
@@ -107,7 +158,7 @@ function toPublicProduct(product) {
 async function main() {
   const source = JSON.parse(await readFile(inputPath, "utf8"));
   const products = selectedProducts(source);
-  products.forEach(validateProduct);
+  products.forEach((product, index) => validateProduct(product, index, products));
   const proposal = products.map(toPublicProduct);
 
   await mkdir(dirname(outputPath), { recursive: true });
