@@ -75,3 +75,28 @@ sizes, customer-facing price, and status. Remove placeholders and confirm that
 descriptions contain no private supplier information. Copy approved objects to
 `src/data/products.ts` manually; running this importer never changes the public
 catalog.
+
+## Prepare an approved launch selection
+
+After curating and approving the local selection, save it as:
+
+```text
+tools/catalog-manager/output/chiriko-launch-selection.json
+```
+
+From the repository root, generate a public-safe, review-only proposal with:
+
+```sh
+node tools/catalog-manager/prepare-launch-products.mjs
+```
+
+The helper validates the required catalog fields and writes
+`tools/catalog-manager/output/launch-products.proposal.json`. It rejects image
+URLs containing common credential markers and copies properties through a
+strict public-field allowlist. Supplier prices, stock quantities,
+`availability_count`, and all other unrecognized source properties are neither
+accessed nor written to the proposal.
+
+Both the approved selection and generated proposal remain in the Git-ignored
+`output/` directory. Review the proposal before manually integrating it; the
+helper never modifies `src/data/products.ts` or any storefront code.
