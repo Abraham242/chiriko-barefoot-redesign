@@ -37,9 +37,12 @@ line.
 
 Before a draft is written, image URL filenames and paths are filtered against
 the normalized commercial brand/model and color variant. Obvious images from a
-different model, color, or leather variant are removed, and launch drafts are
-limited to eight images. If strict color matching leaves no images, only safe
-primary `image_link` values from the matching rows may be retained.
+different model or color variant are removed. Explicitly Vegan variants reject
+leather filenames; explicitly leather variants prefer them; and an unlabelled
+variant may use leather filenames when they are its only otherwise-matching
+images. Launch drafts are limited to eight images. If strict color matching
+leaves no images, only safe primary `image_link` values from the matching rows
+may be retained.
 
 Non-footwear accessories and care products—including insoles, socks, shirts,
 sprays, cleaners, waxes, and protectors—are excluded from the main product
@@ -100,8 +103,9 @@ From the repository root, generate a public-safe, review-only proposal with:
 node tools/catalog-manager/prepare-launch-products.mjs
 ```
 
-The helper validates the required catalog fields, rejects cross-product/model/
-color image contamination, enforces the eight-image launch limit, and writes
+The helper validates exactly 22 products with non-empty image arrays, rejects
+cross-product/model/color image contamination (including leather images on
+explicitly Vegan variants), enforces the eight-image launch limit, and writes
 `tools/catalog-manager/output/launch-products.proposal.json`. It rejects image
 URLs containing common credential markers and copies properties through a
 strict public-field allowlist. Supplier prices, stock quantities,

@@ -30,6 +30,7 @@ const optionalStringFields = [
 const optionalArrayFields = ["sizes", "features", "tags"];
 const forbiddenImageUrlPattern = /secret|token|api_key|auth|signature|password/i;
 const maximumLaunchImages = 8;
+const expectedProductCount = 22;
 
 function slugify(value) {
   return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
@@ -75,7 +76,7 @@ function validateImageIdentity(product, products, label) {
       .flatMap((other) => tokens(other.colorName, ignoredColors)));
     const pathHasKnownColor = [...knownColorTokens].some((color) => containsTokens(path, [color]));
     assert(!pathHasKnownColor || containsTokens(path, selectedColors), `${label} has an image URL that does not match color "${product.colorName}"`);
-    assert(/\bleather\b/i.test(product.colorName) || !/(^|-)leather(-|$)/.test(path), `${label} has a leather image for a non-leather product`);
+    assert(!/\bvegan\b/i.test(product.colorName) || !/(^|-)leather(-|$)/.test(path), `${label} has a leather image for an explicitly Vegan product`);
   }
 }
 
@@ -85,7 +86,7 @@ function assert(condition, message) {
 
 function selectedProducts(parsed) {
   assert(Array.isArray(parsed), "Launch selection must be a JSON array of products");
-  assert(parsed.length > 0, "Launch selection must contain at least one product");
+  assert(parsed.length === expectedProductCount, `Expected ${expectedProductCount} launch products, received ${parsed.length}`);
   return parsed;
 }
 
