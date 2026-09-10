@@ -14,11 +14,11 @@ import { fileURLToPath } from "node:url";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const outputPath = resolve(toolDirectory, "output/product-drafts.json");
-const itemElementNames = new Set(["product", "item", "article"]);
+const itemElementNames = new Set(["product", "item", "article", "offer", "productitem", "shopitem"]);
 
 function usage(message) {
   if (message) console.error(`Error: ${message}\n`);
-  console.error("Usage: node tools/catalog-manager/import-feed.mjs <local-feed.xml>");
+  console.error("Usage: node tools/catalog-manager/import-feed.mjs <local-feed.xml> [--inspect]");
   process.exitCode = 1;
 }
 
@@ -112,11 +112,54 @@ function unique(values) {
   return [...new Set(values.map((value) => clean(value)).filter(Boolean))];
 }
 
+// Supports ordinary tags and supplier-style named parameter elements.
+function fieldsFor(node) {
+  const fields = new Map();
+  const add = (name, value) => {
+    const key = normalizedName(name);
+    const cleaned = clean(value);
+    if (key && cleaned) fields.set(key, [...(fields.get(key) ?? []), cleaned]);
+  };
+  const visit = (candidate) => {
+    if (!candidate.children.length) add(candidate.name, nodeValue(candidate));
+    Object.entries(candidate.attributes).forEach(([name, value]) => add(name, value));
+    const key = candidate.children.find((child) => ["name", "paramname", "attributename", "propertyname"].includes(normalizedName(child.name)));
+    const value = candidate.children.find((child) => ["value", "val", "paramvalue", "attributevalue", "propertyvalue"].includes(normalizedName(child.name)));
+    if (key && value) add(nodeValue(key), nodeValue(value));
+    candidate.children.forEach(visit);
+  };
+  visit(node);
+  return fields;
+}
+
+function fieldValues(fields, aliases) {
+  for (const alias of aliases) {
+    const found = fields.get(normalizedName(alias));
+    if (found?.length) return found;
+  }
+  return [];
+}
+
+function field(fields, aliases, fallback = "") {
+  return clean(fieldValues(fields, aliases)[0], fallback);
+}
+
+function normalizeBrand(value) {
+  const compact = normalizedName(value);
+  if (compact === "belenka") return "Be Lenka";
+  if (compact === "barebarics") return "Barebarics";
+  return clean(value, "Brand to review");
+}
+
+function titleCase(value) {
+  return clean(value).toLocaleLowerCase().replace(/(^|[\s/-])\p{L}/gu, (letter) => letter.toLocaleUpperCase());
+}
+
 function normalizeGender(value) {
   const gender = slugify(value);
-  if (/^(men|male|man|hombre|hombres)$/.test(gender)) return "men";
-  if (/^(women|female|woman|mujer|mujeres)$/.test(gender)) return "women";
-  if (/^(kids|kid|child|children|nino|nina|ninos)$/.test(gender)) return "kids";
+  if (/^(men|male|man|mens|hombre|hombres|caballero)$/.test(gender)) return "men";
+  if (/^(women|female|woman|womens|mujer|mujeres|dama)$/.test(gender)) return "women";
+  if (/^(kids|kid|child|children|junior|nino|nina|ninos|ninas)$/.test(gender)) return "kids";
   return "unisex";
 }
 
@@ -129,46 +172,90 @@ function safeUrl(value) {
   }
 }
 
-function publicPrice(node) {
-  const raw = directValue(node, ["publicPrice", "public_price", "consumerPrice", "consumer_price"]);
+function publicPrice(fields) {
+  // Generic PRICE and cost/net/B2B/wholesale/supplier/margin fields are deliberately excluded.
+  const raw = field(fields, ["recommendedRetailPrice", "retailPrice", "rrp", "publicPrice", "consumerPrice", "customerPrice", "priceRrp", "priceRetail", "priceConsumer"]);
   if (!raw) return 0;
-  const number = Number(raw.replace(/[^\d.,-]/g, "").replace(",", "."));
+  let normalized = raw.replace(/[^\d.,-]/g, "");
+  if (normalized.includes(",") && normalized.includes(".")) normalized = normalized.lastIndexOf(",") > normalized.lastIndexOf(".")
+    ? normalized.replace(/\./g, "").replace(",", ".") : normalized.replace(/,/g, "");
+  else normalized = normalized.replace(",", ".");
+  const number = Number(normalized);
   return Number.isFinite(number) && number >= 0 ? number : 0;
 }
 
-function toDraft(node, index) {
-  const brand = clean(directValue(node, ["brand", "manufacturer", "maker"]), "Brand to review");
-  const model = clean(directValue(node, ["model", "modelName", "style"]), `Model ${index + 1}`);
-  const colorName = clean(directValue(node, ["color", "colour", "colorName"]), "Color to review");
+function imageValues(fields) {
+  const images = [];
+  for (const [name, values] of fields) {
+    if (/^(image|images|imageurl|imgurl|picture|photo|mainimage|additionalimage|galleryimage)\d*(url)?$/.test(name)
+      || /^(imageurl|imgurl|pictureurl|photourl)(alternative|additional|detail|large)?\d*$/.test(name)) images.push(...values);
+  }
+  return unique(images.flatMap((value) => value.split(/[|;,]\s*(?=https?:\/\/)/i)).map(safeUrl));
+}
+
+function rowFrom(node) {
+  const fields = fieldsFor(node);
+  const brand = normalizeBrand(field(fields, ["brand", "brandName", "manufacturer", "manufacturerName", "producer", "maker"]));
+  const productName = field(fields, ["productName", "fullName", "productTitle", "title", "name"]);
+  const model = field(fields, ["modelName", "model", "collectionName", "styleName", "style"], productName || "Model to review");
+  const colorName = titleCase(field(fields, ["colorName", "colourName", "color", "colour", "variantColor"], "Color to review"));
+  return {
+    brand, productName: productName || clean(`${brand} ${model}`), model, colorName,
+    parentBrand: field(fields, ["parentBrand"]),
+    gender: normalizeGender(field(fields, ["gender", "genderName", "sex", "department", "ageGroup"])),
+    category: field(fields, ["categoryName", "categoryPath", "category", "productType", "type"], "Category to review"),
+    colorFamily: titleCase(field(fields, ["colorFamily", "colourFamily"], colorName)),
+    colorHex: field(fields, ["colorHex", "colourHex"], "#E5E1DA"),
+    price: publicPrice(fields),
+    currency: field(fields, ["publicCurrency", "retailCurrency", "customerCurrency", "currency"], "$"),
+    explicitStatus: slugify(field(fields, ["publicStatus"])),
+    images: imageValues(fields),
+    sizes: unique(fieldValues(fields, ["euSize", "shoeSize", "sizeName", "size", "sizes"])),
+  };
+}
+
+function mergeRows(rows) {
+  const groups = new Map();
+  for (const row of rows) {
+    const key = [row.brand, row.productName || row.model, row.colorName].map(slugify).join("|");
+    const current = groups.get(key);
+    if (!current) groups.set(key, { ...row });
+    else {
+      current.sizes = unique([...current.sizes, ...row.sizes]);
+      current.images = unique([...current.images, ...row.images]);
+      if (!current.price && row.price) current.price = row.price;
+    }
+  }
+  return [...groups.values()];
+}
+
+function toDraft(row) {
+  const { brand, model, colorName } = row;
   const groupSlug = slugify(`${brand}-${model}`);
-  const groupName = clean(`${brand} ${model}`);
-  const variantSlug = slugify(`${groupName}-${colorName}`);
-  const category = clean(directValue(node, ["category", "productType", "type"]), "Category to review");
-  const images = unique(descendantValues(node, ["image", "imageUrl", "image_url", "picture", "photo"]).map(safeUrl));
-  const sizes = unique(descendantValues(node, ["size", "sizeName", "size_name", "euSize", "eu_size"]));
-  const explicitStatus = slugify(directValue(node, ["publicStatus", "public_status"]));
+  const groupName = row.productName;
+  const variantSlug = slugify(`${brand}-${model}-${colorName}`);
 
   return {
     id: variantSlug,
     slug: variantSlug,
     brand,
-    parentBrand: clean(directValue(node, ["parentBrand", "parent_brand"])),
+    parentBrand: row.parentBrand,
     model,
     groupSlug,
     groupName,
     name: groupName,
     subtitle: `${colorName} · borrador pendiente de revisión`,
-    gender: normalizeGender(directValue(node, ["gender", "sex", "department"])),
-    category,
+    gender: row.gender,
+    category: row.category,
     colorName,
-    colorFamily: clean(directValue(node, ["colorFamily", "color_family"]), colorName),
-    colorHex: clean(directValue(node, ["colorHex", "color_hex"]), "#E5E1DA"),
-    price: publicPrice(node),
-    currency: clean(directValue(node, ["publicCurrency", "public_currency", "currency"]), "$"),
-    status: explicitStatus === "in-stock" ? "in_stock" : "preorder",
-    consultableSizes: sizes,
+    colorFamily: row.colorFamily,
+    colorHex: row.colorHex,
+    price: row.price,
+    currency: row.currency,
+    status: row.explicitStatus === "in-stock" ? "in_stock" : "preorder",
+    consultableSizes: row.sizes,
     sizes: [],
-    images,
+    images: row.images,
     features: [],
     tags: [],
     isFeatured: false,
@@ -188,24 +275,48 @@ function findItems(root) {
   return items;
 }
 
-async function main() {
-  const inputArgument = process.argv[2];
-  if (!inputArgument || process.argv.length > 3) return usage("provide exactly one local XML file path");
+function inspectStructure(root, items) {
+  const elements = new Map();
+  const attributes = new Map();
+  const visit = (node, depth = 0) => {
+    const key = `${depth}:${node.name}`;
+    elements.set(key, (elements.get(key) ?? 0) + 1);
+    Object.keys(node.attributes).forEach((name) => attributes.set(name, (attributes.get(name) ?? 0) + 1));
+    node.children.forEach((child) => visit(child, depth + 1));
+  };
+  root.children.forEach((node) => visit(node));
+  console.log("Safe XML structure (names and counts only; no values):");
+  for (const [key, count] of [...elements].sort()) {
+    const separator = key.indexOf(":");
+    const depth = Number(key.slice(0, separator));
+    console.log(`${"  ".repeat(Math.min(depth, 8))}<${key.slice(separator + 1)}> × ${count}`);
+  }
+  if (attributes.size) console.log(`Attribute names: ${[...attributes].sort().map(([name, count]) => `${name} (${count})`).join(", ")}`);
+  console.log(`Detected variant rows: ${items.length}; distinct field names: ${new Set(items.flatMap((item) => [...fieldsFor(item).keys()])).size}.`);
+}
 
-  const inputPath = resolve(process.cwd(), inputArgument);
+async function main() {
+  const args = process.argv.slice(2);
+  const inspectOnly = args.includes("--inspect");
+  const paths = args.filter((argument) => argument !== "--inspect");
+  if (paths.length !== 1 || args.some((argument) => argument.startsWith("--") && argument !== "--inspect")) return usage("provide one local XML path and optionally --inspect");
+
+  const inputPath = resolve(process.cwd(), paths[0]);
   const allowedInputDirectory = resolve(toolDirectory, "input");
   if (inputPath === outputPath) return usage("the output file cannot be used as input");
 
   const xml = await readFile(inputPath, "utf8");
-  const items = findItems(parseXml(xml));
-  if (!items.length) throw new Error("No <product>, <item>, or <article> elements were found");
+  const root = parseXml(xml);
+  const items = findItems(root);
+  if (!items.length) throw new Error("No product, item, article, offer, productitem, or shopitem elements were found");
+  if (inspectOnly) return inspectStructure(root, items);
 
-  const drafts = items.map(toDraft);
+  const drafts = mergeRows(items.map(rowFrom)).map(toDraft);
   await mkdir(dirname(outputPath), { recursive: true });
   await writeFile(outputPath, `${JSON.stringify(drafts, null, 2)}\n`, { mode: 0o600 });
 
   const locationWarning = inputPath.startsWith(`${allowedInputDirectory}/`) ? "" : " (consider moving the source into the ignored input directory)";
-  console.log(`Created ${drafts.length} review-only draft(s) at ${outputPath}${locationWarning}.`);
+  console.log(`Created ${drafts.length} grouped, review-only draft(s) at ${outputPath}${locationWarning}.`);
   console.log("Nothing was published or copied into src/data/products.ts.");
 }
 

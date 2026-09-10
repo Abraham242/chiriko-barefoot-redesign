@@ -20,9 +20,16 @@ public-shaped drafts only, but it remains local so that every record can be
 checked before selected records are manually copied into
 `src/data/products.ts`.
 
-The importer recognizes `<product>`, `<item>`, and `<article>` records. Supplier
-schemas vary, so missing public values receive conservative placeholders.
-Only an explicitly named public price is imported; otherwise `price` is `0`.
+The importer recognizes `<product>`, `<item>`, `<article>`, `<offer>`, and
+`<productitem>`, and `<shopitem>` records. Size/SKU rows are grouped by normalized brand,
+commercial product name, and color. Their sizes are combined into one draft's
+`consultableSizes`; `sizes` stays empty. Common model, color, gender, category,
+image, and named-parameter shapes are recognized, and Be Lenka/Barebarics brand
+spellings are normalized.
+
+Only a field explicitly identified as public, consumer, customer, retail, or
+RRP pricing is imported; otherwise `price` is `0`. Generic price fields and
+wholesale, purchase, supplier, B2B, cost, net, or margin pricing are not used.
 Only an explicit `public_status`/`publicStatus` value of `in_stock` produces an
 in-stock draft. All other records default to `preorder`. Imported size labels
 go into `consultableSizes`; `sizes` stays empty because feed availability is
@@ -51,3 +58,15 @@ sizes, customer-facing price, and status. Remove placeholders and confirm that
 descriptions contain no private supplier information. Copy approved objects to
 `src/data/products.ts` manually; running this importer never changes the public
 catalog.
+
+## Safe schema inspection
+
+For an unfamiliar feed, inspect its shape without producing drafts:
+
+```sh
+node tools/catalog-manager/import-feed.mjs ./tools/catalog-manager/input/feed.xml --inspect
+```
+
+Inspection prints only tag and attribute names, nesting, and occurrence, row,
+and field counts. It never prints XML values, URLs, prices, costs, stock
+quantities, or private terms.
