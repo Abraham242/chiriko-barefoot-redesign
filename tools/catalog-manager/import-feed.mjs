@@ -145,6 +145,29 @@ function containsTokens(haystack, tokens) {
   return tokens.length > 0 && tokens.every((token) => padded.includes(`-${token}-`));
 }
 
+function hasLeatherMarker(image) {
+  return /(^|-)leather(-|$)/.test(urlSlug(image));
+}
+
+function materialPreference(product) {
+  const naming = `${product.colorName} ${product.sourceTitle}`;
+  if (/\bvegan\b/i.test(naming)) return "vegan";
+  if (/\bleather\b/i.test(naming)) return "leather";
+  return "unspecified";
+}
+
+function selectMaterialImages(images, product) {
+  const preference = materialPreference(product);
+  const leather = images.filter(hasLeatherMarker);
+  const nonLeather = images.filter((image) => !hasLeatherMarker(image));
+
+  if (preference === "vegan") return nonLeather;
+  if (preference === "leather") return leather.length ? leather : nonLeather;
+  // An unlabelled color normally uses unlabelled files, but some supplier
+  // leather colors (notably Zing) only have otherwise-valid leather URLs.
+  return nonLeather.length ? nonLeather : leather;
+}
+
 function imageMatchesProduct(image, product, catalog, { strictColor = true } = {}) {
   const path = urlSlug(image);
   const modelTokens = identityTokens(product.model);
@@ -160,13 +183,7 @@ function imageMatchesProduct(image, product, catalog, { strictColor = true } = {
     .map((candidate) => candidate.brand));
   if (otherBrands.some((brand) => containsTokens(path, identityTokens(brand)))) return false;
 
-  const wantsLeather = /\bleather\b/i.test(product.colorName);
-  if (!wantsLeather && /(^|-)leather(-|$)/.test(path)) return false;
   const sameModelRows = catalog.filter((candidate) => slugify(candidate.model) === slugify(product.model));
-  const leatherIsAvailable = sameModelRows.some((candidate) =>
-    /\bleather\b/i.test(candidate.colorName) && candidate.images.some((url) => /(^|-)leather(-|$)/.test(urlSlug(url))),
-  );
-  if (wantsLeather && leatherIsAvailable && !/(^|-)leather(-|$)/.test(path)) return false;
 
   const selected = colorTokens(product.colorName);
   const selectedTokenMatch = selected.some((token) => containsTokens(path, [token]));
@@ -285,16 +302,22 @@ function toSafeRow(node) {
 
 function toDraft(rows, catalog, imageStats) {
   const first = rows[0];
+  const productIdentity = {
+    ...first,
+    sourceTitle: unique(rows.map((row) => row.sourceTitle)).join(" "),
+  };
   const { brand, parentBrand, model, colorName } = first;
   const groupSlug = slugify(`${brand}-${model}`);
   const groupName = clean(`${brand} ${model}`);
   const variantSlug = slugify(`${groupName}-${colorName}`);
   const allImages = unique(rows.flatMap((row) => row.images));
-  const strictlyMatchingImages = allImages.filter((image) => imageMatchesProduct(image, first, catalog));
+  const identityMatchingImages = allImages.filter((image) => imageMatchesProduct(image, productIdentity, catalog));
+  const strictlyMatchingImages = selectMaterialImages(identityMatchingImages, productIdentity);
   let images = strictlyMatchingImages;
   if (!images.length) {
-    images = unique(rows.map((row) => row.primaryImage))
-      .filter((image) => imageMatchesProduct(image, first, catalog, { strictColor: false }));
+    const matchingPrimaryImages = unique(rows.map((row) => row.primaryImage))
+      .filter((image) => imageMatchesProduct(image, productIdentity, catalog, { strictColor: false }));
+    images = selectMaterialImages(matchingPrimaryImages, productIdentity);
   }
   images = images.slice(0, 8);
   imageStats.read += rows.reduce((count, row) => count + row.images.length, 0);
