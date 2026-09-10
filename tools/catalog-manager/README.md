@@ -27,6 +27,18 @@ then groups them into one product/color draft by normalized brand, commercial
 model/name, and color. It never creates a separate Chiriko product merely
 because the size or item group differs.
 
+Supplier `title_first_line` values may be category labels (for example,
+`Barefoot tenisky`) rather than model names. When `title_second_line` is
+present, the importer treats it as the commercial model/color title: for
+example, `Zing - White & Black Vegan` becomes model `Zing` and color name
+`White & Black Vegan`. The XML `color` remains the broader `colorFamily`.
+Rows without a second line fall back safely to `title` or a non-generic first
+line.
+
+Non-footwear accessories and care products—including insoles, socks, shirts,
+sprays, cleaners, waxes, and protectors—are excluded from the main product
+drafts by default. The console reports how many such groups were excluded.
+
 Imported size labels go into `consultableSizes` only; `sizes` stays empty. The
 feed's `availability` yes/no value only decides which sizes appear as
 consultable in review drafts: unavailable or unclear values are excluded, while
