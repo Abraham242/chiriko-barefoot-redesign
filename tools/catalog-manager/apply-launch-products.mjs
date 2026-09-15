@@ -24,7 +24,7 @@ const launchProductOrder = [
   "barebarics-zing-black-white",
   "barebarics-zing-all-black",
   "barebarics-zing-white-black-vegan",
-  "barebarics-zing-all-white-leather",
+  "be-lenka-velocity-all-white",
   "be-lenka-rebound-all-white",
   "be-lenka-rebound-all-black",
   "be-lenka-rebound-black-white",
@@ -75,14 +75,7 @@ const blockedTextPatterns = [
 ];
 const credentialMarkerPattern = /(?:secret|token|api[_-]?key|auth|signature|password)/i;
 const maximumLaunchImages = 8;
-const excludedImagesBySlug = new Map([
-  [
-    "barebarics-zing-all-white",
-    new Set([
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117884.png",
-    ]),
-  ],
-]);
+const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -163,7 +156,6 @@ function customerCopy(product) {
 function toStorefrontProduct(product) {
   const copy = customerCopy(product);
   const featured = featuredSlugs.has(product.slug);
-  const excludedImages = excludedImagesBySlug.get(product.slug);
   const storefrontProduct = {
     id: product.id,
     slug: product.slug,
@@ -183,7 +175,7 @@ function toStorefrontProduct(product) {
     status: "preorder",
     consultableSizes: [...product.consultableSizes],
     sizes: [],
-    images: product.images.filter((image) => !excludedImages?.has(image)),
+    images: [...product.images],
     features: copy.features,
     tags: copy.tags,
     isFeatured: featured,
@@ -210,6 +202,9 @@ function validateCatalog(catalog, products) {
   assert(products.length === expectedProductCount, `Expected ${expectedProductCount} launch products, received ${products.length}`);
   assert(new Set(products.map(({ slug }) => slug)).size === products.length, "Product slugs must be unique");
   assert(new Set(products.map(({ id }) => id)).size === products.length, "Product IDs must be unique");
+  for (const slug of removedLaunchSlugs) {
+    assert(!products.some((product) => product.slug === slug), `Removed launch product is still present: ${slug}`);
+  }
   assert(launchProductOrder.length === expectedProductCount, `Launch product order must contain exactly ${expectedProductCount} slugs`);
   assert(new Set(launchProductOrder).size === launchProductOrder.length, "Launch product order slugs must be unique");
   for (const { slug } of products) {
