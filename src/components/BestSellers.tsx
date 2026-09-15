@@ -3,9 +3,9 @@ import { products } from "@/data/products";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const featuredProductIds = [
-  "barebarics-zing-all-white-leather",
-  "barebarics-wave-white-dark-green",
-  "barebarics-enigma-ivory",
+  "barebarics-zing-all-white",
+  "be-lenka-rebound-all-white",
+  "be-lenka-grace-2-0-beige",
 ];
 
 const BestSellers = () => {

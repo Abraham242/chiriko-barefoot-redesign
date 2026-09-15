@@ -19,11 +19,33 @@ const catalogPath = resolve(repositoryRoot, "src/data/products.ts");
 const temporaryCatalogPath = `${catalogPath}.tmp`;
 
 const expectedProductCount = 22;
-const featuredSlugs = new Set([
+const launchProductOrder = [
   "barebarics-zing-all-white",
   "barebarics-zing-black-white",
+  "barebarics-zing-all-black",
+  "barebarics-zing-white-black-vegan",
+  "barebarics-zing-all-white-leather",
   "be-lenka-rebound-all-white",
   "be-lenka-rebound-all-black",
+  "be-lenka-rebound-black-white",
+  "be-lenka-rebound-sand",
+  "barebarics-enigma-ivory",
+  "barebarics-enigma-all-white",
+  "barebarics-enigma-all-black",
+  "barebarics-enigma-white-dark-green",
+  "be-lenka-grace-2-0-beige",
+  "be-lenka-grace-2-0-ivory",
+  "be-lenka-grace-2-0-rose-gold",
+  "be-lenka-promenade-2-0-beige",
+  "be-lenka-promenade-2-0-black",
+  "be-lenka-promenade-2-0-dark-brown",
+  "barebarics-wave-2-0-white-green",
+  "barebarics-wave-2-0-brown",
+  "barebarics-wave-2-0-black-dark-brown",
+];
+const featuredSlugs = new Set([
+  "barebarics-zing-all-white",
+  "be-lenka-rebound-all-white",
   "barebarics-enigma-ivory",
   "be-lenka-grace-2-0-beige",
 ]);
@@ -179,6 +201,14 @@ function validateCatalog(catalog, products) {
   assert(products.length === expectedProductCount, `Expected ${expectedProductCount} launch products, received ${products.length}`);
   assert(new Set(products.map(({ slug }) => slug)).size === products.length, "Product slugs must be unique");
   assert(new Set(products.map(({ id }) => id)).size === products.length, "Product IDs must be unique");
+  assert(launchProductOrder.length === expectedProductCount, `Launch product order must contain exactly ${expectedProductCount} slugs`);
+  assert(new Set(launchProductOrder).size === launchProductOrder.length, "Launch product order slugs must be unique");
+  for (const { slug } of products) {
+    assert(launchProductOrder.includes(slug), `Product slug is not in the launch product order: ${slug}`);
+  }
+  for (const slug of launchProductOrder) {
+    assert(products.some((product) => product.slug === slug), `Launch product order slug is missing: ${slug}`);
+  }
 
   const actualFeatured = products.filter(({ isFeatured }) => isFeatured).map(({ slug }) => slug);
   assert(actualFeatured.length === featuredSlugs.size, "The proposal is missing one or more required featured products");
@@ -193,7 +223,10 @@ async function main() {
   assert(parsed.length === expectedProductCount, `Launch proposal must contain exactly ${expectedProductCount} products`);
   parsed.forEach(validateProposalProduct);
 
-  const products = parsed.map(toStorefrontProduct);
+  const orderBySlug = new Map(launchProductOrder.map((slug, index) => [slug, index]));
+  const products = parsed
+    .map(toStorefrontProduct)
+    .sort((first, second) => (orderBySlug.get(first.slug) ?? Infinity) - (orderBySlug.get(second.slug) ?? Infinity));
   const catalog = serializeCatalog(products);
   validateCatalog(catalog, products);
 
