@@ -40,7 +40,6 @@ export const products: Product[] = [
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-118359.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118370.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118367.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117884.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-118358.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118390.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117886.png"
@@ -248,17 +247,17 @@ export const products: Product[] = [
     "parentBrand": "Be Lenka"
   },
   {
-    "id": "barebarics-zing-all-white-leather",
-    "slug": "barebarics-zing-all-white-leather",
-    "brand": "Barebarics",
-    "model": "Zing",
-    "groupSlug": "barebarics-zing",
-    "groupName": "Barebarics Zing",
-    "name": "Barebarics Zing",
-    "subtitle": "All White - Leather · preventa asistida",
+    "id": "be-lenka-velocity-all-white",
+    "slug": "be-lenka-velocity-all-white",
+    "brand": "Be Lenka",
+    "model": "Velocity",
+    "groupSlug": "be-lenka-velocity",
+    "groupName": "Be Lenka Velocity",
+    "name": "Be Lenka Velocity",
+    "subtitle": "All White · preventa asistida",
     "gender": "unisex",
     "category": "Zapatillas",
-    "colorName": "All White - Leather",
+    "colorName": "All White",
     "colorFamily": "white",
     "colorHex": "#E5E1DA",
     "price": 0,
@@ -270,18 +269,17 @@ export const products: Product[] = [
       "38",
       "39",
       "40",
-      "41"
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2024/10/8/2/barefoot-tenisky-barebarics-zing-all-white-leather-82762.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117883.png",
-      "https://belenkacdn.vshcdn.net/media/2024/08/7/7/barefoot-tenisky-barebarics-zing-all-white-leather-77607.jpg",
-      "https://belenkacdn.vshcdn.net/media/2024/07/7/4/barefoot-tenisky-barebarics-zing-all-white-leather-74567.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117884.png",
-      "https://belenkacdn.vshcdn.net/media/2024/08/7/7/barefoot-tenisky-barebarics-zing-all-white-leather-77516.jpg",
-      "https://belenkacdn.vshcdn.net/media/2024/07/7/4/barefoot-tenisky-barebarics-zing-all-white-leather-74569.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117885.png"
+      "https://belenkacdn.vshcdn.net/media/2024/09/8/0/barefoot-tenisky-be-lenka-velocity-all-white-80542.jpg"
     ],
     "features": [
       "Horma anatómica",
@@ -298,10 +296,9 @@ export const products: Product[] = [
     ],
     "isFeatured": false,
     "isNew": true,
-    "seoTitle": "Barebarics Zing All White - Leather | Chiriko Studio Venezuela",
-    "seoDescription": "Barebarics Zing en All White - Leather. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp.",
-    "tag": "Preventa",
-    "parentBrand": "Be Lenka"
+    "seoTitle": "Be Lenka Velocity All White | Chiriko Studio Venezuela",
+    "seoDescription": "Be Lenka Velocity en All White. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp.",
+    "tag": "Preventa"
   },
   {
     "id": "be-lenka-rebound-all-white",

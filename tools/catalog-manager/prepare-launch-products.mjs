@@ -31,6 +31,8 @@ const optionalArrayFields = ["sizes", "features", "tags"];
 const forbiddenImageUrlPattern = /secret|token|api_key|auth|signature|password/i;
 const maximumLaunchImages = 8;
 const expectedProductCount = 22;
+const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
+const requiredReplacementSlug = "be-lenka-velocity-all-white";
 
 function slugify(value) {
   return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
@@ -87,6 +89,13 @@ function assert(condition, message) {
 function selectedProducts(parsed) {
   assert(Array.isArray(parsed), "Launch selection must be a JSON array of products");
   assert(parsed.length === expectedProductCount, `Expected ${expectedProductCount} launch products, received ${parsed.length}`);
+  for (const slug of removedLaunchSlugs) {
+    assert(!parsed.some((product) => product?.slug === slug), `Removed launch product is still selected: ${slug}`);
+  }
+  assert(
+    parsed.some((product) => product?.slug === requiredReplacementSlug),
+    `Required launch replacement is missing: ${requiredReplacementSlug}`,
+  );
   return parsed;
 }
 
