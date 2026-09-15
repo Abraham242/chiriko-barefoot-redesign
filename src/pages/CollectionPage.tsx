@@ -7,6 +7,7 @@ import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import ProductVariantThumbnails from "@/components/ProductVariantThumbnails";
 import { products } from "@/data/products";
 import type { Product, ProductStatus } from "@/data/productTypes";
 
@@ -90,17 +91,13 @@ const ProductCard = ({ group }: { group: CatalogGroup }) => {
           <p className="shrink-0 font-body text-sm font-medium text-foreground">{priceLabel}</p>
         </div>
         {group.variants.length > 1 && (
-          <div className="mt-3 flex flex-wrap gap-2" aria-label={`Seleccionar color de ${group.displayName}`}>
-            {group.variants.map((variant) => {
-              const selected = variant.id === selectedVariant.id;
-              return (
-                <button key={variant.id} type="button" onClick={() => setSelectedVariant(variant)} aria-pressed={selected} aria-label={`${variant.colorName}${selected ? ", seleccionado" : ""}`} title={variant.colorName} className="flex min-h-9 items-center gap-2 rounded-full px-2 font-body text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground">
-                  <span className={`h-4 w-4 rounded-full border border-foreground/20 ${selected ? "ring-2 ring-foreground ring-offset-2" : ""}`} style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
-                  <span className={selected ? "text-foreground" : "sr-only sm:not-sr-only"}>{variant.colorName}</span>
-                </button>
-              );
-            })}
-          </div>
+          <ProductVariantThumbnails
+            variants={group.variants}
+            selectedVariant={selectedVariant}
+            onSelect={setSelectedVariant}
+            displayName={group.displayName}
+            className="mt-3"
+          />
         )}
         <Link to={href} className="mt-5 inline-flex border-b border-foreground pb-1 font-body text-xs font-medium text-foreground">Ver modelo</Link>
       </div>

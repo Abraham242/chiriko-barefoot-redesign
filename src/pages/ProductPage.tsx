@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SEO from "@/components/SEO";
-import { Navigate, useParams, Link } from "react-router-dom";
+import { Navigate, useNavigate, useParams, Link } from "react-router-dom";
 import {
   Check,
   ChevronDown,
@@ -11,12 +11,14 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductImageGallery from "@/components/ProductImageGallery";
+import ProductVariantThumbnails from "@/components/ProductVariantThumbnails";
 import { getProductById, getProductVariants } from "@/data/catalogHelpers";
 
 const phoneNumber = "584221798072";
 
 const ProductPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const product = id ? getProductById(id) : undefined;
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
@@ -209,25 +211,13 @@ Preferencia de ajuste: [más preciso / más espacio]
                     <p className="font-body text-xs uppercase tracking-[0.16em] text-muted-foreground">
                       Color <span className="normal-case tracking-normal text-foreground">· {color}</span>
                     </p>
-                    <div className="mt-3 flex flex-wrap gap-3" aria-label="Colores disponibles">
-                      {variants.map((variant) => {
-                        const isCurrent = variant.id === product.id;
-                        return (
-                          <Link
-                            key={variant.id}
-                            to={`/product/${variant.slug}`}
-                            aria-current={isCurrent ? "page" : undefined}
-                            aria-label={`${variant.colorName}${isCurrent ? ", color seleccionado" : ""}`}
-                            className={`flex min-h-11 items-center gap-2 rounded-sm border px-3 py-2 font-body text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 ${
-                              isCurrent ? "border-foreground bg-secondary/60 text-foreground" : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-                            }`}
-                          >
-                            <span className={`h-5 w-5 rounded-full border ${isCurrent ? "ring-2 ring-foreground ring-offset-2" : "border-foreground/20"}`} style={{ backgroundColor: variant.colorHex }} aria-hidden="true" />
-                            {variant.colorName}
-                          </Link>
-                        );
-                      })}
-                    </div>
+                    <ProductVariantThumbnails
+                      variants={variants}
+                      selectedVariant={product}
+                      onSelect={(variant) => navigate(`/product/${variant.slug}`)}
+                      displayName={product.groupName || `${product.brand} ${product.model}`}
+                      className="mt-3"
+                    />
                   </div>
                 ) : color ? (
                   <div className="mt-7 border-t border-border/70 pt-6">
