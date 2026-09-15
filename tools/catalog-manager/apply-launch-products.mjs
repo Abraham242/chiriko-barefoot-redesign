@@ -78,6 +78,17 @@ const maximumLaunchImages = 8;
 const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
 const requiredReplacementSlug = "be-lenka-velocity-all-white";
 const minimumReplacementImages = 4;
+const rejectedVelocityImageIds = new Set(["80542", "80543", "80544", "80545", "80546"]);
+function imageAssetId(imageUrl) {
+  try {
+    return new URL(imageUrl).pathname.match(/-(\d+)\.[^.]+$/)?.[1] ?? "";
+  } catch {
+    return "";
+  }
+}
+
+const requiredReplacementSlug = "be-lenka-velocity-all-white";
+const minimumReplacementImages = 4;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -180,6 +191,14 @@ function toStorefrontProduct(product) {
     images: [...product.images],
     features: copy.features,
     tags: copy.tags,
+  const replacement = products.find((product) => product.slug === requiredReplacementSlug);
+  assert(replacement, `Required launch replacement is missing: ${requiredReplacementSlug}`);
+  assert(
+    replacement.images.length >= minimumReplacementImages,
+    `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
+  );
+  const rejectedImage = replacement.images.find((image) => rejectedVelocityImageIds.has(imageAssetId(image)));
+  assert(!rejectedImage, `Required launch replacement contains a known broken image URL: ${rejectedImage}`);
     isFeatured: featured,
     isNew: true,
     seoTitle: `${product.name} ${product.colorName} | Chiriko Studio Venezuela`,

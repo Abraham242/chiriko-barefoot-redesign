@@ -34,6 +34,8 @@ const expectedProductCount = 22;
 const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
 const requiredReplacementSlug = "be-lenka-velocity-all-white";
 const minimumReplacementImages = 4;
+const rejectedVelocityImageIds = new Set(["80542", "80543", "80544", "80545", "80546"]);
+const minimumReplacementImages = 4;
 
 function slugify(value) {
   return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
@@ -61,6 +63,21 @@ function validateImageIdentity(product, products, label) {
     const path = urlSlug(image);
     assert(containsTokens(path, modelTokens), `${label} has an image URL that does not match model "${product.model}"`);
     const unrelated = products.find((other) => {
+function imageAssetId(imageUrl) {
+  try {
+    return new URL(imageUrl).pathname.match(/-(\d+)\.[^.]+$/)?.[1] ?? "";
+  } catch {
+    return "";
+  }
+}
+
+  const replacement = parsed.find((product) => product?.slug === requiredReplacementSlug);
+  assert(
+    Array.isArray(replacement?.images) && replacement.images.length >= minimumReplacementImages,
+    `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
+  );
+  const rejectedImage = replacement.images.find((image) => rejectedVelocityImageIds.has(imageAssetId(image)));
+  assert(!rejectedImage, `Required launch replacement contains a known broken image URL: ${rejectedImage}`);
       const otherModelTokens = tokens(other.model);
       return other !== product && slugify(other.model) !== slugify(product.model)
         && !otherModelTokens.every((token) => modelTokens.includes(token))
