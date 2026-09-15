@@ -40,7 +40,6 @@ export const products: Product[] = [
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-118359.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118370.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118367.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117884.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-118358.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118390.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117886.png"
