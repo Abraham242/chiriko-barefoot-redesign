@@ -75,6 +75,14 @@ const blockedTextPatterns = [
 ];
 const credentialMarkerPattern = /(?:secret|token|api[_-]?key|auth|signature|password)/i;
 const maximumLaunchImages = 8;
+const excludedImagesBySlug = new Map([
+  [
+    "barebarics-zing-all-white",
+    new Set([
+      "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-117884.png",
+    ]),
+  ],
+]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -155,6 +163,7 @@ function customerCopy(product) {
 function toStorefrontProduct(product) {
   const copy = customerCopy(product);
   const featured = featuredSlugs.has(product.slug);
+  const excludedImages = excludedImagesBySlug.get(product.slug);
   const storefrontProduct = {
     id: product.id,
     slug: product.slug,
@@ -174,7 +183,7 @@ function toStorefrontProduct(product) {
     status: "preorder",
     consultableSizes: [...product.consultableSizes],
     sizes: [],
-    images: [...product.images],
+    images: product.images.filter((image) => !excludedImages?.has(image)),
     features: copy.features,
     tags: copy.tags,
     isFeatured: featured,
