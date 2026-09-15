@@ -33,6 +33,7 @@ const maximumLaunchImages = 8;
 const expectedProductCount = 22;
 const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
 const requiredReplacementSlug = "be-lenka-velocity-all-white";
+const minimumReplacementImages = 4;
 
 function slugify(value) {
   return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
@@ -95,6 +96,11 @@ function selectedProducts(parsed) {
   assert(
     parsed.some((product) => product?.slug === requiredReplacementSlug),
     `Required launch replacement is missing: ${requiredReplacementSlug}`,
+  );
+  const replacement = parsed.find((product) => product?.slug === requiredReplacementSlug);
+  assert(
+    Array.isArray(replacement?.images) && replacement.images.length >= minimumReplacementImages,
+    `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
   );
   return parsed;
 }
