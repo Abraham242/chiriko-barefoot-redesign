@@ -287,9 +287,6 @@ export const products: Product[] = [
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-velocity-all-white-128013.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-be-lenka-velocity-all-white-118601.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-velocity-all-white-128014.jpg"
-      "https://belenkacdn.vshcdn.net/media/2024/09/8/0/barefoot-tenisky-be-lenka-velocity-all-white-80544.jpg",
-      "https://belenkacdn.vshcdn.net/media/2024/09/8/0/barefoot-tenisky-be-lenka-velocity-all-white-80545.jpg",
-      "https://belenkacdn.vshcdn.net/media/2024/09/8/0/barefoot-tenisky-be-lenka-velocity-all-white-80546.jpg"
     ],
     "features": [
       "Horma anatómica",
