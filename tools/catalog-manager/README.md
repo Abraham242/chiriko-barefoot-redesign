@@ -89,6 +89,19 @@ Generated images must be visually reviewed before publishing. URL filtering is
 a safety check, not a replacement for confirming that every photograph shows
 the intended commercial product and color.
 
+## Review current product images
+
+Generate a read-only visual board from the public product catalog with:
+
+```sh
+npm run catalog:review-images
+```
+
+Open `tools/catalog-manager/output/product-image-review.html` in a browser to
+review every product image and open its original URL. Products with more than
+six images are highlighted. The generated board stays in the ignored `output/`
+directory and contains only public product identity fields and image URLs.
+
 ## Prepare an approved launch selection
 
 After curating and approving the local selection, save it as:
