@@ -76,6 +76,19 @@ const blockedTextPatterns = [
 const credentialMarkerPattern = /(?:secret|token|api[_-]?key|auth|signature|password)/i;
 const maximumLaunchImages = 8;
 const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
+const requiredReplacementSlug = "be-lenka-velocity-all-white";
+const minimumReplacementImages = 4;
+const rejectedVelocityImageIds = new Set(["80542", "80543", "80544", "80545", "80546"]);
+function imageAssetId(imageUrl) {
+  try {
+    return new URL(imageUrl).pathname.match(/-(\d+)\.[^.]+$/)?.[1] ?? "";
+  } catch {
+    return "";
+  }
+}
+
+const requiredReplacementSlug = "be-lenka-velocity-all-white";
+const minimumReplacementImages = 4;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -178,6 +191,14 @@ function toStorefrontProduct(product) {
     images: [...product.images],
     features: copy.features,
     tags: copy.tags,
+  const replacement = products.find((product) => product.slug === requiredReplacementSlug);
+  assert(replacement, `Required launch replacement is missing: ${requiredReplacementSlug}`);
+  assert(
+    replacement.images.length >= minimumReplacementImages,
+    `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
+  );
+  const rejectedImage = replacement.images.find((image) => rejectedVelocityImageIds.has(imageAssetId(image)));
+  assert(!rejectedImage, `Required launch replacement contains a known broken image URL: ${rejectedImage}`);
     isFeatured: featured,
     isNew: true,
     seoTitle: `${product.name} ${product.colorName} | Chiriko Studio Venezuela`,
@@ -205,6 +226,12 @@ function validateCatalog(catalog, products) {
   for (const slug of removedLaunchSlugs) {
     assert(!products.some((product) => product.slug === slug), `Removed launch product is still present: ${slug}`);
   }
+  const replacement = products.find((product) => product.slug === requiredReplacementSlug);
+  assert(replacement, `Required launch replacement is missing: ${requiredReplacementSlug}`);
+  assert(
+    replacement.images.length >= minimumReplacementImages,
+    `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
+  );
   assert(launchProductOrder.length === expectedProductCount, `Launch product order must contain exactly ${expectedProductCount} slugs`);
   assert(new Set(launchProductOrder).size === launchProductOrder.length, "Launch product order slugs must be unique");
   for (const { slug } of products) {

@@ -18,6 +18,7 @@ const catalogPath = resolve(repositoryRoot, "src/data/products.ts");
 const outputPath = resolve(toolDirectory, "output/product-image-audit.json");
 const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
 const colorNoise = new Set(["all", "and", "color", "colour", "leather", "vegan", "with"]);
+const rejectedVelocityImageIds = new Set(["80542", "80543", "80544", "80545", "80546"]);
 
 function extractProducts(source) {
   const declaration = /export\s+const\s+products(?:\s*:\s*Product\[\])?\s*=\s*/g.exec(source);
@@ -80,6 +81,10 @@ function urlDetails(url) {
 
 function tokens(value) {
   return normalize(value).split("-").filter(Boolean);
+}
+
+function imageAssetId(url) {
+  return urlDetails(url).stem.match(/-(\d+)$/)?.[1] ?? "";
 }
 
 function containsTokenSequence(haystack, expectedTokens) {
@@ -148,6 +153,11 @@ const possibleSlugMismatches = products.flatMap((product) => (product.images ?? 
   return reasons.length ? [{ productSlug: product.slug, imageIndex, url, reasons }] : [];
 }));
 
+const knownBrokenVelocityImages = entries.filter((entry) => {
+  const product = products.find(({ slug }) => slug === entry.productSlug);
+  return product?.model === "Velocity" && rejectedVelocityImageIds.has(imageAssetId(entry.url));
+});
+
 const report = {
   generatedAt: new Date().toISOString(),
   source: "src/data/products.ts",
@@ -159,6 +169,7 @@ const report = {
     imagesReusedAcrossProducts: imagesReusedAcrossProducts.length,
     productsWithMoreThanSixImages: productsWithMoreThanSixImages.length,
     possibleSlugMismatches: possibleSlugMismatches.length,
+    knownBrokenVelocityImages: knownBrokenVelocityImages.length,
   },
   findings: {
     exactDuplicateUrls,
@@ -166,6 +177,7 @@ const report = {
     imagesReusedAcrossProducts,
     productsWithMoreThanSixImages,
     possibleSlugMismatches,
+    knownBrokenVelocityImages,
   },
 };
 
@@ -181,5 +193,8 @@ console.log(`Filenames with mixed extensions:   ${report.summary.filenamesWithDi
 console.log(`Images reused across products:     ${report.summary.imagesReusedAcrossProducts}`);
 console.log(`Products with more than 6 images:  ${report.summary.productsWithMoreThanSixImages}`);
 console.log(`Possible model/color mismatches:   ${report.summary.possibleSlugMismatches}`);
+console.log(`Known broken Velocity images:      ${report.summary.knownBrokenVelocityImages}`);
 console.log(`\nReport written to: ${outputPath}`);
 console.log("No catalog entries or images were modified.\n");
+
+if (knownBrokenVelocityImages.length > 0) process.exitCode = 1;
