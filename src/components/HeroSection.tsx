@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import heroEnigma from "@/assets/hero-enigma-ivory.jpg";
-import heroUrban from "@/assets/hero-urban-zing.jpg";
-import ResponsiveImage from "@/components/ResponsiveImage";
+import heroTriptychDesktop from "@/assets/hero/hero-triptych-desktop.webp";
+import heroTriptychMobile from "@/assets/hero/hero-triptych-mobile.webp";
+import { cfImage, cfSrcSet } from "@/lib/cloudflareImages";
 
 const phoneNumber = "584221798072";
 const whatsappMessage = `Hola, vengo de chirikostudio.com 👋
@@ -11,54 +10,46 @@ Quiero reservar en preventa un par de Chiriko.
 Me gustaría revisar modelo, color, talla habitual y medida de mi pie en centímetros antes de confirmar.
 ¿Me pueden mostrar las opciones disponibles en preventa?`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
-const heroSlides = [
-  {
-    image: heroEnigma,
-    alt: "Calzado barefoot premium Chiriko Studio",
-  },
-  {
-    image: heroUrban,
-    alt: "Calzado barefoot urbano para moverte con libertad",
-  },
-];
+const desktopSrcSet =
+  cfSrcSet(heroTriptychDesktop, [960, 1280, 1600, 1920, 2560]) ??
+  heroTriptychDesktop;
+const mobileSrcSet =
+  cfSrcSet(heroTriptychMobile, [480, 640, 768, 1080]) ??
+  heroTriptychMobile;
 
 const HeroSection = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
   return (
     <section className="relative min-h-[92vh] flex items-end overflow-hidden bg-background">
       <div className="absolute inset-0">
-        {heroSlides.map((slide, index) => (
-          <ResponsiveImage
-            key={slide.alt}
-            src={slide.image}
-            alt={slide.alt}
-            widths={[640, 960, 1280, 1600, 1920]}
+        <picture className="absolute inset-0 block h-full w-full">
+          <source
+            media="(min-width: 768px)"
+            srcSet={desktopSrcSet}
             sizes="100vw"
-            width={1920}
-            height={1280}
-            loading={index === 0 ? "eager" : "lazy"}
-            fetchPriority={index === 0 ? "high" : "low"}
-            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ease-out ${
-              activeSlide === index ? "opacity-100" : "opacity-0"
-            }`}
           />
-        ))}
+          <source
+            media="(max-width: 767px)"
+            srcSet={mobileSrcSet}
+            sizes="100vw"
+          />
+          <img
+            src={cfImage(heroTriptychMobile, 1080)}
+            alt="Calzado barefoot premium Chiriko Studio"
+            width={1080}
+            height={1350}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover object-center"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/78 via-[#1A1A18]/34 to-[#1A1A18]/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A18]/65 via-[#1A1A18]/25 to-transparent" />
       </div>
 
       <div className="relative z-10 w-full">
-        <div className="container mx-auto px-6 lg:px-12 pb-14 pt-32 md:pb-20 lg:pb-24">
-          <div className="max-w-3xl">
+        <div className="w-full px-6 pb-14 pt-32 sm:px-10 md:pb-20 lg:px-[7vw] lg:pb-24 2xl:px-[8vw]">
+          <div className="max-w-[680px]">
             <p className="mb-5 font-body text-[11px] md:text-xs uppercase tracking-[0.22em] text-primary-foreground/80">
               Preventa asistida · entrega estimada 3–4 semanas
             </p>
