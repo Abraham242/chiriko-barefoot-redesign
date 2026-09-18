@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import heroTriptychDesktop from "@/assets/hero/hero-triptych-desktop.webp";
 import heroTriptychMobile from "@/assets/hero/hero-triptych-mobile.webp";
-import ResponsiveImage from "@/components/ResponsiveImage";
+import { cfImage, cfSrcSet } from "@/lib/cloudflareImages";
 
 const phoneNumber = "584221798072";
 const whatsappMessage = `Hola, vengo de chirikostudio.com 👋
@@ -10,33 +10,39 @@ Quiero reservar en preventa un par de Chiriko.
 Me gustaría revisar modelo, color, talla habitual y medida de mi pie en centímetros antes de confirmar.
 ¿Me pueden mostrar las opciones disponibles en preventa?`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+const desktopSrcSet =
+  cfSrcSet(heroTriptychDesktop, [960, 1280, 1600, 1920, 2560]) ??
+  heroTriptychDesktop;
+const mobileSrcSet =
+  cfSrcSet(heroTriptychMobile, [480, 640, 768, 1080]) ??
+  heroTriptychMobile;
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-[92vh] flex items-end overflow-hidden bg-background">
       <div className="absolute inset-0">
-        <ResponsiveImage
-          src={heroTriptychDesktop}
-          alt="Calzado barefoot premium Chiriko Studio"
-          widths={[960, 1280, 1600, 1920, 2560]}
-          sizes="100vw"
-          width={2560}
-          height={1440}
-          loading="eager"
-          fetchPriority="high"
-          className="hidden h-full w-full object-cover object-center md:block"
-        />
-        <ResponsiveImage
-          src={heroTriptychMobile}
-          alt="Calzado barefoot premium Chiriko Studio"
-          widths={[480, 640, 768, 1080]}
-          sizes="100vw"
-          width={1080}
-          height={1350}
-          loading="eager"
-          fetchPriority="high"
-          className="h-full w-full object-cover object-center md:hidden"
-        />
+        <picture className="absolute inset-0 block h-full w-full">
+          <source
+            media="(min-width: 768px)"
+            srcSet={desktopSrcSet}
+            sizes="100vw"
+          />
+          <source
+            media="(max-width: 767px)"
+            srcSet={mobileSrcSet}
+            sizes="100vw"
+          />
+          <img
+            src={cfImage(heroTriptychMobile, 1080)}
+            alt="Calzado barefoot premium Chiriko Studio"
+            width={1080}
+            height={1350}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover object-center"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/78 via-[#1A1A18]/34 to-[#1A1A18]/10" />
       </div>
 
