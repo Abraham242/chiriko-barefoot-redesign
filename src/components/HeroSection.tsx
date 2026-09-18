@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import heroEnigma from "@/assets/hero-enigma-ivory.jpg";
-import heroUrban from "@/assets/hero-urban-zing.jpg";
+import heroTriptychDesktop from "@/assets/hero/hero-triptych-desktop.webp";
+import heroTriptychMobile from "@/assets/hero/hero-triptych-mobile.webp";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const phoneNumber = "584221798072";
@@ -12,47 +11,32 @@ Me gustaría revisar modelo, color, talla habitual y medida de mi pie en centím
 ¿Me pueden mostrar las opciones disponibles en preventa?`;
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
-const heroSlides = [
-  {
-    image: heroEnigma,
-    alt: "Calzado barefoot premium Chiriko Studio",
-  },
-  {
-    image: heroUrban,
-    alt: "Calzado barefoot urbano para moverte con libertad",
-  },
-];
-
 const HeroSection = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
   return (
     <section className="relative min-h-[92vh] flex items-end overflow-hidden bg-background">
       <div className="absolute inset-0">
-        {heroSlides.map((slide, index) => (
-          <ResponsiveImage
-            key={slide.alt}
-            src={slide.image}
-            alt={slide.alt}
-            widths={[640, 960, 1280, 1600, 1920]}
-            sizes="100vw"
-            width={1920}
-            height={1280}
-            loading={index === 0 ? "eager" : "lazy"}
-            fetchPriority={index === 0 ? "high" : "low"}
-            className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ease-out ${
-              activeSlide === index ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
+        <ResponsiveImage
+          src={heroTriptychDesktop}
+          alt="Calzado barefoot premium Chiriko Studio"
+          widths={[960, 1280, 1600, 1920, 2560]}
+          sizes="100vw"
+          width={2560}
+          height={1440}
+          loading="eager"
+          fetchPriority="high"
+          className="hidden h-full w-full object-cover object-center md:block"
+        />
+        <ResponsiveImage
+          src={heroTriptychMobile}
+          alt="Calzado barefoot premium Chiriko Studio"
+          widths={[480, 640, 768, 1080]}
+          sizes="100vw"
+          width={1080}
+          height={1350}
+          loading="eager"
+          fetchPriority="high"
+          className="h-full w-full object-cover object-center md:hidden"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/78 via-[#1A1A18]/34 to-[#1A1A18]/10" />
       </div>
 
