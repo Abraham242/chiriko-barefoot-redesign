@@ -44,11 +44,12 @@ const HeroSection = () => {
           />
         </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/78 via-[#1A1A18]/34 to-[#1A1A18]/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A18]/65 via-[#1A1A18]/25 to-transparent" />
       </div>
 
       <div className="relative z-10 w-full">
-        <div className="container mx-auto px-6 lg:px-12 pb-14 pt-32 md:pb-20 lg:pb-24">
-          <div className="max-w-3xl">
+        <div className="w-full px-6 pb-14 pt-32 sm:px-10 md:pb-20 lg:px-[7vw] lg:pb-24 2xl:px-[8vw]">
+          <div className="max-w-[680px]">
             <p className="mb-5 font-body text-[11px] md:text-xs uppercase tracking-[0.22em] text-primary-foreground/80">
               Preventa asistida · entrega estimada 3–4 semanas
             </p>
