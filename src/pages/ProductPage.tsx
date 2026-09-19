@@ -40,28 +40,33 @@ const ProductPage = () => {
     : isPreorder
       ? "Disponibilidad y precio sujetos a confirmación por WhatsApp"
     : "Disponibilidad sujeta a confirmación por WhatsApp";
-  const whatsappIntent = canReserve
-    ? "Quiero reservar este modelo en preventa."
-    : isPreorder
-      ? "Quiero consultar disponibilidad y precio de este modelo."
-      : "Quiero consultar este modelo.";
-
   const color = product.colorName;
-  const whatsappMessage = `Hola, estoy viendo ${product.name} en la web de Chiriko 👋
+  const sizeLine = selectedSize
+    ? `Talla seleccionada: ${selectedSize}`
+    : "Talla: por confirmar";
+  const whatsappMessage = canReserve
+    ? `Hola, vengo de chirikostudio.com 👋
 
-${whatsappIntent}
+Quiero reservar este producto:
+
 Modelo: ${product.name}
-Color disponible: ${color || "[confirmar]"}${
-    selectedSize ? `\nTalla habitual: ${selectedSize}` : "\nTalla habitual: [por indicar]"
-  }
-Medida de mi pie en centímetros: [cm]
-Preferencia de ajuste: [más preciso / más espacio]
+Color: ${color || "por confirmar"}
+${sizeLine}
 
-¿Me ayudan a confirmar modelo, color y talla por WhatsApp?${
-    canReserve
-      ? " Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva."
-      : ""
-  }`;
+Entiendo que la entrega estimada es de 3–4 semanas desde la confirmación de la reserva.
+
+Quiero confirmar disponibilidad y saber cómo avanzar con la reserva.`
+    : `Hola, vengo de chirikostudio.com 👋
+
+Quiero consultar este producto:
+
+Modelo: ${product.name}
+Color: ${color || "por confirmar"}
+${sizeLine}
+
+Quiero conocer precio y disponibilidad.
+
+Si está disponible, también quiero saber cómo avanzar con la reserva.`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   const seoTitle = product.seoTitle || `${product.name} en Venezuela | Chiriko Studio`;
