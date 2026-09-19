@@ -9,7 +9,7 @@ const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(mess
 
 const navLinks = [
   { label: "Colección", href: "/collection" },
-  { label: "Barefoot", href: "/#learn" },
+  { label: "Barefoot", href: "/que-es-calzado-barefoot" },
   { label: "Guía de Tallas", href: "/size-guide" },
   { label: "Contacto", href: "/#contact" },
 ];
