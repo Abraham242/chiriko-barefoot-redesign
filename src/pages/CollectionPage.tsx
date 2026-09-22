@@ -81,7 +81,7 @@ const ProductCard = ({ group }: { group: CatalogGroup }) => {
             {selectedVariant.isNew && <span className="bg-foreground px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-background">Nuevo</span>}
             {selectedVariant.isFeatured && <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">Destacado</span>}
           </div>
-          <ResponsiveImage src={selectedVariant.images[0]} alt={`${group.displayName} en ${selectedVariant.colorName}`} widths={[420, 640, 900]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width={900} height={900} loading="lazy" className="h-full w-full scale-[1.08] object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.15] sm:scale-[1.12] sm:p-3" />
+          <ResponsiveImage src={selectedVariant.images[0]} alt={`${group.displayName} en ${selectedVariant.colorName}`} widths={[420, 640, 900]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width={900} height={900} loading="lazy" className="h-full w-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.03] sm:p-3" />
         </div>
       </Link>
       <div className="mt-5 flex flex-1 flex-col">
