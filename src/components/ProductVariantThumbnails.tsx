@@ -33,7 +33,7 @@ const ProductVariantThumbnails = ({
           aria-pressed={isSelected}
           aria-label={accessibleName}
           title={variant.colorName}
-          className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-sm border bg-[#f5f3ee] transition duration-200 hover:border-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 sm:h-14 sm:w-14 ${
+          className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-sm border bg-white transition duration-200 hover:border-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 sm:h-16 sm:w-16 ${
             isSelected
               ? "border-foreground ring-1 ring-foreground"
               : "border-foreground/15"
@@ -42,11 +42,11 @@ const ProductVariantThumbnails = ({
           <ResponsiveImage
             src={variant.images[0]}
             alt={accessibleName}
-            widths={[96, 112]}
-            sizes="(min-width: 640px) 56px, 48px"
-            width={112}
-            height={112}
-            className="h-full w-full object-contain p-1"
+            widths={[112, 128]}
+            sizes="(min-width: 640px) 64px, 56px"
+            width={128}
+            height={128}
+            className="h-full w-full object-contain p-1.5"
           />
         </button>
       );

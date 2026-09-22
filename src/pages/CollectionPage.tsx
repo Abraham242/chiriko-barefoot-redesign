@@ -73,18 +73,18 @@ const ProductCard = ({ group }: { group: CatalogGroup }) => {
     : "Consultar disponibilidad";
 
   return (
-    <article className="group min-w-0">
+    <article className="group flex h-full min-w-0 flex-col">
       <Link to={href} className="block" aria-label={`Ver ${group.displayName} en ${selectedVariant.colorName}`}>
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#f3f1ec] sm:aspect-square">
+        <div className="relative aspect-[4/5] overflow-hidden bg-white ring-1 ring-inset ring-foreground/[0.05] sm:aspect-square">
           <div className="absolute left-3 top-3 z-10 flex max-w-[calc(100%-1.5rem)] flex-wrap gap-1.5">
             <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">{statusLabels[selectedVariant.status]}</span>
             {selectedVariant.isNew && <span className="bg-foreground px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-background">Nuevo</span>}
             {selectedVariant.isFeatured && <span className="bg-background/90 px-2.5 py-1 font-body text-[9px] uppercase tracking-[0.14em] text-foreground backdrop-blur-sm">Destacado</span>}
           </div>
-          <ResponsiveImage src={selectedVariant.images[0]} alt={`${group.displayName} en ${selectedVariant.colorName}`} widths={[420, 640, 900]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width={900} height={900} loading="lazy" className="h-full w-full object-contain p-5 transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:p-6" />
+          <ResponsiveImage src={selectedVariant.images[0]} alt={`${group.displayName} en ${selectedVariant.colorName}`} widths={[420, 640, 900]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" width={900} height={900} loading="lazy" className="h-full w-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.03] sm:p-3" />
         </div>
       </Link>
-      <div className="mt-5">
+      <div className="mt-5 flex flex-1 flex-col">
         <p className="font-body text-[10px] uppercase tracking-[0.19em] text-muted-foreground">{selectedVariant.brand}</p>
         <div className="mt-1.5 flex items-start justify-between gap-4">
           <h2 className="min-w-0 font-body text-base font-medium text-foreground sm:text-[17px]"><Link to={href} className="transition-opacity hover:opacity-65">{group.displayName}</Link></h2>
@@ -99,7 +99,7 @@ const ProductCard = ({ group }: { group: CatalogGroup }) => {
             className="mt-3"
           />
         )}
-        <Link to={href} className="mt-5 inline-flex border-b border-foreground pb-1 font-body text-xs font-medium text-foreground">Ver modelo</Link>
+        <Link to={href} className="mt-auto inline-flex self-start border-b border-foreground pb-1 pt-5 font-body text-xs font-medium text-foreground">Ver modelo</Link>
       </div>
     </article>
   );
