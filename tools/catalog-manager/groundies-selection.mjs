@@ -15,8 +15,6 @@ export const groundiesSelection = [
   { title: "G-Flex Women", color: "Black", model: "G-Flex", gender: "women", colorHex: "#222222", slug: "groundies-g-flex-women-black" },
   { title: "G-Flex Women", color: "Off-White", model: "G-Flex", gender: "women", colorHex: "#f0ede4", slug: "groundies-g-flex-women-off-white" },
   { title: "G-Flex Men", color: "Off-White", model: "G-Flex", gender: "men", colorHex: "#f0ede4", slug: "groundies-g-flex-men-off-white" },
-  { title: "Chamonix TR Precision Women", color: "Sand/Coal", model: "Chamonix TR Precision", gender: "women", colorHex: "#c9b797", slug: "groundies-chamonix-tr-precision-women-sand-coal" },
-  { title: "Chamonix TR Precision Men", color: "Sand/Coal", model: "Chamonix TR Precision", gender: "men", colorHex: "#c9b797", slug: "groundies-chamonix-tr-precision-men-sand-coal" },
 ].map((entry) => Object.freeze({ category: "Zapatillas", ...entry }));
 
 Object.freeze(groundiesSelection);

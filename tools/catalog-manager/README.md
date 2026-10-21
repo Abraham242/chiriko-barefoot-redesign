@@ -146,24 +146,26 @@ remain ignored and must not be committed.
 
 ## Groundies curated sync
 
-This is a **manual snapshot**, not a live stock feed. Only the 16 exact approved
-title/color pairs in `groundies-selection.mjs` can reach the public catalog;
-new supplier models and colors are ignored until deliberately curated. Women,
+This is a **manual snapshot**, not a live stock feed. Only the 14 exact approved
+title/color pairs across 7 commercial models in `groundies-selection.mjs` can
+reach the public catalog; new supplier models and colors are ignored until deliberately curated. Women,
 Men and unisex versions have separate groups and visible fit labels. The
 representative color swatches are editorial metadata, not supplier fields.
 
 The curated family order is Nova GS1, Nova GO1, Starlite 2.0, Panama,
-Panama Soft, Active Knit, G-Flex, then Chamonix TR Precision. Panama and
-Panama Soft remain distinct adjacent models. The collection keeps its existing
+Panama Soft, Active Knit, then G-Flex. Panama and Panama Soft remain distinct
+adjacent models. The collection keeps its existing
 featured-first sorting, promoting Starlite while preserving the other families'
 selection order. Only White/Silver/Black Starlite is featured among Groundies.
-Women's/men's G-Flex and Chamonix URLs include their fit to avoid collisions
-between same-color versions. G-Pure and G-Flex Precision are not selected;
-Chamonix TR Low is not a substitute for Chamonix TR Precision.
+Women's/men's G-Flex URLs include their fit to avoid collisions between
+same-color versions. The only approved G-Flex colorways are Women Black,
+Women Off-White and Men Off-White. Men Mint, all G-Flex Precision, all
+Chamonix TR Precision, and both former G-Pure colorways are excluded.
 
 At the reviewed snapshot, regular G-Flex Women Black/Off-White have sizes 36–42,
-G-Flex Men Off-White has 40–45, and Chamonix TR Precision has only 38, 42, 43
-(Women) or 44, 45 (Men). These are consultable sizes, not guaranteed stock.
+and G-Flex Men Off-White has 40–45. Panama Soft Caramel remains approved,
+with only sizes 37, 39, 40, 41, 42. These are consultable sizes, not guaranteed
+stock.
 Refreshes always use the actual XML and never fill in missing sizes; all models
 remain subject to final availability confirmation by WhatsApp.
 
