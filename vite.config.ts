@@ -8,6 +8,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    fs: {
+      // Preserve Vite's defaults and keep private catalog inputs/outputs local.
+      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "**/tools/catalog-manager/input/**", "**/tools/catalog-manager/output/**"],
+    },
     hmr: {
       overlay: false,
     },

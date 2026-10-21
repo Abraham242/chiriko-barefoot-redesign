@@ -87,9 +87,6 @@ function imageAssetId(imageUrl) {
   }
 }
 
-const requiredReplacementSlug = "be-lenka-velocity-all-white";
-const minimumReplacementImages = 4;
-
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -191,14 +188,6 @@ function toStorefrontProduct(product) {
     images: [...product.images],
     features: copy.features,
     tags: copy.tags,
-  const replacement = products.find((product) => product.slug === requiredReplacementSlug);
-  assert(replacement, `Required launch replacement is missing: ${requiredReplacementSlug}`);
-  assert(
-    replacement.images.length >= minimumReplacementImages,
-    `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
-  );
-  const rejectedImage = replacement.images.find((image) => rejectedVelocityImageIds.has(imageAssetId(image)));
-  assert(!rejectedImage, `Required launch replacement contains a known broken image URL: ${rejectedImage}`);
     isFeatured: featured,
     isNew: true,
     seoTitle: `${product.name} ${product.colorName} | Chiriko Studio Venezuela`,
@@ -213,7 +202,7 @@ function toStorefrontProduct(product) {
 function serializeCatalog(products) {
   const serializedProducts = JSON.stringify(products, null, 2);
 
-  return `import type { Product } from "./productTypes";\n\nexport type { Product } from "./productTypes";\n\nexport const products: Product[] = ${serializedProducts};\n`;
+  return `import type { Product } from "./productTypes";\nimport { groundiesProducts } from "./groundiesProducts";\n\nexport type { Product } from "./productTypes";\n\nconst coreProducts: Product[] = ${serializedProducts};\n\nexport const products: Product[] = [...coreProducts, ...groundiesProducts];\n`;
 }
 
 function validateCatalog(catalog, products) {
@@ -232,6 +221,8 @@ function validateCatalog(catalog, products) {
     replacement.images.length >= minimumReplacementImages,
     `Required launch replacement must have at least ${minimumReplacementImages} images: ${requiredReplacementSlug}`,
   );
+  const rejectedImage = replacement.images.find((image) => rejectedVelocityImageIds.has(imageAssetId(image)));
+  assert(!rejectedImage, "Required launch replacement contains a known broken image URL");
   assert(launchProductOrder.length === expectedProductCount, `Launch product order must contain exactly ${expectedProductCount} slugs`);
   assert(new Set(launchProductOrder).size === launchProductOrder.length, "Launch product order slugs must be unique");
   for (const { slug } of products) {

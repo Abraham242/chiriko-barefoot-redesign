@@ -1,8 +1,9 @@
 import type { Product } from "./productTypes";
+import { groundiesProducts } from "./groundiesProducts";
 
 export type { Product } from "./productTypes";
 
-export const products: Product[] = [
+const coreProducts: Product[] = [
   {
     "id": "barebarics-zing-all-white",
     "slug": "barebarics-zing-all-white",
@@ -1261,3 +1262,5 @@ export const products: Product[] = [
     "parentBrand": "Be Lenka"
   }
 ];
+
+export const products: Product[] = [...coreProducts, ...groundiesProducts];

@@ -7,45 +7,15 @@
  * catalog. The source catalog and remote images are never changed or fetched.
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readPublicCatalog } from "./read-public-catalog.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(toolDirectory, "../..");
 const catalogPath = resolve(repositoryRoot, "src/data/products.ts");
 const outputPath = resolve(toolDirectory, "output/product-image-review.html");
-
-function extractProducts(source) {
-  const declaration = /export\s+const\s+products(?:\s*:\s*Product\[\])?\s*=\s*/g.exec(source);
-  if (!declaration) throw new Error("Could not find the exported products array");
-
-  const start = source.indexOf("[", declaration.index + declaration[0].length);
-  if (start < 0) throw new Error("Could not find the start of the products array");
-
-  let depth = 0;
-  let quote = "";
-  let escaped = false;
-  for (let index = start; index < source.length; index += 1) {
-    const character = source[index];
-    if (quote) {
-      if (escaped) escaped = false;
-      else if (character === "\\") escaped = true;
-      else if (character === quote) quote = "";
-      continue;
-    }
-    if (character === '"' || character === "'") quote = character;
-    else if (character === "[") depth += 1;
-    else if (character === "]" && --depth === 0) {
-      try {
-        return JSON.parse(source.slice(start, index + 1));
-      } catch (error) {
-        throw new Error(`The products array is not a JSON-compatible literal: ${error.message}`);
-      }
-    }
-  }
-  throw new Error("Could not find the end of the products array");
-}
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -90,8 +60,7 @@ function productSection(product) {
     </section>`;
 }
 
-const source = await readFile(catalogPath, "utf8");
-const products = extractProducts(source);
+const products = await readPublicCatalog(catalogPath);
 const imageCount = products.reduce((total, product) => total + (Array.isArray(product.images) ? product.images.length : 0), 0);
 const sections = products.map(productSection).join("");
 const html = `<!doctype html>
