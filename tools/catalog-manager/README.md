@@ -226,3 +226,16 @@ must rerun sync, review, and publish the resulting public data. Chiriko must
 confirm final supplier availability by WhatsApp before taking a reservation.
 An initially empty Groundies array means no valid source snapshot has been
 generated yet; do not publish the launch until all selected products are reviewed.
+
+## Curated Be Lenka and Barebarics primary photos
+
+The public-only `approved-primary-photos.mjs` maps the 22 original launch slugs to
+reviewed public image CDN URLs from the October 2026 supplier XML snapshots.
+The storefront uses the selected link as the **first** photo, preserving existing
+secondary gallery images. `apply-launch-products.mjs` honors the same choices so
+reapplying the legacy 22-product catalog does not revert the primary photographs.
+
+This mapping is editorial and manual: **never** commit either private Be Lenka or
+Barebarics source XML, and never copy costs, quantities or supplier identifiers.
+Before publishing, review the photograph for every colorway on mobile and desktop;
+a CDN image link alone does not establish that the framing is visually ideal.
