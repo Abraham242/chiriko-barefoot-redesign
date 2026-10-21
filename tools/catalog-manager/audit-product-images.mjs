@@ -8,9 +8,10 @@
  * the catalog or any image files.
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readPublicCatalog } from "./read-public-catalog.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(toolDirectory, "../..");
@@ -19,37 +20,6 @@ const outputPath = resolve(toolDirectory, "output/product-image-audit.json");
 const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
 const colorNoise = new Set(["all", "and", "color", "colour", "leather", "vegan", "with"]);
 const rejectedVelocityImageIds = new Set(["80542", "80543", "80544", "80545", "80546"]);
-
-function extractProducts(source) {
-  const declaration = /export\s+const\s+products(?:\s*:\s*Product\[\])?\s*=\s*/g.exec(source);
-  if (!declaration) throw new Error("Could not find the exported products array");
-
-  const start = source.indexOf("[", declaration.index + declaration[0].length);
-  if (start < 0) throw new Error("Could not find the start of the products array");
-
-  let depth = 0;
-  let quote = "";
-  let escaped = false;
-  for (let index = start; index < source.length; index += 1) {
-    const character = source[index];
-    if (quote) {
-      if (escaped) escaped = false;
-      else if (character === "\\") escaped = true;
-      else if (character === quote) quote = "";
-      continue;
-    }
-    if (character === '"' || character === "'") quote = character;
-    else if (character === "[") depth += 1;
-    else if (character === "]" && --depth === 0) {
-      try {
-        return JSON.parse(source.slice(start, index + 1));
-      } catch (error) {
-        throw new Error(`The products array is not a JSON-compatible literal: ${error.message}`);
-      }
-    }
-  }
-  throw new Error("Could not find the end of the products array");
-}
 
 function normalize(value) {
   return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
@@ -117,8 +87,7 @@ function groupedDuplicates(entries, keyForEntry) {
   return [...groups.entries()].filter(([, occurrences]) => occurrences.length > 1);
 }
 
-const source = await readFile(catalogPath, "utf8");
-const products = extractProducts(source);
+const products = await readPublicCatalog(catalogPath);
 const entries = products.flatMap((product) => (product.images ?? []).map((url, imageIndex) => ({
   productSlug: product.slug,
   imageIndex,

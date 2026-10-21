@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "catalog:review-images": "node tools/catalog-manager/generate-image-review-board.mjs"
+    "catalog:review-images": "node tools/catalog-manager/generate-image-review-board.mjs",
+    "catalog:sync-groundies": "node tools/catalog-manager/sync-groundies-selection.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -143,3 +143,86 @@ fields and remote image URLs, and replaces the exported catalog in
 defaults and generates Spanish customer-facing copy; it does not read the feed
 or either intermediate draft/selection file. The local files under `output/`
 remain ignored and must not be committed.
+
+## Groundies curated sync
+
+This is a **manual snapshot**, not a live stock feed. Only the 14 exact approved
+title/color pairs across 7 commercial models in `groundies-selection.mjs` can
+reach the public catalog; new supplier models and colors are ignored until deliberately curated. Women,
+Men and unisex versions have separate groups and visible fit labels. The
+representative color swatches are editorial metadata, not supplier fields.
+
+The curated family order is Nova GS1, Nova GO1, Starlite 2.0, Panama,
+Panama Soft, Active Knit, then G-Flex. Panama and Panama Soft remain distinct
+adjacent models. The collection keeps its existing
+featured-first sorting, promoting Starlite while preserving the other families'
+selection order. Only White/Silver/Black Starlite is featured among Groundies.
+Women's/men's G-Flex URLs include their fit to avoid collisions between
+same-color versions. The only approved G-Flex colorways are Women Black,
+Women Off-White and Men Off-White. Men Mint, all G-Flex Precision, all
+Chamonix TR Precision, and both former G-Pure colorways are excluded.
+
+At the reviewed snapshot, regular G-Flex Women Black/Off-White have sizes 36–42,
+and G-Flex Men Off-White has 40–45. Panama Soft Caramel remains approved,
+with only sizes 37, 39, 40, 41, 42. These are consultable sizes, not guaranteed
+stock.
+Refreshes always use the actual XML and never fill in missing sizes; all models
+remain subject to final availability confirmation by WhatsApp.
+
+1. Place the newest **private XML** locally at
+   `tools/catalog-manager/input/groundies.xml`. The entire `input/` directory is
+   gitignored. Never commit the XML or put it under `src/` or `public/`.
+   Vite also denies requests for the private input/output directories.
+2. From the repository root, run:
+
+   ```sh
+   npm.cmd run catalog:sync-groundies
+   # Optional path, still inside the private input directory:
+   npm.cmd run catalog:sync-groundies -- ./tools/catalog-manager/input/groundies.xml
+   ```
+
+   On Linux/macOS use `npm` instead of `npm.cmd`. No network request is made;
+   the tool reads a local UTF-8 XML file only. Do not attach this command to
+   Vite builds or public deployments.
+3. Review `src/data/groundiesProducts.ts`, including every size and image.
+   Availability is converted **only** into `consultableSizes`: only exact
+   `in_stock` size records qualify. Sizes are deduplicated and sorted numerically.
+   Supplier stock does **not** mean Chiriko physical stock. Every Groundies
+   product remains `status: "preorder"`, `price: 0`, and `sizes: []`.
+4. Run `npm.cmd run catalog:review-images` and review the ignored image board.
+   Only primary `image_link` values from exact matching records are used;
+   repeated URLs are deduplicated. One-image colorways are reported as needing
+   additional editorial photography. Galleries are never fabricated.
+5. Validate with `npm.cmd run build`, `npm.cmd run test`, `npm.cmd run lint`, and:
+
+   ```sh
+   node --test tools/catalog-manager/groundies-sync.checks.mjs
+   ```
+
+The XML is private. No GTIN/SKU, supplier IDs, group IDs, costs, stock quantities,
+feed URLs, credentials, or other private supplier metadata is published.
+Only allowlisted editorial fields, public image URLs and consultable sizes
+are serialized. The frontend imports the generated public array; it never
+requests or parses XML. Images must be public HTTPS URLs with no credentials
+or fragments. Only Shopify CDN's numeric `v` image cache version is accepted
+in query strings; signed/private links require editorial replacement.
+
+Missing files, malformed/incomplete XML, DOCTYPE/ENTITY declarations, missing
+approved colorways, unsupported sizes/availability, and missing safe photography
+abort without changing the existing generated catalog. Output is replaced
+atomically only after the entire selection validates. A colorway with all sizes
+out of stock is retained with **empty** `consultableSizes`, never stale sizes,
+and a clear warning requiring manual publication review. A repeated sync with
+the same XML produces identical public data. Recheck Starlite's two approved
+unisex colors against the current feed; never fill gaps in Panama Soft sizes.
+
+`products.ts` keeps the existing 22 products as `coreProducts` and appends the
+generated Groundies array. The legacy 22-product apply helper refreshes only
+that core and preserves the Groundies import/composition. The image review and
+audit helpers read both public arrays without executing frontend code.
+
+Changing supplier stock does not update the website automatically. A person
+must rerun sync, review, and publish the resulting public data. Chiriko must
+confirm final supplier availability by WhatsApp before taking a reservation.
+An initially empty Groundies array means no valid source snapshot has been
+generated yet; do not publish the launch until all selected products are reviewed.
