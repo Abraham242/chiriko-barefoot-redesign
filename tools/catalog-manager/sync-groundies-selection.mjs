@@ -76,7 +76,7 @@ export function generateGroundiesProducts(xml, warn = console.warn) {
     }
     return groundiesSelection.map((entry) => {
       const color = entry.colorName ?? entry.color;
-      const slug = `groundies-${normalize(entry.model)}-${normalize(color)}`;
+      const slug = entry.slug ?? `groundies-${normalize(entry.model)}-${normalize(color)}`;
       const rows = selected.get(selectionKey(entry.title, entry.color));
       if (!rows.length) {
         warn(`WARNING ${slug}: approved colorway is missing; synchronization aborted.`);
@@ -142,9 +142,10 @@ export async function syncGroundiesSelection(inputPath = resolve(inputDirectory,
   try { xml = new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
   catch { throw new Error("XML must be valid UTF-8; catalog unchanged."); }
   const products = generateGroundiesProducts(xml);
-  if (products.length !== 13 || new Set(products.map(({ slug }) => slug)).size !== 13 ||
-      new Set(products.map(({ id }) => id)).size !== 13) {
-    throw new Error("The approved selection must contain exactly 13 unique products; catalog unchanged.");
+  const expectedCount = groundiesSelection.length;
+  if (!expectedCount || products.length !== expectedCount || new Set(products.map(({ slug }) => slug)).size !== expectedCount ||
+      new Set(products.map(({ id }) => id)).size !== expectedCount) {
+    throw new Error(`The approved selection must contain exactly ${expectedCount} unique products; catalog unchanged.`);
   }
   const serialized = serializeGroundiesProducts(products);
   const temporaryPath = `${outputPath}.${randomUUID()}.tmp`;

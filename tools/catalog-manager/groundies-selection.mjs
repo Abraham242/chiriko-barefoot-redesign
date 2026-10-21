@@ -6,13 +6,17 @@ export const groundiesSelection = [
   { title: "Nova GO1", color: "Black", model: "Nova GO1", gender: "unisex", colorHex: "#222222" },
   { title: "GROUNDIES® Starlite 2.0", color: "White/Silver/Black", model: "Starlite 2.0", gender: "unisex", colorHex: "#f4f4f2", featured: true },
   { title: "GROUNDIES® Starlite 2.0", color: "Beige/Caramel", model: "Starlite 2.0", gender: "unisex", colorHex: "#d7c7ac" },
+  { title: "Panama", color: "Khaki", model: "Panama", gender: "unisex", colorHex: "#8a8767" },
+  { title: "Panama", color: "Bordeaux", model: "Panama", gender: "unisex", colorHex: "#722f42" },
   { title: "Panama Soft Women", color: "Caramel", model: "Panama Soft", gender: "women", colorHex: "#af7947" },
   { title: "Active Knit Women", color: "Weiß", colorName: "White", model: "Active Knit", gender: "women", colorHex: "#f4f4f2" },
   { title: "Active Knit Women", color: "Stone/Lime", model: "Active Knit", gender: "women", colorHex: "#b9b3a7" },
-  { title: "G-Pure Women", color: "Dark Brown", model: "G-Pure", gender: "women", colorHex: "#49352b" },
-  { title: "G-Pure Men", color: "Sand/Orange", model: "G-Pure", gender: "men", colorHex: "#c9b797" },
-  { title: "Panama", color: "Khaki", model: "Panama", gender: "unisex", colorHex: "#8a8767" },
-  { title: "Panama", color: "Bordeaux", model: "Panama", gender: "unisex", colorHex: "#722f42" },
+  // Explicit public slugs distinguish fits even when the model/color is shared.
+  { title: "G-Flex Women", color: "Black", model: "G-Flex", gender: "women", colorHex: "#222222", slug: "groundies-g-flex-women-black" },
+  { title: "G-Flex Women", color: "Off-White", model: "G-Flex", gender: "women", colorHex: "#f0ede4", slug: "groundies-g-flex-women-off-white" },
+  { title: "G-Flex Men", color: "Off-White", model: "G-Flex", gender: "men", colorHex: "#f0ede4", slug: "groundies-g-flex-men-off-white" },
+  { title: "Chamonix TR Precision Women", color: "Sand/Coal", model: "Chamonix TR Precision", gender: "women", colorHex: "#c9b797", slug: "groundies-chamonix-tr-precision-women-sand-coal" },
+  { title: "Chamonix TR Precision Men", color: "Sand/Coal", model: "Chamonix TR Precision", gender: "men", colorHex: "#c9b797", slug: "groundies-chamonix-tr-precision-men-sand-coal" },
 ].map((entry) => Object.freeze({ category: "Zapatillas", ...entry }));
 
 Object.freeze(groundiesSelection);

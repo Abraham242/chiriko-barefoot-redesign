@@ -25,20 +25,32 @@ function item(entry, overrides = {}) {
 const feed = (items) => `<rss xmlns:g="http://base.google.com/ns/1.0"><channel>${items.join("")}</channel></rss>`;
 const complete = (replace = (entry) => item(entry)) => feed(groundiesSelection.map(replace));
 const generate = (xml) => generateGroundiesProducts(xml, () => {});
+const productFor = (products, model, gender, color) => {
+  const product = products.find((p) => p.model === model && p.gender === gender && (!color || p.colorName === color));
+  assert.ok(product, `Missing ${model} / ${gender} / ${color ?? "any color"}`);
+  return product;
+};
 
 test("exact allowlist, public output and fit groups", () => {
   const xml = complete();
   const products = generate(xml);
-  assert.equal(products.length, 13);
-  assert.equal(new Set(products.map((p) => p.id)).size, 13);
-  assert.equal(new Set(products.map((p) => p.slug)).size, 13);
-  assert.equal(products[7].colorName, "White");
-  assert.notEqual(products[0].groupSlug, products[1].groupSlug);
-  assert.notEqual(products[2].groupSlug, products[3].groupSlug);
-  assert.notEqual(products[9].groupSlug, products[10].groupSlug);
-  assert.match(products[9].name, /Mujer/);
-  assert.match(products[10].name, /Hombre/);
-  assert.equal(products[4].groupSlug, products[5].groupSlug);
+  assert.equal(products.length, groundiesSelection.length);
+  assert.equal(new Set(products.map((p) => p.id)).size, groundiesSelection.length);
+  assert.equal(new Set(products.map((p) => p.slug)).size, groundiesSelection.length);
+  assert.equal(productFor(products, "Active Knit", "women", "White").colorName, "White");
+  for (const model of ["Nova GS1", "Nova GO1"]) {
+    assert.notEqual(productFor(products, model, "women").groupSlug, productFor(products, model, "unisex").groupSlug);
+  }
+  for (const model of ["G-Flex", "Chamonix TR Precision"]) {
+    const women = productFor(products, model, "women");
+    const men = productFor(products, model, "men");
+    assert.notEqual(women.groupSlug, men.groupSlug);
+    assert.match(women.name, /Mujer/);
+    assert.match(men.name, /Hombre/);
+  }
+  assert.equal(productFor(products, "G-Flex", "women", "Black").groupSlug, productFor(products, "G-Flex", "women", "Off-White").groupSlug);
+  assert.notEqual(productFor(products, "G-Flex", "women", "Off-White").slug, productFor(products, "G-Flex", "men", "Off-White").slug);
+  assert.equal(productFor(products, "Starlite 2.0", "unisex", "White/Silver/Black").groupSlug, productFor(products, "Starlite 2.0", "unisex", "Beige/Caramel").groupSlug);
   assert.deepEqual(products.filter((p) => p.isFeatured).map((p) => p.slug), ["groundies-starlite-2-0-white-silver-black"]);
   for (const product of products) {
     assert.equal(product.status, "preorder");
@@ -48,6 +60,17 @@ test("exact allowlist, public output and fit groups", () => {
     assert.equal(product.images.length, 1);
   }
   assert.equal(serializeGroundiesProducts(generate(xml)), serializeGroundiesProducts(products));
+});
+
+test("approved families retain their curated order with distinct adjacent Panama models", () => {
+  const products = generate(complete());
+  assert.deepEqual([...new Set(products.map((p) => p.model))], [
+    "Nova GS1", "Nova GO1", "Starlite 2.0", "Panama", "Panama Soft", "Active Knit", "G-Flex", "Chamonix TR Precision",
+  ]);
+  const nextToPanama = products[products.findLastIndex((p) => p.model === "Panama") + 1];
+  assert.equal(nextToPanama.model, "Panama Soft");
+  assert.notEqual(productFor(products, "Panama", "unisex").groupSlug, nextToPanama.groupSlug);
+  assert.equal(products.some((p) => /G-Pure|G-Flex Precision|Chamonix TR Low/.test(p.model)), false);
 });
 
 test("numeric sizes are deduplicated, sorted and restricted to in_stock", () => {
@@ -63,23 +86,28 @@ test("out-of-stock refresh clears previous sizes and requests publication review
   const previous = generate(complete());
   const warnings = [];
   const next = generateGroundiesProducts(complete((entry) => item(entry, {
-    availability: entry === groundiesSelection[6] ? "out_of_stock" : "in_stock",
+    availability: entry.model === "Panama Soft" ? "out_of_stock" : "in_stock",
   })), (message) => warnings.push(message));
-  assert.deepEqual(previous[6].consultableSizes, ["38"]);
-  assert.deepEqual(next[6].consultableSizes, []);
-  assert.equal(next.length, 13);
+  assert.deepEqual(productFor(previous, "Panama Soft", "women").consultableSizes, ["38"]);
+  assert.deepEqual(productFor(next, "Panama Soft", "women").consultableSizes, []);
+  assert.equal(next.length, groundiesSelection.length);
   assert.ok(warnings.some((message) => /groundies-panama-soft-caramel.*manual publication review/.test(message)));
 });
 
 test("new models, colors and similarly named fits cannot enter the selection", () => {
   const extra = [
     item({ title: "Chamonix TR Precision", color: "Black" }),
-    item({ title: "G-Flex Precision", color: "Black" }),
+    item({ title: "Chamonix TR Low Women", color: "Sand/Coal" }, { size: "49" }),
+    item({ title: "G-Flex Precision Women", color: "Black" }, { size: "49" }),
+    item({ title: "G-Flex Precision Men", color: "Off-White" }, { size: "49" }),
+    item({ title: "G-Flex Men", color: "Black" }),
+    item({ title: "G-Pure Women", color: "Dark Brown" }),
+    item({ title: "G-Pure Men", color: "Sand/Orange" }),
     item({ title: "GROUNDIES® Starlite 2.0 Women", color: "White/Silver/Black" }, { size: "49" }),
     item({ title: "Nova GS1", color: "New Color" }),
   ];
   assert.deepEqual(generate(feed([...groundiesSelection.map((entry) => item(entry)), ...extra])), generate(complete()));
-  assert.throws(() => generate(complete((entry) => entry === groundiesSelection[4]
+  assert.throws(() => generate(complete((entry) => entry.featured
     ? item({ ...entry, title: "GROUNDIES® Starlite 2.0 Women" }) : item(entry))), /Incomplete approved selection/);
 });
 
@@ -88,9 +116,31 @@ test("fragmented availability and Starlite ranges are derived only from input ro
     const sizes = entry.model === "Starlite 2.0" ? Array.from({ length: 12 }, (_, i) => String(36 + i)) : ["36", "39", "42"];
     return sizes.map((size) => item(entry, { size })).join("");
   }));
-  assert.deepEqual(products[4].consultableSizes, Array.from({ length: 12 }, (_, i) => String(36 + i)));
-  assert.deepEqual(products[5].consultableSizes, products[4].consultableSizes);
-  assert.deepEqual(products[6].consultableSizes, ["36", "39", "42"]);
+  const starlite = productFor(products, "Starlite 2.0", "unisex", "White/Silver/Black");
+  assert.deepEqual(starlite.consultableSizes, Array.from({ length: 12 }, (_, i) => String(36 + i)));
+  assert.deepEqual(productFor(products, "Starlite 2.0", "unisex", "Beige/Caramel").consultableSizes, starlite.consultableSizes);
+  assert.deepEqual(productFor(products, "Panama Soft", "women").consultableSizes, ["36", "39", "42"]);
+});
+
+test("regular G-Flex and exact Chamonix Precision fits keep their own sparse size lists", () => {
+  const selected = groundiesSelection.filter((entry) => ["G-Flex", "Chamonix TR Precision"].includes(entry.model));
+  assert.deepEqual(selected.map(({ title, color }) => [title, color]), [
+    ["G-Flex Women", "Black"], ["G-Flex Women", "Off-White"], ["G-Flex Men", "Off-White"],
+    ["Chamonix TR Precision Women", "Sand/Coal"], ["Chamonix TR Precision Men", "Sand/Coal"],
+  ]);
+  const sizesFor = (entry) => entry.model === "G-Flex"
+    ? (entry.gender === "women" ? ["36", "37", "38", "39", "40", "41", "42"] : ["40", "41", "42", "43", "44", "45"])
+    : (entry.gender === "women" ? ["38", "42", "43"] : ["44", "45"]);
+  const products = generate(complete((entry) => selected.includes(entry)
+    ? sizesFor(entry).map((size) => item(entry, { size })).join("") : item(entry)));
+  for (const entry of selected) {
+    assert.deepEqual(productFor(products, entry.model, entry.gender, entry.color).consultableSizes, sizesFor(entry));
+  }
+  for (const entry of selected) {
+    const substitution = entry.model === "G-Flex" ? "G-Flex Precision" : "Chamonix TR Low";
+    assert.throws(() => generate(complete((candidate) => candidate === entry
+      ? item({ ...entry, title: `${substitution} ${entry.gender === "women" ? "Women" : "Men"}` }) : item(candidate))), /Incomplete approved selection/);
+  }
 });
 
 test("primary image changes propagate; only matching image_link URLs become images", () => {
@@ -173,7 +223,7 @@ test("legacy 22-product apply workflow preserves the Groundies composition", asy
     assert.deepEqual(extractProductArray(applied, "coreProducts"), core);
     assert.match(applied, /\.\.\.coreProducts, \.\.\.groundiesProducts/);
     assert.equal(await readFile(resolve(data, "groundiesProducts.ts"), "utf8"), groundies);
-    assert.equal((await readPublicCatalog(resolve(data, "products.ts"))).length, 35);
+    assert.equal((await readPublicCatalog(resolve(data, "products.ts"))).length, core.length + groundiesSelection.length);
     await promisify(execFile)(process.execPath, [resolve(tool, "apply-launch-products.mjs")]);
     assert.equal(await readFile(resolve(data, "products.ts"), "utf8"), applied);
   } finally { await rm(directory, { recursive: true, force: true }); }

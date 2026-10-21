@@ -294,6 +294,106 @@ export const groundiesProducts: Product[] = [
     "seoDescription": "Groundies Starlite 2.0 en Beige/Caramel. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
   },
   {
+    "id": "groundies-panama-khaki",
+    "slug": "groundies-panama-khaki",
+    "brand": "Groundies",
+    "model": "Panama",
+    "groupSlug": "groundies-panama",
+    "groupName": "Groundies Panama · Unisex",
+    "name": "Groundies Panama · Unisex",
+    "subtitle": "Khaki · preventa asistida",
+    "gender": "unisex",
+    "category": "Zapatillas",
+    "colorName": "Khaki",
+    "colorFamily": "Khaki",
+    "colorHex": "#8a8767",
+    "price": 0,
+    "currency": "$",
+    "status": "preorder",
+    "consultableSizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "sizes": [],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-510238-10-H_pic1.jpg?v=1787154400"
+    ],
+    "features": [
+      "Horma anatómica",
+      "Drop cero",
+      "Espacio amplio para los dedos",
+      "Preventa asistida"
+    ],
+    "tags": [
+      "Preventa asistida"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "tag": "Preventa",
+    "seoTitle": "Groundies Panama Khaki | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies Panama en Khaki. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+  },
+  {
+    "id": "groundies-panama-bordeaux",
+    "slug": "groundies-panama-bordeaux",
+    "brand": "Groundies",
+    "model": "Panama",
+    "groupSlug": "groundies-panama",
+    "groupName": "Groundies Panama · Unisex",
+    "name": "Groundies Panama · Unisex",
+    "subtitle": "Bordeaux · preventa asistida",
+    "gender": "unisex",
+    "category": "Zapatillas",
+    "colorName": "Bordeaux",
+    "colorFamily": "Bordeaux",
+    "colorHex": "#722f42",
+    "price": 0,
+    "currency": "$",
+    "status": "preorder",
+    "consultableSizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "sizes": [],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-510238-08-H_pic1.jpg?v=1787153537"
+    ],
+    "features": [
+      "Horma anatómica",
+      "Drop cero",
+      "Espacio amplio para los dedos",
+      "Preventa asistida"
+    ],
+    "tags": [
+      "Preventa asistida"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "tag": "Preventa",
+    "seoTitle": "Groundies Panama Bordeaux | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies Panama en Bordeaux. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+  },
+  {
     "id": "groundies-panama-soft-caramel",
     "slug": "groundies-panama-soft-caramel",
     "brand": "Groundies",
@@ -428,19 +528,19 @@ export const groundiesProducts: Product[] = [
     "seoDescription": "Groundies Active Knit en Stone/Lime. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
   },
   {
-    "id": "groundies-g-pure-dark-brown",
-    "slug": "groundies-g-pure-dark-brown",
+    "id": "groundies-g-flex-women-black",
+    "slug": "groundies-g-flex-women-black",
     "brand": "Groundies",
-    "model": "G-Pure",
-    "groupSlug": "groundies-g-pure-women",
-    "groupName": "Groundies G-Pure · Mujer",
-    "name": "Groundies G-Pure · Mujer",
-    "subtitle": "Dark Brown · preventa asistida",
+    "model": "G-Flex",
+    "groupSlug": "groundies-g-flex-women",
+    "groupName": "Groundies G-Flex · Mujer",
+    "name": "Groundies G-Flex · Mujer",
+    "subtitle": "Black · preventa asistida",
     "gender": "women",
     "category": "Zapatillas",
-    "colorName": "Dark Brown",
-    "colorFamily": "Dark Brown",
-    "colorHex": "#49352b",
+    "colorName": "Black",
+    "colorFamily": "Black",
+    "colorHex": "#222222",
     "price": 0,
     "currency": "$",
     "status": "preorder",
@@ -451,12 +551,11 @@ export const groundiesProducts: Product[] = [
       "39",
       "40",
       "41",
-      "42",
-      "43"
+      "42"
     ],
     "sizes": [],
     "images": [
-      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/gnd-130290-04-h_pic1.jpg?v=1770888707"
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/gnd-130291-01-h_pic1_564d023e-ea68-42c9-abc5-c085744cb5bf.jpg?v=1770888174"
     ],
     "features": [
       "Horma anatómica",
@@ -470,39 +569,123 @@ export const groundiesProducts: Product[] = [
     "isNew": true,
     "isFeatured": false,
     "tag": "Preventa",
-    "seoTitle": "Groundies G-Pure Dark Brown | Chiriko Studio Venezuela",
-    "seoDescription": "Groundies G-Pure en Dark Brown. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+    "seoTitle": "Groundies G-Flex Black | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies G-Flex en Black. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
   },
   {
-    "id": "groundies-g-pure-sand-orange",
-    "slug": "groundies-g-pure-sand-orange",
+    "id": "groundies-g-flex-women-off-white",
+    "slug": "groundies-g-flex-women-off-white",
     "brand": "Groundies",
-    "model": "G-Pure",
-    "groupSlug": "groundies-g-pure-men",
-    "groupName": "Groundies G-Pure · Hombre",
-    "name": "Groundies G-Pure · Hombre",
-    "subtitle": "Sand/Orange · preventa asistida",
+    "model": "G-Flex",
+    "groupSlug": "groundies-g-flex-women",
+    "groupName": "Groundies G-Flex · Mujer",
+    "name": "Groundies G-Flex · Mujer",
+    "subtitle": "Off-White · preventa asistida",
+    "gender": "women",
+    "category": "Zapatillas",
+    "colorName": "Off-White",
+    "colorFamily": "Off-White",
+    "colorHex": "#f0ede4",
+    "price": 0,
+    "currency": "$",
+    "status": "preorder",
+    "consultableSizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42"
+    ],
+    "sizes": [],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/gnd-130291-02-h_pic1.jpg?v=1770888174"
+    ],
+    "features": [
+      "Horma anatómica",
+      "Drop cero",
+      "Espacio amplio para los dedos",
+      "Preventa asistida"
+    ],
+    "tags": [
+      "Preventa asistida"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "tag": "Preventa",
+    "seoTitle": "Groundies G-Flex Off-White | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies G-Flex en Off-White. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+  },
+  {
+    "id": "groundies-g-flex-men-off-white",
+    "slug": "groundies-g-flex-men-off-white",
+    "brand": "Groundies",
+    "model": "G-Flex",
+    "groupSlug": "groundies-g-flex-men",
+    "groupName": "Groundies G-Flex · Hombre",
+    "name": "Groundies G-Flex · Hombre",
+    "subtitle": "Off-White · preventa asistida",
     "gender": "men",
     "category": "Zapatillas",
-    "colorName": "Sand/Orange",
-    "colorFamily": "Sand/Orange",
+    "colorName": "Off-White",
+    "colorFamily": "Off-White",
+    "colorHex": "#f0ede4",
+    "price": 0,
+    "currency": "$",
+    "status": "preorder",
+    "consultableSizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45"
+    ],
+    "sizes": [],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/gnd-230291-02-h_pic1.jpg?v=1770888288"
+    ],
+    "features": [
+      "Horma anatómica",
+      "Drop cero",
+      "Espacio amplio para los dedos",
+      "Preventa asistida"
+    ],
+    "tags": [
+      "Preventa asistida"
+    ],
+    "isNew": true,
+    "isFeatured": false,
+    "tag": "Preventa",
+    "seoTitle": "Groundies G-Flex Off-White | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies G-Flex en Off-White. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+  },
+  {
+    "id": "groundies-chamonix-tr-precision-women-sand-coal",
+    "slug": "groundies-chamonix-tr-precision-women-sand-coal",
+    "brand": "Groundies",
+    "model": "Chamonix TR Precision",
+    "groupSlug": "groundies-chamonix-tr-precision-women",
+    "groupName": "Groundies Chamonix TR Precision · Mujer",
+    "name": "Groundies Chamonix TR Precision · Mujer",
+    "subtitle": "Sand/Coal · preventa asistida",
+    "gender": "women",
+    "category": "Zapatillas",
+    "colorName": "Sand/Coal",
+    "colorFamily": "Sand/Coal",
     "colorHex": "#c9b797",
     "price": 0,
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
-      "40",
-      "41",
+      "38",
       "42",
-      "43",
-      "44",
-      "45",
-      "46",
-      "47"
+      "43"
     ],
     "sizes": [],
     "images": [
-      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/gnd-230290-42-h_pic1.jpg?v=1770888743"
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-130303-03-H_pic1.jpg?v=1775661764"
     ],
     "features": [
       "Horma anatómica",
@@ -516,43 +699,33 @@ export const groundiesProducts: Product[] = [
     "isNew": true,
     "isFeatured": false,
     "tag": "Preventa",
-    "seoTitle": "Groundies G-Pure Sand/Orange | Chiriko Studio Venezuela",
-    "seoDescription": "Groundies G-Pure en Sand/Orange. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+    "seoTitle": "Groundies Chamonix TR Precision Sand/Coal | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies Chamonix TR Precision en Sand/Coal. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
   },
   {
-    "id": "groundies-panama-khaki",
-    "slug": "groundies-panama-khaki",
+    "id": "groundies-chamonix-tr-precision-men-sand-coal",
+    "slug": "groundies-chamonix-tr-precision-men-sand-coal",
     "brand": "Groundies",
-    "model": "Panama",
-    "groupSlug": "groundies-panama",
-    "groupName": "Groundies Panama · Unisex",
-    "name": "Groundies Panama · Unisex",
-    "subtitle": "Khaki · preventa asistida",
-    "gender": "unisex",
+    "model": "Chamonix TR Precision",
+    "groupSlug": "groundies-chamonix-tr-precision-men",
+    "groupName": "Groundies Chamonix TR Precision · Hombre",
+    "name": "Groundies Chamonix TR Precision · Hombre",
+    "subtitle": "Sand/Coal · preventa asistida",
+    "gender": "men",
     "category": "Zapatillas",
-    "colorName": "Khaki",
-    "colorFamily": "Khaki",
-    "colorHex": "#8a8767",
+    "colorName": "Sand/Coal",
+    "colorFamily": "Sand/Coal",
+    "colorHex": "#c9b797",
     "price": 0,
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
       "44",
-      "45",
-      "46",
-      "47"
+      "45"
     ],
     "sizes": [],
     "images": [
-      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-510238-10-H_pic1.jpg?v=1787154400"
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-230303-03-H_pic1.jpg?v=1775662031"
     ],
     "features": [
       "Horma anatómica",
@@ -566,57 +739,7 @@ export const groundiesProducts: Product[] = [
     "isNew": true,
     "isFeatured": false,
     "tag": "Preventa",
-    "seoTitle": "Groundies Panama Khaki | Chiriko Studio Venezuela",
-    "seoDescription": "Groundies Panama en Khaki. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
-  },
-  {
-    "id": "groundies-panama-bordeaux",
-    "slug": "groundies-panama-bordeaux",
-    "brand": "Groundies",
-    "model": "Panama",
-    "groupSlug": "groundies-panama",
-    "groupName": "Groundies Panama · Unisex",
-    "name": "Groundies Panama · Unisex",
-    "subtitle": "Bordeaux · preventa asistida",
-    "gender": "unisex",
-    "category": "Zapatillas",
-    "colorName": "Bordeaux",
-    "colorFamily": "Bordeaux",
-    "colorHex": "#722f42",
-    "price": 0,
-    "currency": "$",
-    "status": "preorder",
-    "consultableSizes": [
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
-      "44",
-      "45",
-      "46",
-      "47"
-    ],
-    "sizes": [],
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-510238-08-H_pic1.jpg?v=1787153537"
-    ],
-    "features": [
-      "Horma anatómica",
-      "Drop cero",
-      "Espacio amplio para los dedos",
-      "Preventa asistida"
-    ],
-    "tags": [
-      "Preventa asistida"
-    ],
-    "isNew": true,
-    "isFeatured": false,
-    "tag": "Preventa",
-    "seoTitle": "Groundies Panama Bordeaux | Chiriko Studio Venezuela",
-    "seoDescription": "Groundies Panama en Bordeaux. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
+    "seoTitle": "Groundies Chamonix TR Precision Sand/Coal | Chiriko Studio Venezuela",
+    "seoDescription": "Groundies Chamonix TR Precision en Sand/Coal. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp."
   }
 ];
