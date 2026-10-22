@@ -190,9 +190,10 @@ remain subject to final availability confirmation by WhatsApp.
    Supplier stock does **not** mean Chiriko physical stock. Every Groundies
    product remains `status: "preorder"`, `price: 0`, and `sizes: []`.
 4. Run `npm.cmd run catalog:review-images` and review the ignored image board.
-   Only primary `image_link` values from exact matching records are used;
-   repeated URLs are deduplicated. One-image colorways are reported as needing
-   additional editorial photography. Galleries are never fabricated.
+   The XML's primary `image_link` stays first. Manually approved secondary
+   photos from `groundies-galleries.mjs` follow it and survive XML refreshes.
+   Photos are deduplicated by public asset path, including cache-version changes.
+   Galleries are never fabricated or padded to reach a target count.
 5. Validate with `npm.cmd run build`, `npm.cmd run test`, `npm.cmd run lint`, and:
 
    ```sh
@@ -226,6 +227,68 @@ must rerun sync, review, and publish the resulting public data. Chiriko must
 confirm final supplier availability by WhatsApp before taking a reservation.
 An initially empty Groundies array means no valid source snapshot has been
 generated yet; do not publish the launch until all selected products are reviewed.
+
+### Groundies gallery curation
+
+`groundies-galleries.mjs` is a public, editorial mapping keyed by **exact Chiriko
+product slug**. Each entry records the official Groundies product page, exact
+source title/color/gender/fit, the verified primary anchor, secondary URLs and
+their views, and any photography gaps. Only photo URLs reach the generated
+storefront array; source metadata and XML are never bundled. The gallery
+component and Be Lenka/Barebarics records are unchanged.
+
+The 2026-10-22 review used photos actually listed on the exact official product
+pages at `www.groundies.com`, hosted by Groundies on Shopify's public CDN.
+All 83 retained photos returned HTTP 200, decoded successfully, and were
+visually reviewed for the exact model, color and fit. All original primaries
+remain first. Mixed-color/lifestyle shots, unrelated media families and
+unnecessary overlapping views were excluded. No `pic2`/`pic3` filenames were
+constructed or guessed.
+
+| Groundies colorway | Verified photos | Manufacturer photography still useful |
+| --- | ---: | --- |
+| Nova GS1 Women · Stone/Zebra | 5 | — |
+| Nova GS1 Unisex · Navy/Wax Paper | 7 | — |
+| Nova GO1 Women · Chocolate | 4 | Isolated top view (the available mixed-color pair was excluded) |
+| Nova GO1 Unisex · Black | 4 | Rear view for this exact media family |
+| Starlite 2.0 Unisex · White/Silver/Black | 7 | — |
+| Starlite 2.0 Unisex · Beige/Caramel | 7 | — |
+| Panama Unisex · Khaki | 7 | — |
+| Panama Unisex · Bordeaux | 7 | — |
+| Panama Soft Women · Caramel | 6 | Rear view |
+| Active Knit Women · White | 6 | — |
+| Active Knit Women · Stone/Lime | 6 | — |
+| G-Flex Women · Black | 6 | — |
+| G-Flex Women · Off-White | 5 | Rear view; the men's photograph is not substituted |
+| G-Flex Men · Off-White | 6 | — |
+
+For future additions, inspect the **exact** official product page and color/fit,
+copy only observed public image URLs, download and visually review every photo,
+and update only that slug's mapping. Never copy a gallery between women's,
+men's, unisex, model generations or colors. The shared public media-family
+check compares existing URLs only; it never generates new image URLs. A primary
+asset different from its reviewed primary causes sync to fail without changing the
+catalog, so a changed supplier generation cannot silently inherit old photos.
+Numeric public Shopify cache versions may refresh without duplicating a photo.
+
+Run the optional online evidence check separately from XML sync and builds:
+
+```sh
+node tools/catalog-manager/verify-groundies-galleries.mjs
+```
+
+It checks exact official source title, color/fit-to-primary association,
+observed gallery membership/media family, HTTP 200 image responses and duplicate
+file contents. On a Node 24+ machine using an environment HTTP proxy, run it
+with `NODE_USE_ENV_PROXY=1` (PowerShell: `$env:NODE_USE_ENV_PROXY="1"`). Visual
+review is still required; filenames or HTTP success alone do not prove a fit.
+
+The reviewed local XML contains **no `additional_image_link` fields**. Future
+fields remain untrusted review candidates: they cannot bypass the exact-slug
+gallery allowlist, even if their URL is valid HTTPS. After reviewing a future
+candidate against the official source, add it to the mapping; approved photos
+then persist even when later XML exports omit those fields. The sync remains
+offline, manual and atomic. No new dependency or build/deployment hook is needed.
 
 ## Curated Be Lenka and Barebarics primary photos
 
