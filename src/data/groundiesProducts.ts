@@ -84,7 +84,13 @@ export const groundiesProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-520112-12-H_pic1.jpg?v=1787140096"
+      "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/GND-520112-12-H_pic1.jpg?v=1787140096",
+      "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic2.jpg?v=1787140096",
+      "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic3.jpg?v=1787140096",
+      "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic4.jpg?v=1787140096",
+      "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic5.jpg?v=1787140096",
+      "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic6.jpg?v=1787140096",
+      "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic7.jpg?v=1787140096"
     ],
     "features": [
       "Horma anatómica",
