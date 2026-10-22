@@ -21,12 +21,12 @@ function feed(brand, entries = coreSizeSelection.filter((entry) => entry.brand =
 const quiet = () => {};
 
 test("all curated core products have unique slugs and source title/brand mappings", () => {
-  assert.equal(coreSizeSelection.length, 22);
-  assert.equal(new Set(coreSizeSelection.map((p) => p.slug)).size, 22);
-  assert.equal(new Set(coreSizeSelection.map((p) => p.brand + "/" + p.feedTitle)).size, 22);
+  assert.equal(coreSizeSelection.length, 19);
+  assert.equal(new Set(coreSizeSelection.map((p) => p.slug)).size, 19);
+  assert.equal(new Set(coreSizeSelection.map((p) => p.brand + "/" + p.feedTitle)).size, 19);
   assert.deepEqual(coreSizeSelection.reduce((map, entry) => {
     map[entry.brand] = (map[entry.brand] || 0) + 1; return map;
-  }, {}), { Barebarics: 11, "Be Lenka": 11 });
+  }, {}), { Barebarics: 8, "Be Lenka": 11 });
 });
 
 test("matching is exact; zero availability and out-of-stock sizes never qualify", () => {
