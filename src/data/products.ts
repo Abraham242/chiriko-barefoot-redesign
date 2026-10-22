@@ -150,8 +150,7 @@ const coreProducts: Product[] = [
       "43",
       "44",
       "45",
-      "46",
-      "47"
+      "46"
     ],
     "sizes": [],
     "images": [
@@ -206,7 +205,9 @@ const coreProducts: Product[] = [
       "40",
       "41",
       "42",
-      "44"
+      "43",
+      "44",
+      "46"
     ],
     "sizes": [],
     "images": [
@@ -255,7 +256,6 @@ const coreProducts: Product[] = [
     "consultableSizes": [
       "36",
       "37",
-      "38",
       "39",
       "40",
       "41",
@@ -436,6 +436,7 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
@@ -444,7 +445,9 @@ const coreProducts: Product[] = [
       "42",
       "43",
       "44",
-      "45"
+      "45",
+      "46",
+      "47"
     ],
     "sizes": [],
     "images": [
@@ -496,6 +499,7 @@ const coreProducts: Product[] = [
     "consultableSizes": [
       "36",
       "37",
+      "38",
       "39",
       "40",
       "41",
@@ -668,7 +672,6 @@ const coreProducts: Product[] = [
       "39",
       "40",
       "41",
-      "42",
       "43",
       "44",
       "45"
@@ -727,7 +730,8 @@ const coreProducts: Product[] = [
       "42",
       "43",
       "44",
-      "45"
+      "45",
+      "47"
     ],
     "sizes": [],
     "images": [
@@ -774,14 +778,14 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
       "40",
       "41",
       "42",
-      "43",
-      "36"
+      "43"
     ],
     "sizes": [],
     "images": [
@@ -828,13 +832,14 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
+      "37",
       "38",
       "39",
       "40",
       "41",
       "42",
-      "43",
-      "36"
+      "43"
     ],
     "sizes": [],
     "images": [
@@ -882,14 +887,14 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
       "40",
       "41",
       "42",
-      "43",
-      "36"
+      "43"
     ],
     "sizes": [],
     "images": [
@@ -991,6 +996,7 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
@@ -1050,7 +1056,8 @@ const coreProducts: Product[] = [
       "39",
       "40",
       "41",
-      "42"
+      "42",
+      "43"
     ],
     "sizes": [],
     "images": [
