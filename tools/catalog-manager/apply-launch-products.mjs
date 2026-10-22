@@ -11,7 +11,9 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractProductArray } from "./read-public-catalog.mjs";
 import { approvedPrimaryPhotos } from "./approved-primary-photos.mjs";
+import { coreSizeSelection } from "./core-size-selection.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(toolDirectory, "../..");
@@ -19,31 +21,14 @@ const proposalPath = resolve(toolDirectory, "output/launch-products.proposal.jso
 const catalogPath = resolve(repositoryRoot, "src/data/products.ts");
 const temporaryCatalogPath = `${catalogPath}.tmp`;
 
-const expectedProductCount = 22;
-const launchProductOrder = [
-  "barebarics-zing-all-white",
-  "barebarics-zing-black-white",
-  "barebarics-zing-all-black",
-  "barebarics-zing-white-black-vegan",
-  "be-lenka-velocity-all-white",
-  "be-lenka-rebound-all-white",
-  "be-lenka-rebound-all-black",
-  "be-lenka-rebound-black-white",
-  "be-lenka-rebound-sand",
-  "barebarics-enigma-ivory",
+const expectedProductCount = coreSizeSelection.length;
+const legacyProposalCount = 22;
+const retiredSlugs = new Set([
   "barebarics-enigma-all-white",
   "barebarics-enigma-all-black",
-  "barebarics-enigma-white-dark-green",
-  "be-lenka-grace-2-0-beige",
-  "be-lenka-grace-2-0-ivory",
-  "be-lenka-grace-2-0-rose-gold",
-  "be-lenka-promenade-2-0-beige",
-  "be-lenka-promenade-2-0-black",
-  "be-lenka-promenade-2-0-dark-brown",
-  "barebarics-wave-2-0-white-green",
-  "barebarics-wave-2-0-brown",
-  "barebarics-wave-2-0-black-dark-brown",
-];
+  "barebarics-enigma-white-dark-green"
+]);
+const launchProductOrder = coreSizeSelection.map(({ slug }) => slug);
 const featuredSlugs = new Set([
   "barebarics-zing-all-white",
   "be-lenka-rebound-all-white",
@@ -76,7 +61,7 @@ const blockedTextPatterns = [
 ];
 const credentialMarkerPattern = /(?:secret|token|api[_-]?key|auth|signature|password)/i;
 const maximumLaunchImages = 8;
-const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather"]);
+const removedLaunchSlugs = new Set(["barebarics-zing-all-white-leather", ...retiredSlugs]);
 const requiredReplacementSlug = "be-lenka-velocity-all-white";
 const minimumReplacementImages = 4;
 const rejectedVelocityImageIds = new Set(["80542", "80543", "80544", "80545", "80546"]);
@@ -245,12 +230,31 @@ function validateCatalog(catalog, products) {
 async function main() {
   const parsed = JSON.parse(await readFile(proposalPath, "utf8"));
   assert(Array.isArray(parsed), "Launch proposal must be a JSON array");
-  assert(parsed.length === expectedProductCount, `Launch proposal must contain exactly ${expectedProductCount} products`);
-  parsed.forEach(validateProposalProduct);
+  assert([expectedProductCount, legacyProposalCount].includes(parsed.length),
+    "Unexpected launch proposal size; discontinued products must not be restored");
+  assert(new Set(parsed.map(({ slug }) => slug)).size === parsed.length,
+    "Duplicate slug in launch proposal");
+  assert(parsed.every(({ slug }) => launchProductOrder.includes(slug) || retiredSlugs.has(slug)),
+    "Unexpected unapproved colorway in legacy launch proposal");
+  const approved = parsed.filter(({ slug }) => launchProductOrder.includes(slug));
+  assert(approved.length === expectedProductCount, "Missing active launch product; catalog unchanged");
+  approved.forEach(validateProposalProduct);
 
   const orderBySlug = new Map(launchProductOrder.map((slug, index) => [slug, index]));
-  const products = parsed
+  // Preserve the most recent manually synchronized consultable-size snapshot.
+  // The launch proposal is not the source of truth for current supplier sizes.
+  const currentCatalog = extractProductArray(await readFile(catalogPath, "utf8"), "coreProducts");
+  assert(Array.isArray(currentCatalog) && currentCatalog.length === expectedProductCount,
+    "Existing core catalog is required to preserve current sizes");
+  const currentSizes = new Map(currentCatalog.map((entry) => [entry.slug, entry.consultableSizes]));
+  assert(currentSizes.size === expectedProductCount, "Duplicate existing core slug");
+  const products = approved
     .map(toStorefrontProduct)
+    .map((product) => {
+      const retainedSizes = currentSizes.get(product.slug);
+      assert(Array.isArray(retainedSizes), "Cannot preserve previously synchronized sizes for " + product.slug);
+      return { ...product, consultableSizes: [...retainedSizes] };
+    })
     .sort((first, second) => (orderBySlug.get(first.slug) ?? Infinity) - (orderBySlug.get(second.slug) ?? Infinity));
   const catalog = serializeCatalog(products);
   validateCatalog(catalog, products);

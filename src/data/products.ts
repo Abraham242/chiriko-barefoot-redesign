@@ -150,8 +150,7 @@ const coreProducts: Product[] = [
       "43",
       "44",
       "45",
-      "46",
-      "47"
+      "46"
     ],
     "sizes": [],
     "images": [
@@ -206,7 +205,9 @@ const coreProducts: Product[] = [
       "40",
       "41",
       "42",
-      "44"
+      "43",
+      "44",
+      "46"
     ],
     "sizes": [],
     "images": [
@@ -255,7 +256,6 @@ const coreProducts: Product[] = [
     "consultableSizes": [
       "36",
       "37",
-      "38",
       "39",
       "40",
       "41",
@@ -436,6 +436,7 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
@@ -444,7 +445,9 @@ const coreProducts: Product[] = [
       "42",
       "43",
       "44",
-      "45"
+      "45",
+      "46",
+      "47"
     ],
     "sizes": [],
     "images": [
@@ -496,6 +499,7 @@ const coreProducts: Product[] = [
     "consultableSizes": [
       "36",
       "37",
+      "38",
       "39",
       "40",
       "41",
@@ -587,176 +591,6 @@ const coreProducts: Product[] = [
     "parentBrand": "Be Lenka"
   },
   {
-    "id": "barebarics-enigma-all-white",
-    "slug": "barebarics-enigma-all-white",
-    "brand": "Barebarics",
-    "model": "Enigma",
-    "groupSlug": "barebarics-enigma",
-    "groupName": "Barebarics Enigma",
-    "name": "Barebarics Enigma",
-    "subtitle": "All White · preventa asistida",
-    "gender": "unisex",
-    "category": "Zapatillas",
-    "colorName": "All White",
-    "colorFamily": "white",
-    "colorHex": "#E5E1DA",
-    "price": 0,
-    "currency": "$",
-    "status": "preorder",
-    "consultableSizes": [
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
-      "44",
-      "45",
-      "46",
-      "47"
-    ],
-    "sizes": [],
-    "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-all-white-131447.jpg",
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-white-90811.jpg",
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-white-90812.jpg",
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-white-90813.jpg"
-    ],
-    "features": [
-      "Horma anatómica",
-      "Drop cero",
-      "Espacio amplio para los dedos",
-      "Diseño urbano",
-      "Ligero para uso diario",
-      "Preventa asistida"
-    ],
-    "tags": [
-      "Diseño urbano",
-      "Uso diario",
-      "Preventa asistida"
-    ],
-    "isFeatured": false,
-    "isNew": true,
-    "seoTitle": "Barebarics Enigma All White | Chiriko Studio Venezuela",
-    "seoDescription": "Barebarics Enigma en All White. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp.",
-    "tag": "Preventa",
-    "parentBrand": "Be Lenka"
-  },
-  {
-    "id": "barebarics-enigma-all-black",
-    "slug": "barebarics-enigma-all-black",
-    "brand": "Barebarics",
-    "model": "Enigma",
-    "groupSlug": "barebarics-enigma",
-    "groupName": "Barebarics Enigma",
-    "name": "Barebarics Enigma",
-    "subtitle": "All Black · preventa asistida",
-    "gender": "unisex",
-    "category": "Zapatillas",
-    "colorName": "All Black",
-    "colorFamily": "black",
-    "colorHex": "#E5E1DA",
-    "price": 0,
-    "currency": "$",
-    "status": "preorder",
-    "consultableSizes": [
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
-      "44",
-      "45"
-    ],
-    "sizes": [],
-    "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-all-black-131446.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-all-black-115769.jpg",
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-black-90796.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-all-black-115760.jpg"
-    ],
-    "features": [
-      "Horma anatómica",
-      "Drop cero",
-      "Espacio amplio para los dedos",
-      "Diseño urbano",
-      "Ligero para uso diario",
-      "Preventa asistida"
-    ],
-    "tags": [
-      "Diseño urbano",
-      "Uso diario",
-      "Preventa asistida"
-    ],
-    "isFeatured": false,
-    "isNew": true,
-    "seoTitle": "Barebarics Enigma All Black | Chiriko Studio Venezuela",
-    "seoDescription": "Barebarics Enigma en All Black. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp.",
-    "tag": "Preventa",
-    "parentBrand": "Be Lenka"
-  },
-  {
-    "id": "barebarics-enigma-white-dark-green",
-    "slug": "barebarics-enigma-white-dark-green",
-    "brand": "Barebarics",
-    "model": "Enigma",
-    "groupSlug": "barebarics-enigma",
-    "groupName": "Barebarics Enigma",
-    "name": "Barebarics Enigma",
-    "subtitle": "White & Dark Green · preventa asistida",
-    "gender": "unisex",
-    "category": "Zapatillas",
-    "colorName": "White & Dark Green",
-    "colorFamily": "white",
-    "colorHex": "#E5E1DA",
-    "price": 0,
-    "currency": "$",
-    "status": "preorder",
-    "consultableSizes": [
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
-      "44",
-      "45"
-    ],
-    "sizes": [],
-    "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-white-dark-green-131445.jpg",
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-white-dark-green-90894.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-white-dark-green-115220.jpg",
-      "https://belenkacdn.vshcdn.net/media/2026/03/1/2/barefoot-tenisky-barebarics-enigma-white-dark-green-119942.jpg"
-    ],
-    "features": [
-      "Horma anatómica",
-      "Drop cero",
-      "Espacio amplio para los dedos",
-      "Diseño urbano",
-      "Ligero para uso diario",
-      "Preventa asistida"
-    ],
-    "tags": [
-      "Diseño urbano",
-      "Uso diario",
-      "Preventa asistida"
-    ],
-    "isFeatured": false,
-    "isNew": true,
-    "seoTitle": "Barebarics Enigma White & Dark Green | Chiriko Studio Venezuela",
-    "seoDescription": "Barebarics Enigma en White & Dark Green. Calzado barefoot en preventa asistida con confirmación de talla por WhatsApp.",
-    "tag": "Preventa",
-    "parentBrand": "Be Lenka"
-  },
-  {
     "id": "be-lenka-grace-2-0-beige",
     "slug": "be-lenka-grace-2-0-beige",
     "brand": "Be Lenka",
@@ -774,14 +608,14 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
       "40",
       "41",
       "42",
-      "43",
-      "36"
+      "43"
     ],
     "sizes": [],
     "images": [
@@ -828,13 +662,14 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
+      "37",
       "38",
       "39",
       "40",
       "41",
       "42",
-      "43",
-      "36"
+      "43"
     ],
     "sizes": [],
     "images": [
@@ -882,14 +717,14 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
       "40",
       "41",
       "42",
-      "43",
-      "36"
+      "43"
     ],
     "sizes": [],
     "images": [
@@ -991,6 +826,7 @@ const coreProducts: Product[] = [
     "currency": "$",
     "status": "preorder",
     "consultableSizes": [
+      "36",
       "37",
       "38",
       "39",
@@ -1050,7 +886,8 @@ const coreProducts: Product[] = [
       "39",
       "40",
       "41",
-      "42"
+      "42",
+      "43"
     ],
     "sizes": [],
     "images": [
