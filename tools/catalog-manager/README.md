@@ -239,3 +239,36 @@ This mapping is editorial and manual: **never** commit either private Be Lenka o
 Barebarics source XML, and never copy costs, quantities or supplier identifiers.
 Before publishing, review the photograph for every colorway on mobile and desktop;
 a CDN image link alone does not establish that the framing is visually ideal.
+
+## Be Lenka and Barebarics — manual consultable-size sync
+
+This refreshes **only** the "consultableSizes" arrays for the 22 already curated
+Be Lenka and Barebarics colorways. Product additions and discontinuations are
+**manual editorial decisions**, not inferred automatically from the feed.
+
+1. Save your newest confidential local XML feeds as:
+   - "tools/catalog-manager/input/be-lenka.xml" (XML channel title: Be Lenka)
+   - "tools/catalog-manager/input/barebarics.xml" (XML channel title: Barebarics)
+2. Run from the repository root:
+   "npm.cmd run catalog:sync-core-sizes" (Windows; use npm on macOS/Linux).
+3. Review the diff in "src/data/products.ts": only consultableSizes should change,
+   with numeric sorting and exact SKU size matches.
+4. Run "node --test tools/catalog-manager/core-size-sync.checks.mjs",
+   "npm.cmd run build", and the regular image review before publishing.
+5. Confirm exact supplier availability when responding to each WhatsApp inquiry.
+
+The XML files remain gitignored and MUST NOT be committed. The sync reads both
+files locally, verifies the channel brand and exact title_second_line,
+checks in-stock status and positive availability_count for each numeric size,
+and validates every currently approved product/color before changing anything.
+A missing approved colorway, malformed XML, conflicting variant groups or
+unexpected catalog identity aborts the entire update. Zero-stock styles get
+empty consultableSizes with a human-review warning; they are not silently
+deleted. Less than six available sizes also triggers a review warning.
+The update is atomic and repeatable; no sync runs during build or deployment.
+No supplier IDs, quantities, wholesale prices, or feed URLs reach the frontend.
+
+Presence in a feed is **not evidence of active manufacturing**. Ask the supplier
+which styles are officially discontinued before removing public model routes.
+The legacy 22-product apply script preserves the latest consultable sizes
+rather than restoring potentially stale values from a saved launch proposal.
