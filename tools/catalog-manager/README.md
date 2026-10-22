@@ -272,3 +272,18 @@ Presence in a feed is **not evidence of active manufacturing**. Ask the supplier
 which styles are officially discontinued before removing public model routes.
 The legacy 22-product apply script preserves the latest consultable sizes
 rather than restoring potentially stale values from a saved launch proposal.
+
+## Discontinued Enigma colorways (B2B review, October 2026)
+
+The current authenticated B2B order listing labels Barebarics Enigma
+All White, All Black and White & Dark Green as **Discontinued**.
+These have been removed from the 19-colorway public core catalog and the
+manual size sync allowlist, **even though supplier XML lists residual sizes**.
+Enigma Ivory is retained (only sizes 37–41) pending editorial review.
+No new products or colors were automatically imported. Groundies is unchanged.
+
+The old 22-product proposal generator remains a historical local workflow.
+Its apply stage filters those three retired colors before publishing
+and strictly checks the 19-colorway active allowlist. The public primary photo
+allowlist also contains only current core products. Never commit XML or the
+authenticated B2B export to Git.
