@@ -11,6 +11,7 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { approvedPrimaryPhotos } from "./approved-primary-photos.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(toolDirectory, "../..");
@@ -185,7 +186,9 @@ function toStorefrontProduct(product) {
     status: "preorder",
     consultableSizes: [...product.consultableSizes],
     sizes: [],
-    images: [...product.images],
+    images: approvedPrimaryPhotos[product.slug]
+      ? [approvedPrimaryPhotos[product.slug], ...product.images.slice(1).filter((image) => image !== approvedPrimaryPhotos[product.slug])]
+      : [...product.images],
     features: copy.features,
     tags: copy.tags,
     isFeatured: featured,

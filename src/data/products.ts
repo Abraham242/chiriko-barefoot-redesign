@@ -37,7 +37,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2025/09/1/0/barefoot-tenisky-barebarics-zing-all-white-leather-109059.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-zing-all-white-leather-131534.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118370.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118367.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-barebarics-zing-all-white-leather-1-118390.jpg",
@@ -96,7 +96,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2025/03/9/6/barefoot-tenisky-barebarics-zing-black-white-leather-96618.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-zing-black-white-leather-131536.jpg",
       "https://belenkacdn.vshcdn.net/media/2024/03/6/6/barefoot-tenisky-barebarics-zing-black-white-leather-66155.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/03/9/6/barefoot-tenisky-barebarics-zing-black-white-leather-96621.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/03/9/6/barefoot-tenisky-barebarics-zing-black-white-leather-96855.jpg",
@@ -155,7 +155,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2025/02/9/4/barefoot-tenisky-barebarics-zing-all-black-leather-94295.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-zing-all-black-leather-131533.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/04/1/0/barefoot-tenisky-barebarics-zing-all-black-leather-100557.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/02/9/4/barefoot-tenisky-barebarics-zing-all-black-leather-94307.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/04/1/0/barefoot-tenisky-barebarics-zing-all-black-leather-100558.jpg",
@@ -210,7 +210,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2022/06/3/2/barefoot-tenisky-barebarics-zing-white-black-32125.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-zing-white-black-131544.jpg",
       "https://belenkacdn.vshcdn.net/media/2024/03/6/6/barefoot-tenisky-barebarics-zing-white-black-66012.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/02/9/4/barefoot-tenisky-barebarics-zing-white-black-94158.png",
       "https://belenkacdn.vshcdn.net/media/2022/11/4/0/barefoot-tenisky-barebarics-zing-white-black-40067.jpg"
@@ -268,7 +268,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-velocity-all-white-128010.png",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-be-lenka-velocity-all-white-132852.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-be-lenka-velocity-all-white-117971.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-velocity-all-white-128012.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/02/9/5/barefoot-tenisky-be-lenka-velocity-all-white-95626.png",
@@ -329,7 +329,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2024/03/6/7/barefoot-tenisky-be-lenka-rebound-all-white-67481.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-be-lenka-rebound-all-white-133034.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/02/9/5/barefoot-tenisky-be-lenka-rebound-all-white-95602.png",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-all-white-128924.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/02/9/5/barefoot-tenisky-be-lenka-rebound-all-white-95603.png",
@@ -390,7 +390,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-all-black-128796.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-be-lenka-rebound-all-black-133028.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-be-lenka-rebound-all-black-118105.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-all-black-128795.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/07/1/0/barefoot-tenisky-be-lenka-rebound-all-black-105043.jpg",
@@ -448,7 +448,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-black-white-128019.png",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-be-lenka-rebound-black-white-133039.jpg",
       "https://belenkacdn.vshcdn.net/media/2024/03/6/7/barefoot-tenisky-be-lenka-rebound-black-white-67374.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-black-white-128021.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-tenisky-be-lenka-rebound-black-white-118107.jpg",
@@ -508,7 +508,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-sand-128822.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-be-lenka-rebound-sand-133189.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/05/1/2/barefoot-tenisky-be-lenka-rebound-sand-123090.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-sand-128826.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/08/1/2/barefoot-tenisky-be-lenka-rebound-sand-128825.jpg",
@@ -561,7 +561,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/04/1/2/barefoot-tenisky-barebarics-enigma-ivory-121451.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-ivory-131444.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-ivory-115233.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/10/1/1/barefoot-tenisky-barebarics-enigma-ivory-110943.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/10/1/1/barefoot-tenisky-barebarics-enigma-ivory-110945.jpg"
@@ -619,7 +619,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2025/07/1/0/barefoot-tenisky-barebarics-enigma-all-white-105211.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-all-white-131447.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-white-90811.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-white-90812.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-white-90813.jpg"
@@ -675,7 +675,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-black-90896.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-all-black-131446.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-all-black-115769.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-all-black-90796.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-all-black-115760.jpg"
@@ -731,7 +731,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-white-dark-green-90789.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-white-dark-green-131445.jpg",
       "https://belenkacdn.vshcdn.net/media/2025/01/9/0/enigma-white-dark-green-90894.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/01/1/1/barefoot-tenisky-barebarics-enigma-white-dark-green-115220.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/2/barefoot-tenisky-barebarics-enigma-white-dark-green-119942.jpg"
@@ -785,7 +785,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/06/1/2/barefoot-sandale-be-lenka-grace-2-0-beige-124559.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-sandale-be-lenka-grace-2-0-beige-136141.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-beige-119069.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-beige-119081.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-beige-119070.png",
@@ -838,7 +838,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/06/1/2/barefoot-sandale-be-lenka-grace-2-0-ivory-124555.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-sandale-be-lenka-grace-2-0-ivory-136252.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-ivory-119077.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-ivory-119087.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-ivory-119079.png",
@@ -893,7 +893,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/06/1/2/barefoot-sandale-be-lenka-grace-2-0-rose-gold-126023.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-sandale-be-lenka-grace-2-0-rose-gold-136209.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-rose-gold-119073.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-rose-gold-119074.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-grace-2-0-rose-gold-119082.png",
@@ -948,7 +948,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/06/1/2/barefoot-sandale-be-lenka-promenade-2-0-beige-126085.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-sandale-be-lenka-promenade-2-0-beige-136236.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-promenade-2-0-beige-119492.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/2/barefoot-sandale-be-lenka-promenade-2-0-beige-119983.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-promenade-2-0-beige-119493.png",
@@ -1001,7 +1001,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/06/1/2/barefoot-sandale-be-lenka-promenade-2-0-black-126082.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-sandale-be-lenka-promenade-2-0-black-136142.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-promenade-2-0-black-119491.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/2/barefoot-sandale-be-lenka-promenade-2-0-black-119982.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-promenade-2-0-black-119489.png",
@@ -1054,7 +1054,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/06/1/2/barefoot-sandale-be-lenka-promenade-2-0-dark-brown-126067.jpg",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-sandale-be-lenka-promenade-2-0-dark-brown-136143.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-promenade-2-0-dark-brown-119485.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/2/barefoot-sandale-be-lenka-promenade-2-0-dark-brown-119981.png",
       "https://belenkacdn.vshcdn.net/media/2026/03/1/1/barefoot-sandale-be-lenka-promenade-2-0-dark-brown-119487.png",
@@ -1111,7 +1111,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-white-green-127276.png",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-wave-2-0-white-green-131500.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-white-green-127351.jpeg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-white-green-127278.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-white-green-127350.jpeg",
@@ -1172,7 +1172,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-brown-127261.png",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-wave-2-0-brown-131497.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-brown-127348.jpeg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-brown-127263.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-brown-127349.jpeg",
@@ -1233,7 +1233,7 @@ const coreProducts: Product[] = [
     ],
     "sizes": [],
     "images": [
-      "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-black-dark-brown-127291.png",
+      "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-wave-2-0-black-dark-brown-131496.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-black-dark-brown-127360.jpeg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-black-dark-brown-127293.jpg",
       "https://belenkacdn.vshcdn.net/media/2026/07/1/2/barefoot-tenisky-barebarics-wave-2-0-black-dark-brown-127361.jpeg",
