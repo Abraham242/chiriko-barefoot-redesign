@@ -13,7 +13,9 @@
     "test:watch": "vitest",
     "catalog:review-images": "node tools/catalog-manager/generate-image-review-board.mjs",
     "catalog:sync-groundies": "node tools/catalog-manager/sync-groundies-selection.mjs",
-    "catalog:sync-core-sizes": "node tools/catalog-manager/sync-core-sizes.mjs"
+    "catalog:sync-core-sizes": "node tools/catalog-manager/sync-core-sizes.mjs",
+    "catalog:enrich-groundies-photos": "node tools/catalog-manager/enrich-groundies-galleries.mjs",
+    "catalog:test-groundies-photos": "node --test tools/catalog-manager/groundies-gallery.checks.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
