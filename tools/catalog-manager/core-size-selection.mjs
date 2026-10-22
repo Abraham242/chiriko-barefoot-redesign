@@ -51,21 +51,6 @@ export const coreSizeSelection = Object.freeze([
     "feedTitle": "Enigma - Ivory"
   },
   {
-    "slug": "barebarics-enigma-all-white",
-    "brand": "Barebarics",
-    "feedTitle": "Enigma - All White"
-  },
-  {
-    "slug": "barebarics-enigma-all-black",
-    "brand": "Barebarics",
-    "feedTitle": "Enigma - All Black"
-  },
-  {
-    "slug": "barebarics-enigma-white-dark-green",
-    "brand": "Barebarics",
-    "feedTitle": "Enigma - White & Dark Green"
-  },
-  {
     "slug": "be-lenka-grace-2-0-beige",
     "brand": "Be Lenka",
     "feedTitle": "Grace 2.0 - Beige"
