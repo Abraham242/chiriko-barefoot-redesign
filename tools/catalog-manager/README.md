@@ -287,3 +287,40 @@ Its apply stage filters those three retired colors before publishing
 and strictly checks the 19-colorway active allowlist. The public primary photo
 allowlist also contains only current core products. Never commit XML or the
 authenticated B2B export to Git.
+
+## Groundies multi-photo galleries — manual enrichment
+
+The confidential Groundies XML only supplies the primary "image_link" per
+SKU/size. It does **not** include a full photo gallery. A separate CURATED
+public-only manifest in "tools/catalog-manager/approved-groundies-gallery.mjs"
+stores reviewed extra photographs from the brand's official public product pages.
+
+Seven of the fourteen colorways initially have 4–6 genuine product angles;
+the remaining colorways must be enriched before the photo refresh is complete.
+Every photo filename is checked against the exact SKU stem of the existing
+approved XML primary image. Never use a photo of a different fit, gender,
+color or model, or add repeated crops of the same photo.
+
+To attempt a full refresh, in a terminal WITH network access:
+
+  npm.cmd run catalog:enrich-groundies-photos
+  npm.cmd run catalog:test-groundies-photos
+  npm.cmd run build
+
+The optional script consults the PUBLIC Groundies Shopify product JSON only
+through a fixed set of nine verified official public product handles. It
+filters product photos by the exact filename SKU prefix and requires at least
+four distinct images for EVERY one of the 14 selected colorways before writing.
+If even one colorway cannot be matched, it aborts without modifying either
+file. Do not weaken this gate or guess image filenames/URLs.
+
+The manifest is the source of truth when you rerun the LOCAL Groundies XML
+sync: reviewed multi-angle photos are restored after the primary XML photo.
+This does not introduce any network operation into Vite, build, deployment,
+or the confidential XML importer.
+
+After enrichment, generate "npm.cmd run catalog:review-images" and check each
+product detail gallery in Cloudflare preview on desktop and mobile. Keep
+primary images first and use real alternate front/top/sole/detail views.
+Do not merge this change until all 14 colorways are reviewed and the build
+passes. Confirm usage rights for supplier/public brand photos as appropriate.
