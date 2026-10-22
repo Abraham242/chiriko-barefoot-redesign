@@ -4,7 +4,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
@@ -12,6 +11,7 @@ import test from "node:test";
 import { groundiesSelection } from "./groundies-selection.mjs";
 import { generateGroundiesProducts, serializeGroundiesProducts, syncGroundiesSelection } from "./sync-groundies-selection.mjs";
 import { extractProductArray, readPublicCatalog } from "./read-public-catalog.mjs";
+import { coreSizeSelection } from "./core-size-selection.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const escapeXml = (value) => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -203,8 +203,8 @@ test("CLI rejects remote, missing and escaping local paths without altering gene
   }
 });
 
-test("legacy 22-product apply workflow preserves the Groundies composition", async () => {
-  const directory = await mkdtemp(resolve(tmpdir(), "chiriko-legacy-check-"));
+test("legacy core apply workflow preserves active products and Groundies", async () => {
+  const directory = await mkdtemp(resolve(root, ".tmp-chiriko-legacy-check-"));
   try {
     const tool = resolve(directory, "tools/catalog-manager");
     const data = resolve(directory, "src/data");
@@ -212,11 +212,15 @@ test("legacy 22-product apply workflow preserves the Groundies composition", asy
     await mkdir(data, { recursive: true });
     const source = await readFile(resolve(root, "src/data/products.ts"), "utf8");
     const core = extractProductArray(source, "coreProducts");
-    assert.equal(core.length, 22);
+    assert.equal(core.length, coreSizeSelection.length);
     const groundies = serializeGroundiesProducts(generate(complete()));
     await writeFile(resolve(data, "groundiesProducts.ts"), groundies);
     await writeFile(resolve(tool, "output/launch-products.proposal.json"), JSON.stringify(core));
     await writeFile(resolve(tool, "apply-launch-products.mjs"), await readFile(resolve(root, "tools/catalog-manager/apply-launch-products.mjs")));
+    for (const helper of ["approved-primary-photos.mjs", "core-size-selection.mjs", "read-public-catalog.mjs"]) {
+      await writeFile(resolve(tool, helper), await readFile(resolve(root, "tools/catalog-manager", helper)));
+    }
+    await writeFile(resolve(data, "products.ts"), source);
     await promisify(execFile)(process.execPath, [resolve(tool, "apply-launch-products.mjs")]);
     const applied = await readFile(resolve(data, "products.ts"), "utf8");
     assert.deepEqual(extractProductArray(applied, "coreProducts"), core);
