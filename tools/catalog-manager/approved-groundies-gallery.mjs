@@ -44,5 +44,13 @@ export const approvedGroundiesGallery = {
     "https://groundies.com/cdn/shop/files/gnd-130291-02-h_pic3_ef5b4827-943d-4cb3-9b93-3c99d1d81948.jpg?v=1770888174",
     "https://groundies.com/cdn/shop/files/gnd-130291-02-h_pic4_fd1622e9-9bbb-4172-9dd4-fc8abdaed20c.jpg?v=1770888174",
     "https://groundies.com/cdn/shop/files/gnd-130291-02-h_pic5_bbbe67b3-5f85-46c5-949c-6af140b5c938.jpg?v=1770888174"
+  ],
+  "groundies-nova-gs1-navy-wax-paper": [
+    "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic2.jpg?v=1787140096",
+    "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic3.jpg?v=1787140096",
+    "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic4.jpg?v=1787140096",
+    "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic5.jpg?v=1787140096",
+    "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic6.jpg?v=1787140096",
+    "https://groundies.com/cdn/shop/files/GND-520112-12-H_pic7.jpg?v=1787140096"
   ]
 };
