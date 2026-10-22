@@ -11,6 +11,7 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractProductArray } from "./read-public-catalog.mjs";
 import { approvedPrimaryPhotos } from "./approved-primary-photos.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
@@ -249,8 +250,20 @@ async function main() {
   parsed.forEach(validateProposalProduct);
 
   const orderBySlug = new Map(launchProductOrder.map((slug, index) => [slug, index]));
+  // Preserve the most recent manually synchronized consultable-size snapshot.
+  // The launch proposal is not the source of truth for current supplier sizes.
+  const currentCatalog = extractProductArray(await readFile(catalogPath, "utf8"), "coreProducts");
+  assert(Array.isArray(currentCatalog) && currentCatalog.length === expectedProductCount,
+    "Existing core catalog is required to preserve current sizes");
+  const currentSizes = new Map(currentCatalog.map((entry) => [entry.slug, entry.consultableSizes]));
+  assert(currentSizes.size === expectedProductCount, "Duplicate existing core slug");
   const products = parsed
     .map(toStorefrontProduct)
+    .map((product) => {
+      const retainedSizes = currentSizes.get(product.slug);
+      assert(Array.isArray(retainedSizes), "Cannot preserve previously synchronized sizes for " + product.slug);
+      return { ...product, consultableSizes: [...retainedSizes] };
+    })
     .sort((first, second) => (orderBySlug.get(first.slug) ?? Infinity) - (orderBySlug.get(second.slug) ?? Infinity));
   const catalog = serializeCatalog(products);
   validateCatalog(catalog, products);
