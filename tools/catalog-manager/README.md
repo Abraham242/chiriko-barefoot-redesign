@@ -295,8 +295,8 @@ SKU/size. It does **not** include a full photo gallery. A separate CURATED
 public-only manifest in "tools/catalog-manager/approved-groundies-gallery.mjs"
 stores reviewed extra photographs from the brand's official public product pages.
 
-Seven of the fourteen colorways initially have 4–6 genuine product angles;
-the remaining colorways must be enriched before the photo refresh is complete.
+Eight of the fourteen approved colorways currently have 4–7 genuine product angles;
+the remaining six colorways must be enriched before the photo refresh is complete.
 Every photo filename is checked against the exact SKU stem of the existing
 approved XML primary image. Never use a photo of a different fit, gender,
 color or model, or add repeated crops of the same photo.
