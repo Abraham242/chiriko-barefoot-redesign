@@ -2,10 +2,7 @@
 // Deliberately excludes all B2B feed content, costs, identifiers and stock counts.
 // This list stays curated; do not populate it automatically with supplier feed items.
 export const approvedPrimaryPhotos = {
-  "barebarics-enigma-all-black": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-all-black-131446.jpg",
-  "barebarics-enigma-all-white": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-all-white-131447.jpg",
   "barebarics-enigma-ivory": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-ivory-131444.jpg",
-  "barebarics-enigma-white-dark-green": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-enigma-white-dark-green-131445.jpg",
   "barebarics-wave-2-0-black-dark-brown": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-wave-2-0-black-dark-brown-131496.jpg",
   "barebarics-wave-2-0-brown": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-wave-2-0-brown-131497.jpg",
   "barebarics-wave-2-0-white-green": "https://belenkacdn.vshcdn.net/media/2026/10/1/3/barefoot-tenisky-barebarics-wave-2-0-white-green-131500.jpg",
