@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { TextDecoder } from "node:util";
 import { JSDOM } from "jsdom";
 import { groundiesSelection } from "./groundies-selection.mjs";
+import { withApprovedGroundiesGallery } from "./groundies-gallery-utils.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const inputDirectory = resolve(toolDirectory, "input");
@@ -141,7 +142,7 @@ export async function syncGroundiesSelection(inputPath = resolve(inputDirectory,
   let xml;
   try { xml = new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
   catch { throw new Error("XML must be valid UTF-8; catalog unchanged."); }
-  const products = generateGroundiesProducts(xml);
+  const products = generateGroundiesProducts(xml).map((product) => withApprovedGroundiesGallery(product));
   const expectedCount = groundiesSelection.length;
   if (!expectedCount || products.length !== expectedCount || new Set(products.map(({ slug }) => slug)).size !== expectedCount ||
       new Set(products.map(({ id }) => id)).size !== expectedCount) {
