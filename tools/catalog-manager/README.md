@@ -350,3 +350,34 @@ Its apply stage filters those three retired colors before publishing
 and strictly checks the 19-colorway active allowlist. The public primary photo
 allowlist also contains only current core products. Never commit XML or the
 authenticated B2B export to Git.
+
+## Groundies public photo discovery — manual review candidates
+
+All fourteen approved colorways have reviewed galleries (83 photos total;
+see the counts and remaining angle gaps above). `groundies-galleries.mjs`
+is the single source of truth. `approved-groundies-gallery.mjs` provides a
+derived compatibility view for the existing manual photo commands; it is
+never edited or regenerated separately.
+
+To discover public candidates, in a terminal with network access:
+
+```sh
+npm run catalog:enrich-groundies-photos
+npm run catalog:test-groundies-photos
+npm run build
+```
+
+The optional discovery command consults only a fixed set of official public
+Groundies product handles. It filters observed images by the existing primary's
+exact media family and requires 4–8 candidates per selected colorway before
+writing the ignored `output/groundies-gallery-candidates.json` report atomically.
+It never changes the approved gallery mapping or storefront catalog. A filename
+match is only a review candidate: visually verify the exact model, color and fit,
+exclude mixed-color shots, and confirm each URL loads before editing the curated
+mapping. Never guess filenames or substitute another variant's photos.
+
+After an approved mapping change, run the local XML sync, the online evidence
+check, both Groundies check suites, and a desktop/mobile gallery review.
+The compatibility checks verify that the manual photo commands use the same
+complete galleries as the XML sync. No network discovery runs during XML sync,
+Vite builds or deployment, and confidential XML is never read by discovery.
