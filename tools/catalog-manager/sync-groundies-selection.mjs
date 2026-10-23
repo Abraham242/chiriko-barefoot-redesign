@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { TextDecoder } from "node:util";
 import { JSDOM } from "jsdom";
 import { groundiesSelection } from "./groundies-selection.mjs";
-import { withApprovedGroundiesGallery } from "./groundies-gallery-utils.mjs";
+import { groundiesGalleries } from "./groundies-galleries.mjs";
 
 const toolDirectory = dirname(fileURLToPath(import.meta.url));
 const inputDirectory = resolve(toolDirectory, "input");
@@ -28,7 +28,7 @@ function field(item, name) {
   return fields[0]?.textContent.trim() ?? "";
 }
 
-function publicImage(value) {
+export function publicImage(value) {
   try {
     const url = new URL(value);
     const decoded = decodeURIComponent(value);
@@ -48,6 +48,62 @@ function publicImage(value) {
   }
 }
 
+// Ignore public cache versions when detecting the same photograph twice.
+export function groundiesImageKey(value) {
+  const url = new URL(value);
+  return `${url.origin}${url.pathname}`;
+}
+
+// Compare already-observed media families; never construct or guess URLs.
+export function groundiesImageFamily(value) {
+  const filename = new URL(value).pathname.split("/").at(-1).toLowerCase();
+  const marker = filename.indexOf("_pic");
+  return marker > 0 ? filename.slice(0, marker) : null;
+}
+
+function reviewedGallery(entry, slug, primaryImages, galleries) {
+  const gallery = galleries[slug];
+  if (!gallery) {
+    if (Object.keys(galleries).length) throw new Error(`${slug}: missing reviewed gallery; catalog unchanged.`);
+    return [...primaryImages];
+  }
+  let validSource = false;
+  try {
+    const source = new URL(gallery.sourceUrl);
+    validSource = ["https://www.groundies.com", "https://groundies.com"].includes(source.origin) &&
+      !source.username && !source.password && !source.search && !source.hash && /^\/products\/[a-z0-9-]+$/.test(source.pathname);
+  } catch { /* Fail below without printing source values. */ }
+  if (!validSource || gallery.title !== entry.title || gallery.color !== entry.color ||
+      gallery.gender !== entry.gender || gallery.fit !== "Barefoot" || !Array.isArray(gallery.secondaryImages)) {
+    throw new Error(`${slug}: reviewed source identity does not match the approved variant; catalog unchanged.`);
+  }
+  const allowedViews = new Set(["top", "sole", "rear", "detail", "angled", "on-foot"]);
+  if (gallery.secondaryImages.some((image) => !image || !allowedViews.has(image.view))) {
+    throw new Error(`${slug}: invalid reviewed photograph metadata; catalog unchanged.`);
+  }
+  const reviewed = [gallery.primaryImage, ...gallery.secondaryImages.map(({ url }) => url)].map(publicImage);
+  if (reviewed.some((url) => !url || new URL(url).hostname !== "cdn.shopify.com")) {
+    throw new Error(`${slug}: unsafe reviewed image URL; catalog unchanged.`);
+  }
+  const family = groundiesImageFamily(reviewed[0]);
+  if (!family || reviewed.some((url) => groundiesImageFamily(url) !== family)) {
+    throw new Error(`${slug}: reviewed photos mix model, color or fit media families; catalog unchanged.`);
+  }
+  const approvedKeys = new Set(reviewed.map(groundiesImageKey));
+  if (approvedKeys.size !== reviewed.length || reviewed.length > 8) {
+    throw new Error(`${slug}: reviewed gallery must contain distinct photos and at most 8 images; catalog unchanged.`);
+  }
+  if ([...primaryImages].some((url) => groundiesImageKey(url) !== groundiesImageKey(reviewed[0]))) {
+    throw new Error(`${slug}: XML primary image needs a new gallery review; catalog unchanged.`);
+  }
+  const images = new Map();
+  for (const url of [...primaryImages, ...reviewed]) {
+    const key = groundiesImageKey(url);
+    if (!images.has(key)) images.set(key, url);
+  }
+  return [...images.values()];
+}
+
 function sizeLabel(value, slug) {
   if (!/^[1-9]\d?(?:[.,]\d+)?$/.test(value)) {
     throw new Error(`${slug}: missing or unsupported numeric size; catalog unchanged.`);
@@ -56,7 +112,7 @@ function sizeLabel(value, slug) {
 }
 
 /** Parse privately; return only explicitly constructed public fields. No raw XML errors escape. */
-export function generateGroundiesProducts(xml, warn = console.warn) {
+export function generateGroundiesProducts(xml, warn = console.warn, galleries = groundiesGalleries) {
   if (/<!\s*(?:DOCTYPE|ENTITY)\b/i.test(xml)) {
     throw new Error("DOCTYPE and ENTITY declarations are forbidden; catalog unchanged.");
   }
@@ -100,7 +156,8 @@ export function generateGroundiesProducts(xml, warn = console.warn) {
         throw new Error("Invalid approved photography; catalog unchanged.");
       }
       if (!sizes.size) warn(`WARNING ${slug}: zero consultable sizes; manual publication review required.`);
-      if (images.size === 1) warn(`EDITORIAL ${slug}: one primary image; additional editorial photography needed.`);
+      const galleryImages = reviewedGallery(entry, slug, images, galleries);
+      if (galleryImages.length < 4) warn(`EDITORIAL ${slug}: ${galleryImages.length} photo(s); additional manufacturer photography needed.`);
       const groupSlug = `groundies-${normalize(entry.model)}${entry.gender === "unisex" ? "" : `-${entry.gender}`}`;
       const name = `Groundies ${entry.model} · ${fitLabels[entry.gender]}`;
       return {
@@ -108,7 +165,7 @@ export function generateGroundiesProducts(xml, warn = console.warn) {
         subtitle: `${color} · preventa asistida`, gender: entry.gender, category: entry.category,
         colorName: color, colorFamily: color, colorHex: entry.colorHex,
         price: 0, currency: "$", status: "preorder",
-        consultableSizes: [...sizes].sort((a, b) => Number(a) - Number(b)), sizes: [], images: [...images],
+        consultableSizes: [...sizes].sort((a, b) => Number(a) - Number(b)), sizes: [], images: galleryImages,
         features: [...features], tags: ["Preventa asistida"], isNew: true, isFeatured: entry.featured === true,
         tag: entry.featured ? "Lanzamiento" : "Preventa",
         seoTitle: `Groundies ${entry.model} ${color} | Chiriko Studio Venezuela`,
@@ -142,7 +199,7 @@ export async function syncGroundiesSelection(inputPath = resolve(inputDirectory,
   let xml;
   try { xml = new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
   catch { throw new Error("XML must be valid UTF-8; catalog unchanged."); }
-  const products = generateGroundiesProducts(xml).map((product) => withApprovedGroundiesGallery(product));
+  const products = generateGroundiesProducts(xml);
   const expectedCount = groundiesSelection.length;
   if (!expectedCount || products.length !== expectedCount || new Set(products.map(({ slug }) => slug)).size !== expectedCount ||
       new Set(products.map(({ id }) => id)).size !== expectedCount) {

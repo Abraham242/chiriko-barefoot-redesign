@@ -1,21 +1,20 @@
 #!/usr/bin/env node
 /**
- * Optional, manual-only public media enrichment for 14 preapproved Groundies colorways.
+ * Optional, manual-only public media discovery for 14 preapproved Groundies colorways.
  * Requires network access; never reads confidential XML or runs during site build.
- * Fails closed if a selected gallery is missing/ambiguous. Review before publishing.
+ * Writes a review-only candidate report. Never overwrites approved galleries or catalog.
  */
 import { randomUUID } from "node:crypto";
-import { readFile, rename, unlink, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { extractProductArray } from "./read-public-catalog.mjs";
 import { groundiesSelection } from "./groundies-selection.mjs";
 import { photoStem, withApprovedGroundiesGallery, officialGroundiesPhoto } from "./groundies-gallery-utils.mjs";
-import { serializeGroundiesProducts } from "./sync-groundies-selection.mjs";
 
 const dir = dirname(fileURLToPath(import.meta.url));
 const catalogFile = resolve(dir, "../../src/data/groundiesProducts.ts");
-const photoFile = resolve(dir, "./approved-groundies-gallery.mjs");
+const reportFile = resolve(dir, "output/groundies-gallery-candidates.json");
 const BASE = "https://groundies.com";
 const STORE_ID = "/s/files/1/0933/3063/7143/files/";
 const MIN_PHOTOS = 4;
@@ -145,31 +144,28 @@ async function main() {
     console.log(product.slug + ": " + (extras.length+1) + " images");
   }
 
-  // Validate every size/model/color/fit key before writing either output.
+  // Validate every model/color/fit key before writing the review-only report.
   const enriched = catalog.map((p) => withApprovedGroundiesGallery(p, reviewed));
   assert(enriched.every((p) => p.images.length >= MIN_PHOTOS && p.images.length <= MAX_PHOTOS),
     "Some approved models have insufficient gallery coverage");
 
-  const manifest = [
-    "/** Reviewed PUBLIC official Shopify image links, never private supplier data. */",
-    "export const approvedGroundiesGallery = " + JSON.stringify(reviewed,null,2) + ";",
-    ""
-  ].join("\n");
-  const productCode = serializeGroundiesProducts(enriched);
-  const tmpManifest = photoFile + "." + randomUUID() + ".tmp";
-  const tmpCatalog = catalogFile + "." + randomUUID() + ".tmp";
+  const report = JSON.stringify({
+    note: "Public review candidates only. Visually verify exact model/color/fit before editing groundies-galleries.mjs. No approved images or catalog files were changed.",
+    galleries: Object.fromEntries(catalog.map((product) => [product.slug, {
+      sourceUrl: BASE + "/products/" + sourceBySlug[product.slug],
+      primaryImage: product.images[0],
+      candidates: reviewed[product.slug],
+    }])),
+  }, null, 2) + "\n";
+  const temporaryReport = reportFile + "." + randomUUID() + ".tmp";
+  await mkdir(dirname(reportFile), { recursive: true });
   try {
-    await writeFile(tmpManifest, manifest, {encoding:"utf8", flag:"wx"});
-    await writeFile(tmpCatalog, productCode, {encoding:"utf8", flag:"wx"});
-    // The manifest is the source of truth on later manual XML syncs.
-    await rename(tmpManifest, photoFile);
-    await rename(tmpCatalog, catalogFile);
+    await writeFile(temporaryReport, report, {encoding:"utf8", flag:"wx"});
+    await rename(temporaryReport, reportFile);
   } finally {
-    for (const path of [tmpManifest,tmpCatalog]) {
-      await unlink(path).catch((error) => { if (error.code !== "ENOENT") throw error; });
-    }
+    await unlink(temporaryReport).catch((error) => { if (error.code !== "ENOENT") throw error; });
   }
-  console.log("All 14 curated Groundies galleries updated; visually review BEFORE merging.");
+  console.log("Wrote public photo candidates to output/groundies-gallery-candidates.json. Approved galleries and storefront catalog were not changed.");
 }
 
 main().catch((error) => {
