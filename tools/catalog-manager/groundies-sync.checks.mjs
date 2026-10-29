@@ -12,6 +12,8 @@ import { groundiesSelection } from "./groundies-selection.mjs";
 import { generateGroundiesProducts, serializeGroundiesProducts, syncGroundiesSelection } from "./sync-groundies-selection.mjs";
 import { extractProductArray, readPublicCatalog } from "./read-public-catalog.mjs";
 import { coreSizeSelection } from "./core-size-selection.mjs";
+import { groundiesGalleries } from "./groundies-galleries.mjs";
+import { verifyOfficialGallerySource } from "./verify-groundies-galleries.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const escapeXml = (value) => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -24,7 +26,11 @@ function item(entry, overrides = {}) {
 }
 const feed = (items) => `<rss xmlns:g="http://base.google.com/ns/1.0"><channel>${items.join("")}</channel></rss>`;
 const complete = (replace = (entry) => item(entry)) => feed(groundiesSelection.map(replace));
-const generate = (xml) => generateGroundiesProducts(xml, () => {});
+// Bare-parser fixtures deliberately isolate XML handling from the real curation.
+const generate = (xml) => generateGroundiesProducts(xml, () => {}, {});
+const galleryForEntry = (entry) => Object.values(groundiesGalleries).find((gallery) =>
+  gallery.title === entry.title && gallery.color === entry.color && gallery.gender === entry.gender);
+const reviewedFeed = (replace = (entry) => item(entry, { image_link: galleryForEntry(entry).primaryImage })) => complete(replace);
 const productFor = (products, model, gender, color) => {
   const product = products.find((p) => p.model === model && p.gender === gender && (!color || p.colorName === color));
   assert.ok(product, `Missing ${model} / ${gender} / ${color ?? "any color"}`);
@@ -86,7 +92,7 @@ test("out-of-stock refresh clears previous sizes and requests publication review
   const warnings = [];
   const next = generateGroundiesProducts(complete((entry) => item(entry, {
     availability: entry.model === "Panama Soft" ? "out_of_stock" : "in_stock",
-  })), (message) => warnings.push(message));
+  })), (message) => warnings.push(message), {});
   assert.deepEqual(productFor(previous, "Panama Soft", "women").consultableSizes, ["38"]);
   assert.deepEqual(productFor(next, "Panama Soft", "women").consultableSizes, []);
   assert.equal(next.length, groundiesSelection.length);
@@ -150,6 +156,102 @@ test("primary image changes propagate; only matching image_link URLs become imag
   assert.deepEqual(products[0].images, ["https://images.example.com/updated-0.png"]);
   const versioned = "https://cdn.shopify.com/s/files/1/public-image.jpg?v=1234567890";
   assert.deepEqual(generate(complete((entry) => item(entry, { image_link: versioned })))[0].images, [versioned]);
+});
+
+test("reviewed galleries survive XML refreshes without additional_image_link fields", () => {
+  const xml = reviewedFeed();
+  const products = generateGroundiesProducts(xml, () => {});
+  assert.equal(products.length, Object.keys(groundiesGalleries).length);
+  for (const product of products) {
+    const gallery = groundiesGalleries[product.slug];
+    assert.ok(gallery);
+    assert.deepEqual(product.images, [gallery.primaryImage, ...gallery.secondaryImages.map(({ url }) => url)]);
+    assert.ok(product.images.length >= 4 && product.images.length <= 8);
+    assert.equal(new Set(product.images).size, product.images.length);
+    assert.equal(product.status, "preorder");
+  }
+  assert.equal(serializeGroundiesProducts(generateGroundiesProducts(xml, () => {})), serializeGroundiesProducts(products));
+  assert.doesNotMatch(serializeGroundiesProducts(products), /sourceUrl|secondaryImages|primaryImage|www\.groundies\.com/);
+  const refreshed = generateGroundiesProducts(reviewedFeed((entry) => item(entry, {
+    image_link: galleryForEntry(entry).primaryImage, size: "41", availability: "out_of_stock",
+  })), () => {});
+  for (const [index, product] of refreshed.entries()) {
+    assert.deepEqual(product.images, products[index].images);
+    assert.deepEqual(product.consultableSizes, []);
+  }
+});
+
+test("unreviewed additional_image_link values cannot bypass exact-slug curation", () => {
+  const expected = generateGroundiesProducts(reviewedFeed(), () => {});
+  for (const additional_image_link of [
+    groundiesGalleries["groundies-panama-khaki"].primaryImage,
+    "https://cdn.shopify.com/s/files/unreviewed-image.jpg",
+    "https://private.example.com/photo.jpg?token=PRIVATE_VALUE",
+  ]) {
+    const actual = generateGroundiesProducts(reviewedFeed((entry) => item(entry, {
+      image_link: galleryForEntry(entry).primaryImage, additional_image_link,
+    })), () => {});
+    assert.deepEqual(actual, expected);
+  }
+});
+
+test("changed primary assets, unsafe URLs, and wrong fit/color metadata fail gallery validation", () => {
+  const slug = "groundies-g-flex-women-off-white";
+  const gallery = groundiesGalleries[slug];
+  for (const patch of [
+    { title: "G-Flex Men" }, { gender: "men" }, { color: "Black" }, { fit: "Barefoot+" },
+    { sourceUrl: "https://competitor.example.com/products/g-flex-women" },
+    { secondaryImages: [{ url: "https://cdn.shopify.com/photo.jpg?token=PRIVATE_VALUE", view: "rear" }] },
+    { secondaryImages: [{ url: groundiesGalleries["groundies-g-flex-men-off-white"].secondaryImages[0].url, view: "top" }] },
+    { secondaryImages: [{ url: gallery.primaryImage, view: "top" }] },
+    { secondaryImages: [...gallery.secondaryImages, ...gallery.secondaryImages] },
+  ]) {
+    assert.throws(() => generateGroundiesProducts(reviewedFeed(), () => {}, {
+      ...groundiesGalleries, [slug]: { ...gallery, ...patch },
+    }), /catalog unchanged/);
+  }
+  assert.throws(() => generateGroundiesProducts(reviewedFeed((entry) => item(entry, {
+    image_link: entry.title === gallery.title && entry.color === gallery.color
+      ? "https://cdn.shopify.com/s/files/unreviewed-generation_pic1.jpg" : galleryForEntry(entry).primaryImage,
+  })), () => {}), /XML primary image needs a new gallery review/);
+  assert.throws(() => generateGroundiesProducts(reviewedFeed((entry) => item(entry, {
+    image_link: entry.title === gallery.title && entry.color === gallery.color
+      ? gallery.secondaryImages[0].url : galleryForEntry(entry).primaryImage,
+  })), () => {}), /XML primary image needs a new gallery review/);
+  const incomplete = { ...groundiesGalleries };
+  delete incomplete[slug];
+  assert.throws(() => generateGroundiesProducts(reviewedFeed(), () => {}, incomplete), /missing reviewed gallery/);
+});
+
+test("cache versions do not duplicate the primary or erase approved secondary photos", () => {
+  const products = generateGroundiesProducts(reviewedFeed((entry) => {
+    const url = new URL(galleryForEntry(entry).primaryImage);
+    url.searchParams.set("v", "1");
+    return item(entry, { image_link: url.href });
+  }), () => {});
+  for (const product of products) {
+    const gallery = groundiesGalleries[product.slug];
+    assert.equal(product.images.length, gallery.secondaryImages.length + 1);
+    assert.equal(new URL(product.images[0]).search, "?v=1");
+    assert.deepEqual(product.images.slice(1), gallery.secondaryImages.map(({ url }) => url));
+  }
+});
+
+test("official-source evidence must bind the primary to its exact color/fit and every photo to that page", () => {
+  const slug = "groundies-g-flex-women-black";
+  const gallery = groundiesGalleries[slug];
+  const source = {
+    title: gallery.title,
+    images: [gallery.primaryImage, ...gallery.secondaryImages.map(({ url }) => url)].map((src, index) => ({ id: index + 1, src })),
+    variants: [{ option1: gallery.fit, option2: gallery.color, image_id: 1 }],
+  };
+  verifyOfficialGallerySource(slug, gallery, source);
+  for (const changed of [
+    { ...source, title: "G-Flex Precision Women" },
+    { ...source, variants: [{ ...source.variants[0], option2: "Mint" }] },
+    { ...source, variants: [{ ...source.variants[0], option1: "Barefoot+" }] },
+    { ...source, images: source.images.slice(0, -1) },
+  ]) assert.throws(() => verifyOfficialGallerySource(slug, gallery, changed));
 });
 
 test("private fields and XML content never become public product metadata", () => {

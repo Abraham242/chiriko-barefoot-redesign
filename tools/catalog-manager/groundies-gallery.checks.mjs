@@ -32,6 +32,7 @@ test("only the 14 curated product slugs can receive official multi-angle galleri
     assert.ok(extras.every((img) => photoStem(img) === photoStem(p.images[0])));
     const withGallery = withApprovedGroundiesGallery(p);
     assert.deepEqual(withGallery.images, [p.images[0], ...extras]);
+    assert.deepEqual(withGallery.images, p.images);
   }
 });
 
@@ -52,6 +53,9 @@ test("gallery validator rejects other fits, colors, suppliers, credentials and d
     assert.throws(() => withApprovedGroundiesGallery(main,{[main.slug]:[bad]}));
   }
   assert.throws(() => withApprovedGroundiesGallery(main,{[main.slug]:[valid,valid]}),/Duplicate/);
+  const cdnAlias = "https://cdn.shopify.com/s/files/1/0933/3063/7143/files/gnd-130291-02-h_pic2.jpg?v=456";
+  assert.ok(officialGroundiesPhoto(cdnAlias));
+  assert.throws(() => withApprovedGroundiesGallery(main,{[main.slug]:[valid,cdnAlias]}),/Duplicate/);
 });
 
 test("the gallery additions do not change colors, prices, sizes or identity", async () => {

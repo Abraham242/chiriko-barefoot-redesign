@@ -20,8 +20,9 @@ export function photoStem(value) {
 export function officialGroundiesPhoto(value) {
   try {
     const url = new URL(value);
-    if (url.origin !== "https://groundies.com" ||
-        !url.pathname.startsWith("/cdn/shop/files/") ||
+    const approvedLocation = (url.origin === "https://groundies.com" && url.pathname.startsWith("/cdn/shop/files/")) ||
+      (url.origin === "https://cdn.shopify.com" && url.pathname.startsWith("/s/files/1/0933/3063/7143/files/"));
+    if (!approvedLocation ||
         url.username || url.password || url.hash ||
         url.searchParams.size !== 1 ||
         !/^\d+$/.test(url.searchParams.get("v") ?? "")) return false;
@@ -41,13 +42,16 @@ export function withApprovedGroundiesGallery(product, manifest = approvedGroundi
   if (!stem) throw new Error("Groundies primary photo lacks a verified SKU stem.");
   const extras = manifest[product.slug] ?? [];
   if (!Array.isArray(extras) || extras.length > 7) throw new Error("Too many Groundies gallery photos.");
-  const chosen = new Set([new URL(original).pathname.toLowerCase()]);
+  // The official domain and Shopify CDN can expose the same photo under
+  // different paths. Filename identity also ignores public cache versions.
+  const photoKey = (url) => decodeURIComponent(new URL(url).pathname.split("/").at(-1)).toLowerCase();
+  const chosen = new Set([photoKey(original)]);
   const result = [original];
   for (const url of extras) {
     if (!officialGroundiesPhoto(url) || photoStem(url) !== stem) {
       throw new Error("Groundies gallery photo does not match approved model/color/fit.");
     }
-    const key = new URL(url).pathname.toLowerCase();
+    const key = photoKey(url);
     if (chosen.has(key)) throw new Error("Duplicate Groundies gallery image.");
     chosen.add(key);
     result.push(url);
